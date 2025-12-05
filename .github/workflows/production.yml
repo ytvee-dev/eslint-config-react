@@ -10,11 +10,28 @@ permissions:
   pull-requests: write
 
 jobs:
-  deploy:
-    uses: KosyanMedia/marketing-infra-utils/.github/workflows/yarn.single.yml@master
-    with:
-      needs-release: true
-      is-self-hosted: true
-      runs-on: Linux
-      npm-token-key: CREATIVE_PRODUCTION_NPM_TOKEN
-    secrets: inherit
+  publish:
+    name: Publish to npm (public)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Publish package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          yarn npm publish --access public
