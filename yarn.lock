@@ -143,9 +143,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kosyanmedia/eslint-config-devcom@workspace:.":
+"@ytvee-dev/eslint-config-ytdev@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@kosyanmedia/eslint-config-devcom@workspace:."
+  resolution: "@ytvee-dev/eslint-config-ytdev@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.33.0"
     eslint: "npm:^9.33.0"

@@ -26,10 +26,10 @@
 
 ```bash
 # Yarn
-yarn add @kosyanmedia/eslint-config-devcom -D
+yarn add @ytvee-dev/eslint-config-ytdev -D
 
 # npm
-npm install @kosyanmedia/eslint-config-devcom --save-dev
+npm install @ytvee-dev/eslint-config-ytdev --save-dev
 ```
 
 2. Добавьте утилитарные зависимости в проект (вы можете сверить их с `peerDependencies` этого репозитория):
@@ -45,23 +45,23 @@ npm install eslint prettier @eslint/js eslint-config-prettier globals eslint-plu
 3. Подключите конфигурацию `prettier` проекта в ваш `.prettierrc.js`:
 
 ```bash
-module.exports = require('@kosyanmedia/eslint-config-devcom/prettier')
+module.exports = require('@ytvee-dev/eslint-config-ytdev/prettier')
 ```
 
 или в формате json:
 
 ```json
 {
-  "extends": "@kosyanmedia/eslint-config-devcom/prettier"
+  "extends": "@ytvee-dev/eslint-config-ytdev/prettier"
 }
 ```
 
 4. Настройте ваш `eslint.config.mjs` по примеру:
 
 ```javascript
-import baseConfig from '@kosyanmedia/eslint-config-devcom'
+import baseConfig from '@ytvee-dev/eslint-config-ytdev'
 // Вы можете взять сразу расширенный набор требований
-// import strictConfig from '@kosyanmedia/eslint-config-devcom/configs/strict'
+// import strictConfig from '@ytvee-dev/eslint-config-ytdev/configs/strict'
 
 export default [
   ...baseConfig,
