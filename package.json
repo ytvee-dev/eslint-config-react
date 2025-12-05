@@ -1,16 +1,16 @@
 {
-  "name": "@kosyanmedia/eslint-config-devcom",
+  "name": "@ytvee-dev/eslint-config-ytdev",
   "version": "2.4.8",
-  "description": "The general ESLint config for SAlO projects.",
+  "description": "The general ESLint config for projects.",
   "main": "eslint.config.mjs",
   "keywords": [
     "eslint",
     "bestpractices"
   ],
-  "author": "Dmitry Ruban",
+  "author": "Tyan Yevgeniy",
   "license": "ISC",
   "packageManager": "yarn@4.9.1",
-  "repository": "https://github.com/KosyanMedia/eslint-config-devcom",
+  "repository": "https://github.com/ytvee-dev/eslint-config-ytdev",
   "files": [
     "README.md",
     "package.json",
