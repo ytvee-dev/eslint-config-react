@@ -143,36 +143,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kosyanmedia/eslint-config-devcom@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@kosyanmedia/eslint-config-devcom@workspace:."
-  dependencies:
-    "@eslint/js": "npm:^9.33.0"
-    eslint: "npm:^9.33.0"
-    eslint-config-prettier: "npm:^9.1.2"
-    eslint-plugin-import: "npm:^2.32.0"
-    eslint-plugin-prettier: "npm:^5.5.4"
-    eslint-plugin-project-structure: "npm:^3.13.3"
-    eslint-plugin-simple-import-sort: "npm:^12.1.1"
-    globals: "npm:^15.11.0"
-    prettier: "npm:^3.3.3"
-    typescript: "npm:^5.2.2"
-    typescript-eslint: "npm:^8.39.0"
-  peerDependencies:
-    "@eslint/js": ">= 9.0.0"
-    eslint: ">= 9.0.0"
-    eslint-config-prettier: ">= 9.0.0"
-    eslint-plugin-import: ">= 2.0.0"
-    eslint-plugin-prettier: ">= 5.0.0"
-    eslint-plugin-project-structure: ">= 3.13.0"
-    eslint-plugin-simple-import-sort: ">= 12.0.0"
-    globals: ">= 15.0.0"
-    prettier: ">= 3.0.0"
-    typescript: ">= 4.0.0"
-    typescript-eslint: ">= 8.0.0"
-  languageName: unknown
-  linkType: soft
-
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -371,6 +341,36 @@ __metadata:
   checksum: 10/2eb89b9e4d531d52de414591869bc208b45dd71b5f758302f176ef92bc3b922e60be5a046a2788cc0e16724631b2dc95aad849b866716a9c7a6361f994c97379
   languageName: node
   linkType: hard
+
+"@ytvee-dev/eslint-config-ytdev@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@ytvee-dev/eslint-config-ytdev@workspace:."
+  dependencies:
+    "@eslint/js": "npm:^9.33.0"
+    eslint: "npm:^9.33.0"
+    eslint-config-prettier: "npm:^9.1.2"
+    eslint-plugin-import: "npm:^2.32.0"
+    eslint-plugin-prettier: "npm:^5.5.4"
+    eslint-plugin-project-structure: "npm:^3.13.3"
+    eslint-plugin-simple-import-sort: "npm:^12.1.1"
+    globals: "npm:^15.11.0"
+    prettier: "npm:^3.3.3"
+    typescript: "npm:^5.2.2"
+    typescript-eslint: "npm:^8.39.0"
+  peerDependencies:
+    "@eslint/js": ">= 9.0.0"
+    eslint: ">= 9.0.0"
+    eslint-config-prettier: ">= 9.0.0"
+    eslint-plugin-import: ">= 2.0.0"
+    eslint-plugin-prettier: ">= 5.0.0"
+    eslint-plugin-project-structure: ">= 3.13.0"
+    eslint-plugin-simple-import-sort: ">= 12.0.0"
+    globals: ">= 15.0.0"
+    prettier: ">= 3.0.0"
+    typescript: ">= 4.0.0"
+    typescript-eslint: ">= 8.0.0"
+  languageName: unknown
+  linkType: soft
 
 "acorn-jsx@npm:^5.3.2":
   version: 5.3.2
