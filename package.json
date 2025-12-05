@@ -11,6 +11,10 @@
   "license": "ISC",
   "packageManager": "yarn@4.9.1",
   "repository": "https://github.com/ytvee-dev/eslint-config-ytdev",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "files": [
     "README.md",
     "package.json",
