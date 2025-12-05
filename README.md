@@ -25,13 +25,21 @@
 1. Подготовьте основной пакет, используя любой подходящий package manager.
 
 ```bash
+# Yarn
 yarn add @kosyanmedia/eslint-config-devcom -D
+
+# npm
+npm install @kosyanmedia/eslint-config-devcom --save-dev
 ```
 
 2. Добавьте утилитарные зависимости в проект (вы можете сверить их с `peerDependencies` этого репозитория):
 
 ```bash
+# Yarn
 yarn add eslint prettier @eslint/js eslint eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint eslint-plugin-project-structure -D
+
+# npm
+npm install eslint prettier @eslint/js eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint eslint-plugin-project-structure --save-dev
 ```
 
 3. Подключите конфигурацию `prettier` проекта в ваш `.prettierrc.js`:
@@ -67,11 +75,15 @@ export default [
 
 ### Настройка среды
 
-1. Для работы с проектом потребуется [yarn](https://yarnpkg.com) (`npm install -g yarn`).
+1. Для работы с проектом потребуется [yarn](https://yarnpkg.com) (`npm install -g yarn`) **или** обычный `npm`.
 2. Установите зависимости:
 
 ```bash
+# Yarn
 yarn install
+
+# npm
+npm install
 ```
 
 Вы готовы к доработкам!
