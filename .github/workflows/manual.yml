@@ -1,0 +1,17 @@
+name: Manual Flow
+
+on: workflow_dispatch
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  deploy:
+    uses: KosyanMedia/marketing-infra-utils/.github/workflows/yarn.single.yml@master
+    with:
+      needs-release: false
+      is-self-hosted: true
+      runs-on: Linux
+      npm-token-key: CREATIVE_PRODUCTION_NPM_TOKEN
+    secrets: inherit
