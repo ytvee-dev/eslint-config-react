@@ -37,10 +37,10 @@ npm install @ytvee-dev/eslint-config-ytdev --save-dev
 
 ```bash
 # Yarn
-yarn add eslint prettier @eslint/js eslint eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint eslint-plugin-project-structure husky -D
+yarn add eslint prettier @eslint/js eslint eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint husky -D
 
 # npm
-npm install eslint prettier @eslint/js eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint eslint-plugin-project-structure husky --save-dev
+npm install eslint prettier @eslint/js eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint husky --save-dev
 
 # Для React-проектов добавьте плагины из Airbnb-пресета:
 # Yarn

@@ -20,7 +20,7 @@
 - Набор игнорируемых путей (node_modules, сборочные артефакты, документация и т.д.) для ускорения линтинга.【F:configs/rules/ignore.rule.mjs†L1-L16】
 
 
-- Дополнительный строгий профиль добавляет запрет `any`, правила именования переменных (camelCase/PascalCase), ограничение одного класса/интерфейса/типа/перечисления на файл и требование модульной структуры проекта.【F:configs/strict.mjs†L1-L20】【F:configs/rules/one-module.rule.mjs†L1-L38】
+- Дополнительный строгий профиль добавляет запрет `any`, правила именования переменных (camelCase/PascalCase) и ограничение одного класса/интерфейса/типа/перечисления на файл.【F:configs/strict.mjs†L1-L20】【F:configs/rules/one-module.rule.mjs†L1-L38】
 
 ## Что есть в Airbnb JavaScript Style Guide
 

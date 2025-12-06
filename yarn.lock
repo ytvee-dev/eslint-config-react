@@ -680,17 +680,6 @@ eslint-plugin-prettier@^5.5.4:
     prettier-linter-helpers "^1.0.0"
     synckit "^0.11.7"
 
-eslint-plugin-project-structure@^3.13.3:
-  version "3.14.1"
-  resolved "https://registry.npmjs.org/eslint-plugin-project-structure/-/eslint-plugin-project-structure-3.14.1.tgz"
-  integrity sha512-5CMf5qPVE6mp5OCn6hTEw0HMFzpP828U/2X+VhFO37t5XEbDbVrvj/Z2+N82IAujvCRjVvdj51MprjCA+EcQEw==
-  dependencies:
-    "@typescript-eslint/utils" "^8.47.0"
-    comment-json "^4.4.1"
-    js-yaml "^4.1.1"
-    jsonschema "^1.5.0"
-    micromatch "^4.0.8"
-
 eslint-plugin-simple-import-sort@^12.1.1:
   version "12.1.1"
   resolved "https://registry.npmjs.org/eslint-plugin-simple-import-sort/-/eslint-plugin-simple-import-sort-12.1.1.tgz"
