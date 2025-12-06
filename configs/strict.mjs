@@ -1,5 +1,4 @@
 import { oneModuleRule } from './rules/one-module.rule.mjs'
-import { structureRule } from './rules/structure.rule.mjs'
 import base from './base.mjs'
 
 export default [
@@ -20,5 +19,4 @@ export default [
     },
   },
   oneModuleRule,
-  structureRule,
 ]
