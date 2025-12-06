@@ -19,6 +19,7 @@
 
 - `base` - единая конфигурация для всех проектов. Помогает следовать общему стилю.
 - `strict` - строгие правила для повышения качества кода.
+- `react` - дополнение с правилами из [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) для JSX/React, включая хуки и базовые проверки доступности.
 
 ## Использование
 
@@ -36,10 +37,17 @@ npm install @ytvee-dev/eslint-config-ytdev --save-dev
 
 ```bash
 # Yarn
-yarn add eslint prettier @eslint/js eslint eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint eslint-plugin-project-structure -D
+yarn add eslint prettier @eslint/js eslint eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint eslint-plugin-project-structure husky -D
 
 # npm
-npm install eslint prettier @eslint/js eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint eslint-plugin-project-structure --save-dev
+npm install eslint prettier @eslint/js eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint eslint-plugin-project-structure husky --save-dev
+
+# Для React-проектов добавьте плагины из Airbnb-пресета:
+# Yarn
+yarn add eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y -D
+
+# npm
+npm install eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y --save-dev
 ```
 
 3. Подключите конфигурацию `prettier` проекта в ваш `.prettierrc.js`:
@@ -69,7 +77,31 @@ export default [
 ]
 ```
 
-5. Вы бесподобны!
+Если вы пишете на React, подключите набор правил из Airbnb JavaScript Style Guide для JSX/хуков/доступности:
+
+```javascript
+import reactConfig from '@ytvee-dev/eslint-config-ytdev/configs/react'
+
+export default [
+  ...reactConfig,
+  // Ваши дополнительные настройки
+]
+```
+
+5. Запускайте линтер в репозитории (для автоисправлений добавьте `--fix`):
+
+```bash
+yarn lint
+yarn lint:fix
+```
+
+6. В репозитории настроен pre-commit хук, который блокирует коммит при наличии ошибок ESLint (Airbnb/React правила включаются, если вы используете конфиг `react`). Чтобы временно отключить хук, установите переменную окружения `HUSKY=0` при выполнении коммита:
+
+```bash
+HUSKY=0 git commit -m "skip lint hook"
+```
+
+7. Вы бесподобны!
 
 ## Contributing
 
