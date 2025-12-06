@@ -1,6 +1,6 @@
 {
   "name": "@ytvee-dev/eslint-config-ytdev",
-  "version": "2.4.8",
+  "version": "2.4.9",
   "description": "The general ESLint config for projects.",
   "main": "eslint.config.mjs",
   "keywords": [
@@ -30,6 +30,9 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "husky": "^9.1.7"
+  },
+  "dependencies": {
     "@eslint/js": "^9.33.0",
     "eslint": "^9.33.0",
     "eslint-config-prettier": "^9.1.2",
@@ -39,26 +42,9 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "husky": "^9.1.7",
     "globals": "^15.11.0",
     "prettier": "^3.3.3",
     "typescript": "^5.2.2",
     "typescript-eslint": "^8.39.0"
-  },
-  "peerDependencies": {
-    "@eslint/js": ">= 9.0.0",
-    "eslint": ">= 9.0.0",
-    "eslint-config-prettier": ">= 9.0.0",
-    "eslint-plugin-import": ">= 2.0.0",
-    "eslint-plugin-jsx-a11y": ">= 6.0.0",
-    "eslint-plugin-prettier": ">= 5.0.0",
-    "eslint-plugin-react": ">= 7.0.0",
-    "eslint-plugin-react-hooks": ">= 5.0.0",
-    "eslint-plugin-simple-import-sort": ">= 12.0.0",
-    "husky": ">= 9.0.0",
-    "globals": ">= 15.0.0",
-    "prettier": ">= 3.0.0",
-    "typescript": ">= 4.0.0",
-    "typescript-eslint": ">= 8.0.0"
   }
 }
