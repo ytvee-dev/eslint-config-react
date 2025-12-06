@@ -1,48 +1,27 @@
-# Devcom Code Standards
+# ESLint Config for React Projects
 
-Каждый проект DEVCOM должен следовать принятому ГОСТ.
+Набор правил ESLint, который помогает быстро подключить единый стиль кода в React-проектах: типобезопасные проверки, договорённости по импорту и готовая интеграция с Prettier.
 
-Подробнее:
+## Название
 
-- [Backend Styleguide](https://aviasales.atlassian.net/wiki/spaces/devcom/pages/5996249191/Code+Style+Backend+Design)
-- [Frontend Styleguide](https://aviasales.atlassian.net/wiki/spaces/devcom/pages/5647270587/Code+Style)
+`@ytvee-dev/eslint-config-ytdev`
 
 ## Описание
 
-Данный проект представляет собой сборник правил, конфигов, переиспользуемых
-командой Devcom. А именно:
-
-- `eslint` конфигурация.
-- `prettier` правила.
-
-И предоставляет готовые конфиги для вашего проекта:
-
-- `base` - единая конфигурация для всех проектов. Помогает следовать общему стилю.
-- `strict` - строгие правила для повышения качества кода.
-- `react` - дополнение с правилами из [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) для JSX/React, включая хуки и базовые проверки доступности.
+Конфигурация объединяет базовые проверки JavaScript/TypeScript, строгие ограничения для качества кода и дополнительный профиль для React. Пакет ориентирован на командную разработку: минимальная настройка, предсказуемые ошибки линтера и единый стиль форматирования.
 
 ## Использование
 
-1. Подготовьте основной пакет, используя любой подходящий package manager.
+1. Установите пакет и его peer-зависимости любым менеджером пакетов:
 
 ```bash
 # Yarn
-yarn add @ytvee-dev/eslint-config-ytdev -D
+yarn add @ytvee-dev/eslint-config-ytdev @eslint/js eslint eslint-config-prettier eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort globals prettier typescript-eslint -D
 
 # npm
-npm install @ytvee-dev/eslint-config-ytdev --save-dev
-```
+npm install @ytvee-dev/eslint-config-ytdev @eslint/js eslint eslint-config-prettier eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort globals prettier typescript-eslint --save-dev
 
-2. Добавьте утилитарные зависимости в проект (вы можете сверить их с `peerDependencies` этого репозитория):
-
-```bash
-# Yarn
-yarn add eslint prettier @eslint/js eslint eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint husky -D
-
-# npm
-npm install eslint prettier @eslint/js eslint-config-prettier globals eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort typescript-eslint husky --save-dev
-
-# Для React-проектов добавьте плагины из Airbnb-пресета:
+# Для проектов на React добавьте плагины Airbnb-профиля
 # Yarn
 yarn add eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y -D
 
@@ -50,13 +29,13 @@ yarn add eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y -D
 npm install eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y --save-dev
 ```
 
-3. Подключите конфигурацию `prettier` проекта в ваш `.prettierrc.js`:
+2. Подключите форматирование Prettier через файл `.prettierrc`:
 
-```bash
-module.exports = require('@ytvee-dev/eslint-config-ytdev/prettier')
+```js
+module.exports = require('@ytvee-dev/eslint-config-ytdev/prettier');
 ```
 
-или в формате json:
+или в JSON-формате:
 
 ```json
 {
@@ -64,51 +43,32 @@ module.exports = require('@ytvee-dev/eslint-config-ytdev/prettier')
 }
 ```
 
-4. Настройте ваш `eslint.config.mjs` по примеру:
+3. Настройте `eslint.config.mjs` под ваш проект:
 
-```javascript
-import baseConfig from '@ytvee-dev/eslint-config-ytdev'
-// Вы можете взять сразу расширенный набор требований
-// import strictConfig from '@ytvee-dev/eslint-config-ytdev/configs/strict'
+```js
+import baseConfig from '@ytvee-dev/eslint-config-ytdev';
+// import strictConfig from '@ytvee-dev/eslint-config-ytdev/configs/strict';
+// import reactConfig from '@ytvee-dev/eslint-config-ytdev/configs/react';
 
 export default [
   ...baseConfig,
-  // Ваши дополнительные настройки
-]
+  // ...strictConfig,
+  // ...reactConfig,
+  // ваши дополнительные правила
+];
 ```
 
-Если вы пишете на React, подключите набор правил из Airbnb JavaScript Style Guide для JSX/хуков/доступности:
-
-```javascript
-import reactConfig from '@ytvee-dev/eslint-config-ytdev/configs/react'
-
-export default [
-  ...reactConfig,
-  // Ваши дополнительные настройки
-]
-```
-
-5. Запускайте линтер в репозитории (для автоисправлений добавьте `--fix`):
+4. Запускайте проверки:
 
 ```bash
 yarn lint
 yarn lint:fix
 ```
 
-6. В репозитории настроен pre-commit хук, который блокирует коммит при наличии ошибок ESLint (Airbnb/React правила включаются, если вы используете конфиг `react`). Чтобы временно отключить хук, установите переменную окружения `HUSKY=0` при выполнении коммита:
+## Настройка среды
 
-```bash
-HUSKY=0 git commit -m "skip lint hook"
-```
-
-7. Вы бесподобны!
-
-## Contributing
-
-### Настройка среды
-
-1. Для работы с проектом потребуется [yarn](https://yarnpkg.com) (`npm install -g yarn`) **или** обычный `npm`.
-2. Установите зависимости:
+1. Подготовьте Node.js и выбранный менеджер пакетов (`yarn` или `npm`).
+2. Установите зависимости репозитория:
 
 ```bash
 # Yarn
@@ -118,4 +78,6 @@ yarn install
 npm install
 ```
 
-Вы готовы к доработкам!
+3. При желании подключите git-хуки: в проекте есть готовая конфигурация husky, отключить временно можно через `HUSKY=0` при коммите.
+
+После этого линтер готов к работе в вашем React-приложении.
