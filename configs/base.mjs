@@ -7,6 +7,7 @@ import pluginJs from '@eslint/js'
 import { ignoreRule } from './rules/ignore.rule.mjs'
 import { importRule } from './rules/import.rule.mjs'
 import { importsRule } from './rules/import-sort.rule.mjs'
+import { javascriptRule } from './rules/javascript.rule.mjs'
 import { typescriptRule } from './rules/typescript.rule.mjs'
 
 export default [
@@ -25,5 +26,6 @@ export default [
   },
   importRule,
   importsRule,
+  javascriptRule,
   eslintPluginPrettierRecommended,
 ]
