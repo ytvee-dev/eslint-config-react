@@ -12,7 +12,7 @@
 
 ## Использование
 
-1. Установите пакет одной командой — все необходимые плагины и парсеры подтянутся транзитивно:
+1. Установите пакет одной командой — все необходимые плагины и парсеры подтянутся транзитивно, ничего дополнять вручную не нужно:
 
 ```bash
 # Yarn
@@ -57,6 +57,16 @@ export default [
 yarn lint
 yarn lint:fix
 ```
+
+## Какие зависимости уже включены
+
+Пакет сам тянет весь стек, необходимый для работы линтера:
+
+- `eslint`, `@eslint/js` и `typescript-eslint` (парсер + набор правил для TypeScript);
+- плагины для импорта, сортировки, Prettier и React-проектов: `eslint-plugin-import`, `eslint-plugin-simple-import-sort`, `eslint-plugin-prettier`, `eslint-config-prettier`, `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`;
+- `prettier` для единообразного форматирования.
+
+Никаких дополнительных пресетов Babel или рантайм-шимов не требуется: правила работают на уровне статического анализа кода, поэтому достаточно установить `@ytvee-dev/eslint-config-ytdev` через `yarn add`/`npm install`, и все зависимости подтянутся вместе с ним.
 
 ## Нужны ли Babel или shims?
 
