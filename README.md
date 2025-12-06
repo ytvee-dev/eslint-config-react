@@ -12,21 +12,14 @@
 
 ## Использование
 
-1. Установите пакет и его peer-зависимости любым менеджером пакетов:
+1. Установите пакет одной командой — все необходимые плагины и парсеры подтянутся транзитивно, ничего дополнять вручную не нужно:
 
 ```bash
 # Yarn
-yarn add @ytvee-dev/eslint-config-ytdev @eslint/js eslint eslint-config-prettier eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort globals prettier typescript-eslint -D
+yarn add @ytvee-dev/eslint-config-ytdev -D
 
 # npm
-npm install @ytvee-dev/eslint-config-ytdev @eslint/js eslint eslint-config-prettier eslint-plugin-import eslint-plugin-prettier eslint-plugin-simple-import-sort globals prettier typescript-eslint --save-dev
-
-# Для проектов на React добавьте плагины Airbnb-профиля
-# Yarn
-yarn add eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y -D
-
-# npm
-npm install eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y --save-dev
+npm install @ytvee-dev/eslint-config-ytdev --save-dev
 ```
 
 2. Подключите форматирование Prettier через файл `.prettierrc`:
@@ -64,6 +57,21 @@ export default [
 yarn lint
 yarn lint:fix
 ```
+
+## Какие зависимости уже включены
+
+Пакет сам тянет весь стек, необходимый для работы линтера:
+
+- `eslint`, `@eslint/js` и `typescript-eslint` (парсер + набор правил для TypeScript);
+- плагины для импорта, сортировки, Prettier и React-проектов: `eslint-plugin-import`, `eslint-plugin-simple-import-sort`, `eslint-plugin-prettier`, `eslint-config-prettier`, `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`;
+- `prettier` для единообразного форматирования.
+
+Никаких дополнительных пресетов Babel или рантайм-шимов не требуется: правила работают на уровне статического анализа кода, поэтому достаточно установить `@ytvee-dev/eslint-config-ytdev` через `yarn add`/`npm install`, и все зависимости подтянутся вместе с ним.
+
+## Нужны ли Babel или shims?
+
+В отличие от `eslint-config-airbnb`, конфигурация не зависит от Babel или полифиллов: линтер работает на стандартном парсере ESLint и `typescript-eslint`.
+Шимы в рантайме тоже не требуются — правила затрагивают только статический анализ кода, а не окружение исполнения.
 
 ## Чем отличается от Airbnb и что не включено
 
