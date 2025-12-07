@@ -14,8 +14,8 @@ const sum = a + b;
 console.log(sum);
 
 // Плохо
-const sum = a + b
-console.log(sum)
+const sum = a + b;
+console.log(sum);
 ```
 
 ### Не используйте `Symbol` и `BigInt` без нативной поддержки (`no-restricted-syntax`)
@@ -100,14 +100,14 @@ export default App;
 
 ```tsx
 // Хорошо
-{items.map((item) => (
-  <Fragment key={item.id}>{item.title}</Fragment>
-))}
+{
+  items.map((item) => <Fragment key={item.id}>{item.title}</Fragment>);
+}
 
 // Плохо
-{items.map((item) => (
-  <Fragment>{item.title}</Fragment>
-))}
+{
+  items.map((item) => <Fragment>{item.title}</Fragment>);
+}
 ```
 
 ### React: недопустимо дублировать пропсы (`react/jsx-no-duplicate-props`)
@@ -182,7 +182,7 @@ useEffect(() => {
 const message = 'Hello, world!';
 
 // Плохо (двойные кавычки нарушают стиль)
-const message = "Hello, world!";
+const message = 'Hello, world!';
 ```
 
 ### Сортировка импортов (`simple-import-sort/imports`)
@@ -351,14 +351,22 @@ let value: any = null;
 ```ts
 // Хорошо (разные файлы)
 // user.ts
-export interface User { id: string }
+export interface User {
+  id: string;
+}
 
 // role.ts
-export enum Role { Admin = 'admin' }
+export enum Role {
+  Admin = 'admin',
+}
 
 // Плохо (в одном файле)
-export interface User { id: string }
-export enum Role { Admin = 'admin' }
+export interface User {
+  id: string;
+}
+export enum Role {
+  Admin = 'admin',
+}
 ```
 
 ## Как применять профили

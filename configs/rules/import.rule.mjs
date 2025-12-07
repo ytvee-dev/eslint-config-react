@@ -1,4 +1,4 @@
-import importPlugin from 'eslint-plugin-import'
+import importPlugin from 'eslint-plugin-import';
 
 export const importRule = {
   plugins: {
@@ -18,4 +18,4 @@ export const importRule = {
       },
     ],
   },
-}
+};

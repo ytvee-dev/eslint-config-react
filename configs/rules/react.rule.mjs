@@ -1,6 +1,6 @@
-import jsxA11y from 'eslint-plugin-jsx-a11y'
-import reactPlugin from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 export const reactRule = {
   files: ['**/*.{jsx,tsx}'],
@@ -36,4 +36,4 @@ export const reactRule = {
     'jsx-a11y/no-noninteractive-element-interactions': 'warn',
     'jsx-a11y/no-static-element-interactions': 'warn',
   },
-}
+};
