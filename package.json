@@ -17,7 +17,10 @@
   "author": "Tyan Yevgeniy",
   "license": "ISC",
   "packageManager": "yarn@4.9.1",
-  "repository": "https://github.com/ytvee-dev/eslint-config-react",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ytvee-dev/eslint-config-react.git"
+  },
   "engines": {
     "node": ">=18"
   },
