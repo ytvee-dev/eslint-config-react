@@ -41,7 +41,7 @@
     "build": "echo \"Info: Build is unnecessary\"",
     "lint": "eslint . --ext .js,.mjs,.ts,.tsx --report-unused-disable-directives",
     "lint:fix": "yarn lint --fix",
-    "prepare": "husky install"
+    "prepare": "command -v husky >/dev/null 2>&1 && husky install || true"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",
