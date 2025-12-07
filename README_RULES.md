@@ -80,14 +80,38 @@ for (let i = 0; i < list.length; i += 1) {
 
 #### Защита от ошибок синтаксиса и RegExp
 
-Правила серии `no-*-regex` следят за корректностью регулярных выражений (нет управляющих символов, пустых классов или лишних пробелов) и предотвращают неочевидные экранирования (`no-irregular-whitespace`, `no-useless-backreference`).
+Каждое правило закрывает отдельный класс ошибок в регулярках и синтаксисе:
+
+- `no-control-regex`, `no-empty-character-class`, `no-misleading-character-class`, `no-regex-spaces` — защищают от некорректных классов символов и лишних пробелов.
+- `no-invalid-regexp`, `no-useless-backreference` — предотвращают ошибки компиляции регулярки.
+- `no-irregular-whitespace` — запрещает невидимые символы, которые ломают парсинг.
+- `no-fallthrough` — требует явного завершения `switch`, чтобы не пропускать `break` по ошибке.
 
 ```js
-// Плохо: пробел в классе и бессмысленная ссылка на группу
+// Плохо: пробел в классе, некорректная ссылка на группу и отсутствующий break
+switch (status) {
+  case 'pending':
+    handlePending();
+  case 'done':
+    handleDone();
+    break;
+}
+
 const pattern = /[0-9 ]+/;
 const fallback = /(a)?b\1/;
 
-// Хорошо: конкретный диапазон и без лишних ссылок
+// Хорошо: явный break и корректные регулярки без лишних символов
+switch (status) {
+  case 'pending':
+    handlePending();
+    break;
+  case 'done':
+    handleDone();
+    break;
+  default:
+    handleUnknown();
+}
+
 const pattern = /[0-9]+/;
 const fallback = /ab?/;
 ```
