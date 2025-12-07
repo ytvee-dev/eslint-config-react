@@ -4,7 +4,7 @@
 
 ## Название
 
-`@ytvee-dev/eslint-config-ytdev`
+`@ytvee-dev/eslint-config-react`
 
 ## Описание
 
@@ -19,42 +19,36 @@
 
 ## Использование
 
-1. Установите конфиг и peer-зависимости (React-плагины подключайте только если нужен профиль `configs/react`):
+1. Установите конфиг одной командой — все плагины и пресеты подтянутся автоматически (включая React-профиль):
 
 ```bash
-# Yarn (базовый профиль)
-yarn add -D @ytvee-dev/eslint-config-ytdev eslint @eslint/js typescript typescript-eslint eslint-plugin-import eslint-plugin-simple-import-sort eslint-plugin-prettier eslint-config-prettier prettier globals
+# Yarn
+yarn add -D @ytvee-dev/eslint-config-react
 
-# Yarn (React-дополнения)
-yarn add -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y
-
-# npm (базовый профиль)
-npm install -D @ytvee-dev/eslint-config-ytdev eslint @eslint/js typescript typescript-eslint eslint-plugin-import eslint-plugin-simple-import-sort eslint-plugin-prettier eslint-config-prettier prettier globals
-
-# npm (React-дополнения)
-npm install -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y
+# npm
+npm install -D @ytvee-dev/eslint-config-react
 ```
 
 2. Подключите форматирование Prettier через файл `.prettierrc`:
 
 ```js
-module.exports = require('@ytvee-dev/eslint-config-ytdev/prettier');
+module.exports = require('@ytvee-dev/eslint-config-react/prettier');
 ```
 
 или в JSON-формате:
 
 ```json
 {
-  "extends": "@ytvee-dev/eslint-config-ytdev/prettier"
+  "extends": "@ytvee-dev/eslint-config-react/prettier"
 }
 ```
 
 3. Настройте `eslint.config.mjs` под ваш проект:
 
 ```js
-import baseConfig from '@ytvee-dev/eslint-config-ytdev';
-// import strictConfig from '@ytvee-dev/eslint-config-ytdev/configs/strict';
-// import reactConfig from '@ytvee-dev/eslint-config-ytdev/configs/react';
+import baseConfig from '@ytvee-dev/eslint-config-react';
+// import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+// import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
 
 export default [
   ...baseConfig,
@@ -73,13 +67,9 @@ yarn lint:fix
 
 ## Какие зависимости нужны
 
-Конфиг использует peer-зависимости, поэтому их нужно ставить в проекте вручную, чтобы версия линтера совпадала с вашей сборкой:
+Все нужные плагины и конфигурации идут как обычные зависимости пакета, поэтому дополнительная установка не требуется: линтер, плагины для импортов/форматирования и React-добавки подтянутся вместе с `@ytvee-dev/eslint-config-react`. В `peerDependencies` они оставлены только для контроля совместимых версий — менеджер пакетов сам поставит конкретные версии из набора пакета.
 
-- `eslint`, `@eslint/js`, `typescript`, `typescript-eslint`, `globals`;
-- плагины для импорта и форматирования: `eslint-plugin-import`, `eslint-plugin-simple-import-sort`, `eslint-plugin-prettier`, `eslint-config-prettier`, `prettier`;
-- React-плагины подключайте только для JSX-профиля: `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`.
-
-Никаких дополнительных пресетов Babel или рантайм-шимов не требуется: правила работают на уровне статического анализа кода, поэтому достаточно установить зависимости из списка выше. Для работы TypeScript-проверок конфигурация использует `projectService`, поэтому линтеру понадобится `tsconfig.json` в корне проекта или путь к нему в `parserOptions`. Требуется Node.js версии 18 или новее (см. поле `engines` пакета).
+Никаких дополнительных пресетов Babel или рантайм-шимов не требуется: правила работают на уровне статического анализа кода. Для работы TypeScript-проверок конфигурация использует `projectService`, поэтому линтеру понадобится `tsconfig.json` в корне проекта или путь к нему в `parserOptions`. Требуется Node.js версии 18 или новее (см. поле `engines` пакета).
 
 ## Нужны ли Babel или shims?
 
@@ -88,7 +78,7 @@ yarn lint:fix
 
 ## Чем отличается от Airbnb и что не включено
 
-- **Базовый профиль без React-зависимостей.** Конфигурация собирается на `@eslint/js` и `typescript-eslint` и не тянет плагины `react`/`jsx-a11y` по умолчанию, чтобы линтер работал одинаково в Node/SSR и чистых TypeScript-проектах. Для React есть отдельный профиль `configs/react.mjs` с минимально необходимыми правилами JSX, хуков и доступности.
+- **Отдельное включение React-профиля.** Конфигурация собирается на `@eslint/js` и `typescript-eslint`, а React-правила подключаются только если добавить `configs/react.mjs` в свой `eslint.config.mjs`. Нужные плагины (`react`, `react-hooks`, `jsx-a11y`) установятся вместе с пакетом, но лишних правил в не-React проектах не будет.
 - **Форматирование отдано Prettier, а не правилам Airbnb.** Вместо набора форматирующих правил из `eslint-config-airbnb` используется `eslint-plugin-prettier/recommended` и общий пресет `prettier.js`. Это избавляет от конфликтов стиля и делает вывод одинаковым для JS/TS и JSX/TSX-файлов.
 - **Другой подход к сортировке импортов.** Вместо `import/order` из Airbnb применён `eslint-plugin-simple-import-sort` с явными группами внешних, внутренних и относительных модулей.
 - **Ставка на типобезопасность, а не на весь стек JS-правил Airbnb.** Базовый набор включает `pluginJs.configs.recommended` и `typescript-eslint` с типовыми проверками, но не подключает детализированные JS-ограничения Airbnb (например, строгую деструктуризацию или порядок методов в классах), чтобы оставить пространство для дополнительных правил в профиле `configs/strict.mjs`.

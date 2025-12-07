@@ -295,9 +295,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ytvee-dev/eslint-config-ytdev@workspace:.":
+"@ytvee-dev/eslint-config-react@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@ytvee-dev/eslint-config-ytdev@workspace:."
+  resolution: "@ytvee-dev/eslint-config-react@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.33.0"
     eslint: "npm:^9.33.0"
@@ -309,7 +309,6 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^5.1.0-rc.0"
     eslint-plugin-simple-import-sort: "npm:^12.1.1"
     globals: "npm:^15.11.0"
-    husky: "npm:^9.1.7"
     prettier: "npm:^3.3.3"
     typescript: "npm:^5.2.2"
     typescript-eslint: "npm:^8.39.0"

@@ -1,6 +1,6 @@
 # Правила линтера, используемые в проекте
 
-Документ описывает все правила, которые реально включены в `@ytvee-dev/eslint-config-ytdev`, в стилистике [Airbnb JavaScript Style Guide](https://leonidlebedev.github.io/javascript-airbnb). Ниже перечислены профили, ограничения и игнорируемые файлы.
+Документ описывает все правила, которые реально включены в `@ytvee-dev/eslint-config-react`, в стилистике [Airbnb JavaScript Style Guide](https://leonidlebedev.github.io/javascript-airbnb). Ниже перечислены профили, ограничения и игнорируемые файлы.
 
 ## Игнорируемые пути
 
