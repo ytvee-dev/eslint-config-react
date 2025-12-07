@@ -1,5 +1,5 @@
-import { oneModuleRule } from './rules/one-module.rule.mjs'
-import base from './base.mjs'
+import { oneModuleRule } from './rules/one-module.rule.mjs';
+import base from './base.mjs';
 
 export default [
   ...base,
@@ -19,4 +19,4 @@ export default [
     },
   },
   oneModuleRule,
-]
+];

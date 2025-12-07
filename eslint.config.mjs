@@ -1,3 +1,3 @@
-import base from './configs/base.mjs'
+import base from './configs/base.mjs';
 
-export default base
+export default base;
