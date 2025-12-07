@@ -16,15 +16,192 @@
 
 ### Общие правила `@eslint/js` (config `recommended`)
 
-- Корректность классов и конструкторов: `constructor-super`, `no-class-assign`, `no-dupe-class-members`, `no-this-before-super`, `no-unused-private-class-members`, `getter-return`.
-- Безопасность управления потоком: `no-cond-assign`, `no-constant-binary-expression`, `no-constant-condition`, `no-unexpected-multiline`, `no-unreachable`, `no-unsafe-finally`, `require-yield`, `for-direction`.
-- Защита от ошибок синтаксиса и RegExp: `no-control-regex`, `no-empty-character-class`, `no-fallthrough`, `no-invalid-regexp`, `no-misleading-character-class`, `no-regex-spaces`, `no-useless-backreference`, `no-irregular-whitespace`.
-- Чистый код без дубликатов: `no-dupe-args`, `no-dupe-else-if`, `no-dupe-keys`, `no-duplicate-case`, `no-empty`, `no-empty-pattern`, `no-empty-static-block`, `no-extra-boolean-cast`.
-- Работа с переменными: `no-delete-var`, `no-shadow-restricted-names`, `no-undef`, `no-unused-labels`, `no-unused-vars` (перекрывается TypeScript-версией ниже), `no-self-assign`.
-- Безопасные числа и сравнения: `no-compare-neg-zero`, `no-loss-of-precision`, `use-isnan`, `valid-typeof`.
-- Корректность промисов и асинхронности: `no-async-promise-executor`, `no-unsafe-optional-chaining`, `no-unsafe-negation`.
-- Чистые объявления: `no-case-declarations`, `no-const-assign`, `no-ex-assign`, `no-func-assign`, `no-global-assign`, `no-import-assign`, `no-new-native-nonconstructor`, `no-obj-calls`, `no-octal`, `no-prototype-builtins`, `no-redeclare`, `no-setter-return`, `no-with`, `no-debugger`.
-- Регулярности работы с массивами и строками: `no-sparse-arrays`, `no-useless-catch`, `no-useless-escape`, `no-nonoctal-decimal-escape`.
+Ниже — краткое описание каждой группы правил в стиле гида Airbnb. Для большинства пунктов приведены небольшие примеры «хорошо/плохо», чтобы было понятно, почему правило помогает ловить ошибки.
+
+#### Корректность классов и конструкторов
+
+- `constructor-super`, `no-this-before-super`, `no-class-assign` — защищают наследование: нельзя обращаться к `this` до вызова `super` и переопределять объявленный класс.
+- `no-dupe-class-members` — запрещает дублировать методы, чтобы не потерять реализацию.
+- `no-unused-private-class-members` — подчёркивает неиспользуемые приватные поля, чтобы не копить мёртвый код.
+- `getter-return` — требует, чтобы геттеры всегда что-то возвращали.
+
+```ts
+// Плохо: обращение к this до super и два одинаковых метода
+class Child extends Parent {
+  constructor() {
+    this.value = 1;
+    super();
+  }
+
+  method() {}
+  method() {}
+}
+
+// Хорошо
+class Child extends Parent {
+  #cache = 0;
+
+  constructor() {
+    super();
+    this.value = 1;
+  }
+
+  get computed() {
+    return this.value + this.#cache;
+  }
+}
+```
+
+#### Безопасность управления потоком
+
+- `no-cond-assign`, `no-constant-binary-expression`, `no-constant-condition` — запрещают опечатки в условиях, оставляя только преднамеренные проверки.
+- `no-unexpected-multiline` — предотвращает разрывы строк, меняющие смысл кода.
+- `no-unreachable`, `no-unsafe-finally`, `for-direction`, `require-yield` — ловят недостижимый код, неверное направление циклов, опасные `finally` и пустые генераторы.
+
+```js
+// Плохо: присваивание в условии и цикл, который никогда не завершится
+if (value = getDefault()) {
+  doWork();
+}
+
+for (let i = 0; i < list.length; i--) {
+  console.log(list[i]);
+}
+
+// Хорошо
+if (value === getDefault()) {
+  doWork();
+}
+
+for (let i = 0; i < list.length; i += 1) {
+  console.log(list[i]);
+}
+```
+
+#### Защита от ошибок синтаксиса и RegExp
+
+Правила серии `no-*-regex` следят за корректностью регулярных выражений (нет управляющих символов, пустых классов или лишних пробелов) и предотвращают неочевидные экранирования (`no-irregular-whitespace`, `no-useless-backreference`).
+
+```js
+// Плохо: пробел в классе и бессмысленная ссылка на группу
+const pattern = /[0-9 ]+/;
+const fallback = /(a)?b\1/;
+
+// Хорошо: конкретный диапазон и без лишних ссылок
+const pattern = /[0-9]+/;
+const fallback = /ab?/;
+```
+
+#### Чистый код без дубликатов
+
+- `no-dupe-args`, `no-duplicate-case`, `no-dupe-keys`, `no-dupe-else-if` — не допускают дублирующих объявлений, которые усложняют чтение и ведут к багам.
+- `no-empty`, `no-empty-pattern`, `no-empty-static-block` — требуют смыслового содержимого в блоках и деструктуризации.
+- `no-extra-boolean-cast` — убирает бесполезные преобразования.
+
+```js
+// Плохо: два одинаковых case и пустой блок
+switch (status) {
+  case 'ok':
+    handleOk();
+    break;
+  case 'ok':
+    handleOkAgain();
+    break;
+  default:
+}
+
+// Хорошо
+switch (status) {
+  case 'ok':
+    handleOk();
+    break;
+  case 'error':
+    handleError();
+    break;
+  default:
+    logUnknown(status);
+}
+```
+
+#### Работа с переменными
+
+- `no-delete-var`, `no-undef`, `no-shadow-restricted-names` — не дают удалять объявления и использовать необъявленные переменные или тени глобальных имён.
+- `no-unused-labels`, `no-unused-vars` — напоминают удалять неиспользуемые сущности.
+- `no-self-assign` — предотвращает бессмысленные присваивания самому себе.
+
+```js
+// Плохо
+let result;
+value = value; // no-self-assign
+delete result; // no-delete-var
+
+// Хорошо
+const result = compute(value);
+```
+
+#### Безопасные числа и сравнения
+
+Запрещены опасные паттерны: сравнение с `-0` (`no-compare-neg-zero`), некорректные проверки NaN (`use-isnan`), использование несуществующих типов в `typeof` (`valid-typeof`) и числа, теряющие точность (`no-loss-of-precision`).
+
+```js
+// Плохо
+if (value === NaN) {
+  // ...
+}
+
+// Хорошо
+if (Number.isNaN(value)) {
+  // ...
+}
+```
+
+#### Корректность промисов и асинхронности
+
+- `no-async-promise-executor` — запрещает `async` в конструкторе `Promise`, чтобы исключить неотловленные ошибки.
+- `no-unsafe-optional-chaining`, `no-unsafe-negation` — не дают использовать опциональную цепочку и отрицание в местах, где можно получить `TypeError`.
+
+```js
+// Плохо
+new Promise(async (resolve) => {
+  const data = await load();
+  resolve(data?.items.length);
+});
+
+// Хорошо
+load().then((data) => {
+  resolve(data?.items?.length ?? 0);
+});
+```
+
+#### Чистые объявления
+
+Базовые запреты на изменение неизменяемых сущностей (`no-const-assign`, `no-ex-assign`, `no-func-assign`, `no-global-assign`, `no-import-assign`), опасные конструкции (`no-new-native-nonconstructor`, `no-obj-calls`, `no-prototype-builtins`, `no-with`, `no-debugger`) и устаревший синтаксис (`no-octal`, `no-case-declarations`, `no-setter-return`, `no-redeclare`).
+
+```js
+// Плохо
+const answer = 42;
+answer = 43; // попытка изменить const
+
+// Хорошо
+let answer = 42;
+answer = 43;
+```
+
+#### Регулярности работы с массивами и строками
+
+- `no-sparse-arrays` — избегаем разреженных массивов с пропущенными элементами.
+- `no-useless-catch`, `no-useless-escape` — не допускаем пустых блоков `catch` и лишних экранирований.
+- `no-nonoctal-decimal-escape` — запрещает устаревшие восьмеричные escape-последовательности.
+
+```js
+// Плохо
+const items = [1, , 3];
+const message = "Line break: \8";
+
+// Хорошо
+const items = [1, 2, 3];
+const message = 'Line break: \n';
+```
 
 ### Явные точки с запятой (`semi`)
 
