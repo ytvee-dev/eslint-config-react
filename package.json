@@ -27,6 +27,9 @@
   },
   "files": [
     "README.md",
+    "README_RULES.md",
+    "README_STYLEGUIDE.md",
+    "LICENSE",
     "configs",
     "eslint.config.mjs",
     "prettier.js"
