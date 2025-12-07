@@ -1,26 +1,28 @@
 # Стайлгайд линтера
 
-Документ описывает правила, включённые в пресет `@ytvee-dev/eslint-config-ytdev`, и то, какие договорённости он наследует из [Airbnb JavaScript Style Guide](https://leonidlebedev.github.io/javascript-airbnb).
+Документ суммирует профиль `@ytvee-dev/eslint-config-ytdev` и поясняет, какие правила вы получите из коробки. Полный список с деталями и примерами — в [README_RULES.md](./README_RULES.md).
 
 ## Базовые принципы
 
-- **Рекомендации `@eslint/js` и type-checked `typescript-eslint`.** Конфиг использует официальные рекомендованные наборы, поэтому вы получаете проверки на безопасное использование переменных, предпочтение `const`, отсутствие неиспользуемых переменных и корректную работу с промисами и типами.
-- **Явные точки с запятой и запрет новых синтаксических примитивов без поддержки среды.** Правило `semi` требует завершающие точки с запятой, а `no-restricted-syntax` блокирует использование `Symbol` и `BigInt` там, где это может быть небезопасно.
-- **Управление импортами.** Сортировка импортов происходит через `eslint-plugin-simple-import-sort`, а `eslint-plugin-import` не позволяет указывать расширения и дублировать импорт одного и того же модуля.
-- **Интеграция с Prettier.** Форматирование проверяется как ошибки ESLint с настройками из `prettier.js` (ширина 120 символов, одинарные кавычки, точка с запятой, запятая после последнего элемента, отступ 2 пробела).
+- **Полный набор `@eslint/js` recommended.** Все встроенные проверки базового профиля ESLint активны: корректность классов, защита от дублирующих деклараций, безопасная работа с промисами и числовыми операциями.
+- **TypeScript в режиме type-checked.** Используется `typescript-eslint` с набором `recommendedTypeChecked`: защита от небезопасных операций (`no-unsafe-*`), отложенных промисов (`no-floating-promises`, `require-await`), ошибочных конструкций типов и устаревшего синтаксиса.
+- **Явное форматирование.** `eslint-plugin-prettier/recommended` применяет настройки из `prettier.js` (ширина строки 120, одинарные кавычки, точка с запятой, отступ 2 пробела, trailing comma) и делает нарушения ошибками линтера.
+- **Управление импортами.** `eslint-plugin-import` запрещает дубли и расширения в путях, `eslint-plugin-simple-import-sort` сортирует импорты группами внешние → алиасы `@` → side-effect → относительные.
+- **Безопасные новые примитивы.** `no-restricted-syntax` блокирует `Symbol` и `BigInt` без нативной поддержки, чтобы конфиг оставался совместимым с целевой средой.
 
 ## Дополнения для TypeScript
 
-- `@typescript-eslint/explicit-function-return-type` заставляет объявлять возвращаемые типы.
-- `@typescript-eslint/consistent-type-definitions` предпочитает `interface` для объектных типов.
-- `@typescript-eslint/no-floating-promises` требует обрабатывать промисы.
-- `@typescript-eslint/no-unused-vars` контролирует неиспользуемые переменные с разрешением имён, начинающихся с `_`.
-- `@typescript-eslint/explicit-member-accessibility` и `@typescript-eslint/member-ordering` поддерживают предсказуемую структуру классов.
+- Объявляйте возвращаемый тип явно (`@typescript-eslint/explicit-function-return-type`).
+- Предпочитайте `interface` для объектных форм (`@typescript-eslint/consistent-type-definitions`).
+- Обрабатывайте каждый промис (`@typescript-eslint/no-floating-promises`).
+- Оставляйте неиспользуемые аргументы только с префиксом `_` (`@typescript-eslint/no-unused-vars`).
+- Всегда указывайте модификаторы доступа и придерживайтесь фиксированного порядка членов класса (`@typescript-eslint/explicit-member-accessibility`, `@typescript-eslint/member-ordering`).
 
 ## Профили
 
-- **Строгий профиль (`configs/strict.mjs`).** Дополнительно запрещает `any`, вводит соглашение об именовании в `camelCase`/`PascalCase` (с разрешёнными подчёркиваниями) и ограничивает один публичный тип/класс/enum на файл.
-- **React-профиль (`configs/react.mjs`).** Добавляет правила для JSX (`react/jsx-filename-extension`, `react/self-closing-comp`, `react/jsx-no-duplicate-props`), хуков (`react-hooks/*`) и базовой доступности (`jsx-a11y/*`).
+- **Базовый (`eslint.config.mjs`).** Все перечисленные выше правила, включая полные рекомендованные наборы JS/TS, кастомные правила импортов и форматирования.
+- **Строгий (`configs/strict.mjs`).** Поверх базы: запрет `any`, соглашение об именовании в `camelCase`/`PascalCase` и требование одного публичного типа/класса/enum на файл.
+- **React (`configs/react.mjs`).** Поверх базы: правила JSX (`react/jsx-filename-extension`, `react/self-closing-comp`, `react/jsx-no-duplicate-props`, `react/jsx-key`, `react/jsx-boolean-value`), хуков (`react-hooks/rules-of-hooks`, `react-hooks/exhaustive-deps`) и доступности (`jsx-a11y/*`).
 
 ## Лицензия
 
