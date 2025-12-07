@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "The general ESLint config for projects.",
   "main": "eslint.config.mjs",
+  "exports": {
+    ".": "./eslint.config.mjs",
+    "./eslint.config": "./eslint.config.mjs",
+    "./configs/react": "./configs/react.mjs",
+    "./configs/strict": "./configs/strict.mjs",
+    "./prettier": "./prettier.js"
+  },
   "keywords": [
     "eslint",
     "bestpractices"
@@ -11,28 +18,27 @@
   "license": "ISC",
   "packageManager": "yarn@4.9.1",
   "repository": "https://github.com/ytvee-dev/eslint-config-ytdev",
+  "engines": {
+    "node": ">=18"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "files": [
     "README.md",
-    "package.json",
-    "yarn.lock",
     "configs",
     "eslint.config.mjs",
     "prettier.js"
   ],
   "scripts": {
     "build": "echo \"Info: Build is unnecessary\"",
-    "lint": "yarn eslint . --ext .js,.mjs,.ts,.tsx --report-unused-disable-directives",
+    "lint": "eslint . --ext .js,.mjs,.ts,.tsx --report-unused-disable-directives",
     "lint:fix": "yarn lint --fix",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "husky": "^9.1.7"
-  },
-  "dependencies": {
+    "@types/node": "^22.9.0",
     "@eslint/js": "^9.33.0",
     "eslint": "^9.33.0",
     "eslint-config-prettier": "^9.1.2",
@@ -43,8 +49,35 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^15.11.0",
+    "husky": "^9.1.7",
     "prettier": "^3.3.3",
     "typescript": "^5.2.2",
     "typescript-eslint": "^8.39.0"
+  },
+  "peerDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.0.0",
+    "eslint-plugin-jsx-a11y": "^6.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
+    "globals": "^15.0.0",
+    "prettier": "^3.0.0",
+    "typescript": ">=5.2.0",
+    "typescript-eslint": "^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "eslint-plugin-jsx-a11y": {
+      "optional": true
+    },
+    "eslint-plugin-react": {
+      "optional": true
+    },
+    "eslint-plugin-react-hooks": {
+      "optional": true
+    }
   }
 }

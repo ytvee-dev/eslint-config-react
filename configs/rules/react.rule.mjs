@@ -1,13 +1,21 @@
-import jsxA11y from 'eslint-plugin-jsx-a11y'
-import reactPlugin from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+
+/** @type {import('eslint').Linter.Plugin} */
+const jsxA11yPlugin = jsxA11y;
+/** @type {import('eslint').Linter.Plugin} */
+const reactPluginConfig = reactPlugin;
+/** @type {import('eslint').Linter.Plugin} */
+const reactHooksPlugin = reactHooks;
 
 export const reactRule = {
   files: ['**/*.{jsx,tsx}'],
   plugins: {
-    react: reactPlugin,
-    'react-hooks': reactHooks,
-    'jsx-a11y': jsxA11y,
+    react: reactPluginConfig,
+    'react-hooks': reactHooksPlugin,
+    'jsx-a11y': jsxA11yPlugin,
   },
   settings: {
     react: {
@@ -36,4 +44,4 @@ export const reactRule = {
     'jsx-a11y/no-noninteractive-element-interactions': 'warn',
     'jsx-a11y/no-static-element-interactions': 'warn',
   },
-}
+};

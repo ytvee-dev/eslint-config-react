@@ -1,4 +1,4 @@
-import base from './base.mjs'
-import { reactRule } from './rules/react.rule.mjs'
+import { reactRule } from './rules/react.rule.mjs';
+import base from './base.mjs';
 
-export default [...base, reactRule]
+export default [...base, reactRule];

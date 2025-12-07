@@ -12,14 +12,20 @@
 
 ## Использование
 
-1. Установите пакет одной командой — все необходимые плагины и парсеры подтянутся транзитивно, ничего дополнять вручную не нужно:
+1. Установите конфиг и peer-зависимости (React-плагины подключайте только если нужен профиль `configs/react`):
 
 ```bash
-# Yarn
-yarn add @ytvee-dev/eslint-config-ytdev -D
+# Yarn (базовый профиль)
+yarn add -D @ytvee-dev/eslint-config-ytdev eslint @eslint/js typescript typescript-eslint eslint-plugin-import eslint-plugin-simple-import-sort eslint-plugin-prettier eslint-config-prettier prettier globals
 
-# npm
-npm install @ytvee-dev/eslint-config-ytdev --save-dev
+# Yarn (React-дополнения)
+yarn add -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y
+
+# npm (базовый профиль)
+npm install -D @ytvee-dev/eslint-config-ytdev eslint @eslint/js typescript typescript-eslint eslint-plugin-import eslint-plugin-simple-import-sort eslint-plugin-prettier eslint-config-prettier prettier globals
+
+# npm (React-дополнения)
+npm install -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-jsx-a11y
 ```
 
 2. Подключите форматирование Prettier через файл `.prettierrc`:
@@ -58,15 +64,15 @@ yarn lint
 yarn lint:fix
 ```
 
-## Какие зависимости уже включены
+## Какие зависимости нужны
 
-Пакет сам тянет весь стек, необходимый для работы линтера:
+Конфиг использует peer-зависимости, поэтому их нужно ставить в проекте вручную, чтобы версия линтера совпадала с вашей сборкой:
 
-- `eslint`, `@eslint/js` и `typescript-eslint` (парсер + набор правил для TypeScript);
-- плагины для импорта, сортировки, Prettier и React-проектов: `eslint-plugin-import`, `eslint-plugin-simple-import-sort`, `eslint-plugin-prettier`, `eslint-config-prettier`, `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`;
-- `prettier` для единообразного форматирования.
+- `eslint`, `@eslint/js`, `typescript`, `typescript-eslint`, `globals`;
+- плагины для импорта и форматирования: `eslint-plugin-import`, `eslint-plugin-simple-import-sort`, `eslint-plugin-prettier`, `eslint-config-prettier`, `prettier`;
+- React-плагины подключайте только для JSX-профиля: `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`.
 
-Никаких дополнительных пресетов Babel или рантайм-шимов не требуется: правила работают на уровне статического анализа кода, поэтому достаточно установить `@ytvee-dev/eslint-config-ytdev` через `yarn add`/`npm install`, и все зависимости подтянутся вместе с ним.
+Никаких дополнительных пресетов Babel или рантайм-шимов не требуется: правила работают на уровне статического анализа кода, поэтому достаточно установить зависимости из списка выше.
 
 ## Нужны ли Babel или shims?
 
