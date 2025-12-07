@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -11,9 +10,7 @@ import { importsRule } from './rules/import-sort.rule.mjs';
 import { javascriptRule } from './rules/javascript.rule.mjs';
 import { typescriptRule } from './rules/typescript.rule.mjs';
 
-/** @type {{ cwd: () => string }} */
-const nodeProcess = process;
-const tsconfigRootDir = nodeProcess.cwd();
+const tsconfigRootDir = new URL('..', import.meta.url).pathname;
 
 export default [
   typescriptRule,
