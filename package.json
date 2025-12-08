@@ -1,6 +1,6 @@
 {
   "name": "@ytvee-dev/eslint-config-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "The general ESLint config for projects.",
   "main": "eslint.config.mjs",
   "exports": {
@@ -30,8 +30,7 @@
   },
   "files": [
     "README.md",
-    "README_RULES.md",
-    "README_STYLEGUIDE.md",
+    "README_RU.md",
     "LICENSE",
     "configs",
     "eslint.config.mjs",

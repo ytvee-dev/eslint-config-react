@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ytvee-dev/eslint-config-react - Documentation</title>
+    <link rel="stylesheet" href="docs/page/styles.css">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <h1 class="logo">@ytvee-dev/eslint-config-react</h1>
+            <nav class="nav">
+                <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+                    <span class="lang-en">RU</span>
+                    <span class="lang-ru">EN</span>
+                </button>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<div class="container main-container">
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <h3 class="nav-title" data-en="Documentation" data-ru="Документация">Documentation</h3>
+                <ul class="nav-list">
+                    <li><a href="#overview" class="nav-link" data-en="Overview" data-ru="Обзор">Overview</a></li>
+                    <li><a href="#installation" class="nav-link" data-en="Installation"
+                           data-ru="Установка">Installation</a></li>
+                    <li><a href="#profiles" class="nav-link" data-en="Profiles" data-ru="Профили">Profiles</a></li>
+                </ul>
+            </div>
+            <div class="nav-section">
+                <h3 class="nav-title" data-en="Rules" data-ru="Правила">Rules</h3>
+                <ul class="nav-list">
+                    <li><a href="#style-guide" class="nav-link" data-en="Style Guide" data-ru="Стайлгайд">Style
+                        Guide</a></li>
+                    <li><a href="#base-rules" class="nav-link" data-en="Base Rules" data-ru="Базовые правила">Base
+                        Rules</a></li>
+                    <li><a href="#typescript-rules" class="nav-link" data-en="TypeScript Rules"
+                           data-ru="Правила TypeScript">TypeScript Rules</a></li>
+                    <li><a href="#react-rules" class="nav-link" data-en="React Rules" data-ru="Правила React">React
+                        Rules</a></li>
+                    <li><a href="#strict-rules" class="nav-link" data-en="Strict Rules" data-ru="Строгие правила">Strict
+                        Rules</a></li>
+                </ul>
+            </div>
+            <div class="nav-section">
+                <h3 class="nav-title" data-en="Resources" data-ru="Ресурсы">Resources</h3>
+                <ul class="nav-list">
+                    <li><a href="https://github.com/ytvee-dev/eslint-config-react" target="_blank" class="nav-link">GitHub</a>
+                    </li>
+                    <li><a href="https://www.npmjs.com/package/@ytvee-dev/eslint-config-react" target="_blank"
+                           class="nav-link">NPM</a></li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <section id="overview" class="section">
+            <h2 class="section-title" data-en="Overview" data-ru="Обзор">Overview</h2>
+            <div class="section-content">
+                <p data-en="A comprehensive ESLint configuration for React and TypeScript projects with integrated Prettier support."
+                   data-ru="Комплексная конфигурация ESLint для React и TypeScript проектов с интегрированной поддержкой Prettier.">
+                    A comprehensive ESLint configuration for React and TypeScript projects with integrated Prettier
+                    support.
+                </p>
+
+                <div class="features">
+                    <h3 data-en="Features" data-ru="Возможности">Features</h3>
+                    <ul>
+                        <li data-en="Type-safe linting with TypeScript ESLint"
+                            data-ru="Типобезопасный линтинг с TypeScript ESLint">Type-safe linting with TypeScript
+                            ESLint
+                        </li>
+                        <li data-en="Prettier integration for consistent code formatting"
+                            data-ru="Интеграция Prettier для единообразного форматирования">Prettier integration for
+                            consistent code formatting
+                        </li>
+                        <li data-en="React support with hooks and JSX rules"
+                            data-ru="Поддержка React с правилами для хуков и JSX">React support with hooks and JSX rules
+                        </li>
+                        <li data-en="Accessibility checks with jsx-a11y" data-ru="Проверки доступности с jsx-a11y">
+                            Accessibility checks with jsx-a11y
+                        </li>
+                        <li data-en="Import sorting and organization" data-ru="Сортировка и организация импортов">Import
+                            sorting and organization
+                        </li>
+                        <li data-en="Best practices from Airbnb style guide"
+                            data-ru="Best practices из Airbnb style guide">Best practices from Airbnb style guide
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation" class="section">
+            <h2 class="section-title" data-en="Installation" data-ru="Установка">Installation</h2>
+            <div class="section-content">
+                <div class="code-block">
+            <pre><code># npm
+npm install -D @ytvee-dev/eslint-config-react
+
+# yarn
+yarn add -D @ytvee-dev/eslint-config-react
+
+# pnpm
+pnpm add -D @ytvee-dev/eslint-config-react</code></pre>
+                </div>
+
+                <h3 data-en="Configuration" data-ru="Настройка">Configuration</h3>
+                <p data-en="Create eslint.config.mjs in your project root:"
+                   data-ru="Создайте eslint.config.mjs в корне проекта:">
+                    Create <code>eslint.config.mjs</code> in your project root:
+                </p>
+
+                <div class="code-block">
+            <pre><code>import reactConfig from "@ytvee-dev/eslint-config-react/configs/react";
+
+export default [...reactConfig];</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="profiles" class="section">
+            <h2 class="section-title" data-en="Profiles" data-ru="Профили">Profiles</h2>
+            <div class="section-content">
+                <div class="profile-card">
+                    <h3>Base Profile</h3>
+                    <p data-en="Fundamental ESLint rules, TypeScript type-checking, and Prettier formatting."
+                       data-ru="Базовые правила ESLint, проверка типов TypeScript и форматирование Prettier.">
+                        Fundamental ESLint rules, TypeScript type-checking, and Prettier formatting.
+                    </p>
+                    <div class="code-block">
+              <pre><code>import baseConfig from "@ytvee-dev/eslint-config-react";
+
+export default [...baseConfig];</code></pre>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <h3>React Profile</h3>
+                    <p data-en="Base profile + React-specific rules, hooks, and accessibility checks."
+                       data-ru="Базовый профиль + React-специфичные правила, хуки и проверки доступности.">
+                        Base profile + React-specific rules, hooks, and accessibility checks.
+                    </p>
+                    <div class="code-block">
+              <pre><code>import reactConfig from "@ytvee-dev/eslint-config-react/configs/react";
+
+export default [...reactConfig];</code></pre>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <h3>Strict Profile</h3>
+                    <p data-en="Base profile + strict TypeScript rules, naming conventions, and no-any enforcement."
+                       data-ru="Базовый профиль + строгие правила TypeScript, соглашения об именовании и запрет any.">
+                        Base profile + strict TypeScript rules, naming conventions, and no-any enforcement.
+                    </p>
+                    <div class="code-block">
+              <pre><code>import strictConfig from "@ytvee-dev/eslint-config-react/configs/strict";
+
+export default [...strictConfig];</code></pre>
+                    </div>
+                </div>
+
+                <p class="note">
+                    <strong data-en="Note:" data-ru="Примечание:">Note:</strong>
+                    <span data-en="For detailed profile usage examples, see the "
+                          data-ru="Подробные примеры использования профилей см. в ">
+              For detailed profile usage examples, see the 
+            </span>
+                    <a href="docs/PROFILES.md" data-en="Profiles Guide" data-ru="Руководстве по профилям">Profiles
+                        Guide</a>.
+                </p>
+            </div>
+        </section>
+
+        <section id="style-guide" class="section">
+            <h2 class="section-title" data-en="Style Guide" data-ru="Стайлгайд">Style Guide</h2>
+            <div class="section-content">
+                <p data-en="The configuration follows best practices from Airbnb JavaScript Style Guide with TypeScript enhancements."
+                   data-ru="Конфигурация следует best practices из Airbnb JavaScript Style Guide с улучшениями для TypeScript.">
+                    The configuration follows best practices from Airbnb JavaScript Style Guide with TypeScript
+                    enhancements.
+                </p>
+
+                <div class="style-section">
+                    <h3 data-en="Code Formatting" data-ru="Форматирование кода">Code Formatting</h3>
+                    <ul>
+                        <li data-en="Line width: 120 characters" data-ru="Ширина строки: 120 символов">Line width: 120
+                            characters
+                        </li>
+                        <li data-en="Quotes: single (')" data-ru="Кавычки: одинарные (')">Quotes: single (')</li>
+                        <li data-en="Semicolons: required" data-ru="Точка с запятой: обязательна">Semicolons: required
+                        </li>
+                        <li data-en="Indentation: 2 spaces" data-ru="Отступ: 2 пробела">Indentation: 2 spaces</li>
+                        <li data-en="Trailing comma: always" data-ru="Trailing comma: всегда">Trailing comma: always
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="style-section">
+                    <h3 data-en="Import Organization" data-ru="Организация импортов">Import Organization</h3>
+                    <p data-en="Imports are automatically sorted into groups:"
+                       data-ru="Импорты автоматически сортируются по группам:">
+                        Imports are automatically sorted into groups:
+                    </p>
+                    <ol>
+                        <li data-en="External dependencies (react, express)"
+                            data-ru="Внешние зависимости (react, express)">External dependencies (react, express)
+                        </li>
+                        <li data-en="Namespace packages (@internal/logger)"
+                            data-ru="Namespace пакеты (@internal/logger)">Namespace packages (@internal/logger)
+                        </li>
+                        <li data-en="Absolute aliases (@/components/Button)"
+                            data-ru="Абсолютные алиасы (@/components/Button)">Absolute aliases (@/components/Button)
+                        </li>
+                        <li data-en="Side-effect imports (./styles.css)" data-ru="Side-effect импорты (./styles.css)">
+                            Side-effect imports (./styles.css)
+                        </li>
+                        <li data-en="Parent directory imports (../parent/module)"
+                            data-ru="Импорты из родительских директорий (../parent/module)">Parent directory imports
+                            (../parent/module)
+                        </li>
+                        <li data-en="Current directory imports (./helper)"
+                            data-ru="Импорты из текущей директории (./helper)">Current directory imports (./helper)
+                        </li>
+                    </ol>
+                </div>
+
+                <p class="note">
+                    <strong data-en="For complete style guide details:" data-ru="Полные детали стайлгайда:">For complete
+                        style guide details:</strong>
+                    <a href="docs/README_STYLEGUIDE.md">English</a> | <a href="docs/README_STYLEGUIDE_RU.md">Русский</a>
+                </p>
+            </div>
+        </section>
+
+        <section id="base-rules" class="section">
+            <h2 class="section-title" data-en="Base Rules" data-ru="Базовые правила">Base Rules</h2>
+            <div class="section-content">
+                <p data-en="The base profile includes:" data-ru="Базовый профиль включает:">
+                    The base profile includes:
+                </p>
+
+                <div class="rule-category">
+                    <h3 data-en="ESLint Recommended" data-ru="Рекомендованные ESLint">ESLint Recommended</h3>
+                    <ul>
+                        <li data-en="Code correctness checks" data-ru="Проверки корректности кода">Code correctness
+                            checks
+                        </li>
+                        <li data-en="Security rules" data-ru="Правила безопасности">Security rules</li>
+                        <li data-en="Best practices enforcement" data-ru="Применение best practices">Best practices
+                            enforcement
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rule-category">
+                    <h3 data-en="Airbnb Best Practices" data-ru="Best Practices от Airbnb">Airbnb Best Practices</h3>
+                    <ul>
+                        <li><code>no-var</code> - <span data-en="Use const/let instead of var"
+                                                        data-ru="Используй const/let вместо var">Use const/let instead of var</span>
+                        </li>
+                        <li><code>prefer-const</code> - <span data-en="Prefer const for non-reassigned variables"
+                                                              data-ru="Предпочитай const для неизменяемых переменных">Prefer const for non-reassigned variables</span>
+                        </li>
+                        <li><code>eqeqeq</code> - <span data-en="Strict comparison === instead of =="
+                                                        data-ru="Строгое сравнение === вместо ==">Strict comparison === instead of ==</span>
+                        </li>
+                        <li><code>prefer-template</code> - <span data-en="Use template strings"
+                                                                 data-ru="Используй template strings">Use template strings</span>
+                        </li>
+                        <li><code>arrow-body-style</code> - <span data-en="Implicit return in arrow functions"
+                                                                  data-ru="Неявный return в стрелочных функциях">Implicit return in arrow functions</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <p class="note">
+                    <strong data-en="For complete rules list with examples:"
+                            data-ru="Полный список правил с примерами:">For complete rules list with examples:</strong>
+                    <a href="docs/README_RULES.md">English</a> | <a href="docs/README_RULES_RU.md">Русский</a>
+                </p>
+            </div>
+        </section>
+
+        <section id="typescript-rules" class="section">
+            <h2 class="section-title" data-en="TypeScript Rules" data-ru="Правила TypeScript">TypeScript Rules</h2>
+            <div class="section-content">
+                <p data-en="TypeScript rules include type-checked mode for maximum safety:"
+                   data-ru="Правила TypeScript включают режим type-checked для максимальной безопасности:">
+                    TypeScript rules include type-checked mode for maximum safety:
+                </p>
+
+                <div class="rule-category">
+                    <h3 data-en="Type Safety" data-ru="Типобезопасность">Type Safety</h3>
+                    <ul>
+                        <li><code>@typescript-eslint/explicit-function-return-type</code> - <span
+                                data-en="Explicit return types"
+                                data-ru="Явные типы возврата">Explicit return types</span></li>
+                        <li><code>@typescript-eslint/no-floating-promises</code> - <span data-en="Handle all promises"
+                                                                                         data-ru="Обрабатывай все промисы">Handle all promises</span>
+                        </li>
+                        <li><code>@typescript-eslint/no-unused-vars</code> - <span data-en="No unused variables"
+                                                                                   data-ru="Нет неиспользуемых переменных">No unused variables</span>
+                        </li>
+                        <li><code>@typescript-eslint/consistent-type-definitions</code> - <span
+                                data-en="Prefer interface" data-ru="Предпочитай interface">Prefer interface</span></li>
+                    </ul>
+                </div>
+
+                <div class="rule-category">
+                    <h3 data-en="Class Members" data-ru="Члены класса">Class Members</h3>
+                    <ul>
+                        <li><code>@typescript-eslint/explicit-member-accessibility</code> - <span
+                                data-en="Explicit access modifiers" data-ru="Явные модификаторы доступа">Explicit access modifiers</span>
+                        </li>
+                        <li><code>@typescript-eslint/member-ordering</code> - <span
+                                data-en="Consistent class member order" data-ru="Единообразный порядок членов класса">Consistent class member order</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="react-rules" class="section">
+            <h2 class="section-title" data-en="React Rules" data-ru="Правила React">React Rules</h2>
+            <div class="section-content">
+                <div class="rule-category">
+                    <h3 data-en="JSX Rules" data-ru="Правила JSX">JSX Rules</h3>
+                    <ul>
+                        <li><code>react/jsx-filename-extension</code> - <span data-en="JSX only in .jsx/.tsx files"
+                                                                              data-ru="JSX только в .jsx/.tsx файлах">JSX only in .jsx/.tsx files</span>
+                        </li>
+                        <li><code>react/jsx-boolean-value</code> - <span data-en="Boolean props without value"
+                                                                         data-ru="Булевы пропсы без значения">Boolean props without value</span>
+                        </li>
+                        <li><code>react/self-closing-comp</code> - <span data-en="Self-closing tags"
+                                                                         data-ru="Самозакрывающиеся теги">Self-closing tags</span>
+                        </li>
+                        <li><code>react/jsx-key</code> - <span data-en="Keys in lists" data-ru="Ключи в списках">Keys in lists</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rule-category">
+                    <h3 data-en="React Hooks" data-ru="React Hooks">React Hooks</h3>
+                    <ul>
+                        <li><code>react-hooks/rules-of-hooks</code> - <span data-en="Rules of hooks enforcement"
+                                                                            data-ru="Применение правил хуков">Rules of hooks enforcement</span>
+                        </li>
+                        <li><code>react-hooks/exhaustive-deps</code> - <span data-en="Complete dependencies"
+                                                                             data-ru="Полные зависимости">Complete dependencies</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rule-category">
+                    <h3 data-en="Accessibility (a11y)" data-ru="Доступность (a11y)">Accessibility (a11y)</h3>
+                    <ul>
+                        <li><code>jsx-a11y/alt-text</code> - <span data-en="Alt text for images"
+                                                                   data-ru="Alt текст для изображений">Alt text for images</span>
+                        </li>
+                        <li><code>jsx-a11y/anchor-is-valid</code> - <span data-en="Valid links"
+                                                                          data-ru="Корректные ссылки">Valid links</span>
+                        </li>
+                        <li><code>jsx-a11y/click-events-have-key-events</code> - <span data-en="Keyboard events"
+                                                                                       data-ru="Клавиатурные события">Keyboard events</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="strict-rules" class="section">
+            <h2 class="section-title" data-en="Strict Rules" data-ru="Строгие правила">Strict Rules</h2>
+            <div class="section-content">
+                <p data-en="The strict profile adds additional constraints for large teams:"
+                   data-ru="Строгий профиль добавляет дополнительные ограничения для больших команд:">
+                    The strict profile adds additional constraints for large teams:
+                </p>
+
+                <div class="rule-category">
+                    <h3 data-en="Strict TypeScript" data-ru="Строгий TypeScript">Strict TypeScript</h3>
+                    <ul>
+                        <li><code>@typescript-eslint/no-explicit-any</code> - <span data-en="Disallow any type"
+                                                                                    data-ru="Запрет типа any">Disallow any type</span>
+                        </li>
+                        <li><code>@typescript-eslint/naming-convention</code> - <span
+                                data-en="camelCase/PascalCase enforcement" data-ru="Применение camelCase/PascalCase">camelCase/PascalCase enforcement</span>
+                        </li>
+                        <li><code>max-classes-per-file</code> - <span data-en="One public type/class per file"
+                                                                      data-ru="Один публичный тип/класс на файл">One public type/class per file</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>
+                    <span data-en="Made with ❤️ by" data-ru="Сделано с ❤️">Made with ❤️ by</span>
+                    <a href="https://github.com/ytvee-dev" target="_blank">Tyan Yevgeniy</a>
+                </p>
+                <p class="footer-links">
+                    <a href="https://github.com/ytvee-dev/eslint-config-react" target="_blank">GitHub</a>
+                    <span>•</span>
+                    <a href="https://www.npmjs.com/package/@ytvee-dev/eslint-config-react" target="_blank">NPM</a>
+                    <span>•</span>
+                    <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/LICENSE" target="_blank">ISC
+                        License</a>
+                </p>
+            </div>
+        </footer>
+    </main>
+</div>
+
+<script src="docs/page/script.js"></script>
+</body>
+</html>
+
