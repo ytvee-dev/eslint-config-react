@@ -40,7 +40,7 @@
   "scripts": {
     "build": "echo \"Info: Build is unnecessary\"",
     "lint": "eslint . --ext .js,.mjs,.ts,.tsx --report-unused-disable-directives",
-    "lint:fix": "yarn lint --fix",
+    "lint:fix": "eslint . --ext .js,.mjs,.ts,.tsx --report-unused-disable-directives --fix",
     "prepare": "command -v husky >/dev/null 2>&1 && husky install || true"
   },
   "devDependencies": {
