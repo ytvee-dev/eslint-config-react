@@ -1,6 +1,6 @@
 # Стайлгайд линтера
 
-Документ суммирует профиль `@ytvee-dev/eslint-config-react` и поясняет, какие правила вы получите из коробки. Полный список с деталями и примерами — в [README_RULES.md](./README_RULES.md).
+Документ суммирует профиль `@ytvee-dev/eslint-config-react` и поясняет, какие правила вы получите из коробки. Полный список с деталями и примерами — в [README_RULES_RU.md](README_RULES_RU.md).
 
 ## Содержание
 
@@ -73,12 +73,12 @@
 Все функции должны явно указывать тип возвращаемого значения.
 
 ```ts
-// ✅ Хорошо
+// Хорошо
 function sum(a: number, b: number): number {
   return a + b;
 }
 
-// ❌ Плохо
+// Плохо
 function sum(a: number, b: number) {
   return a + b;
 }
@@ -89,12 +89,12 @@ function sum(a: number, b: number) {
 Предпочитай `interface` для объектных типов вместо `type`.
 
 ```ts
-// ✅ Хорошо
+// Хорошо
 interface User {
   name: string;
 }
 
-// ❌ Плохо
+// Плохо
 type User = {
   name: string;
 };
@@ -105,11 +105,11 @@ type User = {
 Каждый промис должен быть обработан: `await`, `.then()/.catch()` или явное `void`.
 
 ```ts
-// ✅ Хорошо
+// Хорошо
 await fetchData();
 void fetchData();
 
-// ❌ Плохо
+// Плохо
 fetchData();
 ```
 
@@ -118,11 +118,11 @@ fetchData();
 Неиспользуемые переменные/параметры запрещены, кроме начинающихся с `_`.
 
 ```ts
-// ✅ Хорошо
+// Хорошо
 const { name, ...rest } = user;
 const onClick = (_event: Event) => {};
 
-// ❌ Плохо
+// Плохо
 const unused = 1;
 ```
 
@@ -131,13 +131,13 @@ const unused = 1;
 Всегда указывай модификаторы доступа (`public`, `protected`, `private`) для членов класса (кроме конструкторов).
 
 ```ts
-// ✅ Хорошо
+// Хорошо
 class User {
   public name: string;
   private age: number;
 }
 
-// ❌ Плохо
+// Плохо
 class User {
   name: string;
   age: number;
@@ -218,12 +218,12 @@ class User {
 
 Включает все перечисленные выше правила:
 
-- ✅ ESLint recommended
-- ✅ TypeScript type-checked
-- ✅ Best Practices (Airbnb)
-- ✅ Сортировка импортов
-- ✅ Prettier форматирование
-- ⚠️ `@typescript-eslint/no-explicit-any` отключён (для постепенной миграции)
+- ESLint recommended
+- TypeScript type-checked
+- Best Practices (Airbnb)
+- Сортировка импортов
+- Prettier форматирование
+- `@typescript-eslint/no-explicit-any` отключён (для постепенной миграции)
 
 ```js
 import baseConfig from '@ytvee-dev/eslint-config-react';
@@ -235,9 +235,9 @@ export default [...baseConfig];
 
 Базовый профиль + дополнительные ограничения:
 
-- ✅ Запрет `any` (`@typescript-eslint/no-explicit-any`)
-- ✅ Соглашение об именовании `camelCase`/`PascalCase`
-- ✅ Один публичный тип/класс/enum на файл
+- Запрет `any` (`@typescript-eslint/no-explicit-any`)
+- Соглашение об именовании `camelCase`/`PascalCase`
+- Один публичный тип/класс/enum на файл
 
 ```js
 import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
@@ -300,21 +300,23 @@ export default [...strictConfig];
 export default [...strictConfig, ...reactConfig];
 ```
 
+Для получения подробной информации о применении профилей смотрите [PROFILES_RU.md](PROFILES_RU.md).
+
 ## Автофикс
 
 Большинство правил поддерживают автоматическое исправление:
 
 ### Что исправляется автоматически
 
-- ✅ **Форматирование** — Prettier исправляет отступы, кавычки, точки с запятой
-- ✅ **Импорты** — автоматическая сортировка по группам
-- ✅ **var → const/let** — замена устаревшего var
-- ✅ **Стрелочные функции** — упрощение тела функции
-- ✅ **Trailing comma** — добавление запятой в многострочных структурах
-- ✅ **object-shorthand** — сокращение синтаксиса объектов
-- ✅ **template literals** — замена конкатенации на template strings
-- ✅ **Кавычки свойств** — удаление ненужных кавычек
-- ✅ **React** — самозакрывающиеся теги, булевы пропсы
+- **Форматирование** — Prettier исправляет отступы, кавычки, точки с запятой
+- **Импорты** — автоматическая сортировка по группам
+- **var → const/let** — замена устаревшего var
+- **Стрелочные функции** — упрощение тела функции
+- **Trailing comma** — добавление запятой в многострочных структурах
+- **object-shorthand** — сокращение синтаксиса объектов
+- **template literals** — замена конкатенации на template strings
+- **Кавычки свойств** — удаление ненужных кавычек
+- **React** — самозакрывающиеся теги, булевы пропсы
 
 ### Запуск автофикса
 
@@ -330,20 +332,20 @@ npx eslint src/file.ts --fix
 
 ### Что требует ручного исправления
 
-- ❌ `no-unused-vars` — удаление неиспользуемых переменных
-- ❌ `@typescript-eslint/no-floating-promises` — добавление await/void
-- ❌ `react-hooks/exhaustive-deps` — добавление зависимостей в useEffect
-- ❌ `@typescript-eslint/explicit-function-return-type` — указание типов возврата
-- ❌ Правила accessibility — добавление alt, role, aria атрибутов
+- `no-unused-vars` — удаление неиспользуемых переменных
+- `@typescript-eslint/no-floating-promises` — добавление await/void
+- `react-hooks/exhaustive-deps` — добавление зависимостей в useEffect
+- `@typescript-eslint/explicit-function-return-type` — указание типов возврата
+- Правила accessibility — добавление alt, role, aria атрибутов
 
 ## Отличия от Airbnb
 
 ### Что включено из Airbnb
 
-- ✅ Best Practices правила (variables, functions, objects, arrays, strings)
-- ✅ Стиль кода (semicolons, braces, commas, spacing)
-- ✅ Безопасность (no-eval, no-new-func, no-extend-native)
-- ✅ Сравнения и операторы (eqeqeq, no-nested-ternary)
+- Best Practices правила (variables, functions, objects, arrays, strings)
+- Стиль кода (semicolons, braces, commas, spacing)
+- Безопасность (no-eval, no-new-func, no-extend-native)
+- Сравнения и операторы (eqeqeq, no-nested-ternary)
 
 ### Что изменено
 
@@ -381,4 +383,5 @@ npx eslint src/file.ts --fix
 
 ## Лицензия
 
-Пакет распространяется по лицензии ISC. Полный текст доступен в файле [LICENSE](./LICENSE).
+Пакет распространяется по лицензии ISC. Полный текст доступен в файле [LICENSE](../LICENSE).
+
