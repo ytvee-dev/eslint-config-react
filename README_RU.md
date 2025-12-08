@@ -1,4 +1,4 @@
-# @ytvee-dev/eslint-config-react
+# eslint-config-react
 
 **Русская версия** | [English](./README.md)
 
@@ -100,15 +100,12 @@ module.exports = require("@ytvee-dev/eslint-config-react/prettier");
 
 ## Документация
 
-**Интерактивная документация:** [ytvee-dev.github.io/eslint-config-react](https://ytvee-dev.github.io/eslint-config-react/)
 
 Полная документация также доступна в папке `/docs`:
 
 - [Полный справочник правил](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES_RU.md) ([EN](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES.md))
 - [Обзор стайлгайда](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE_RU.md) ([EN](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE.md))
 - [Руководство по профилям](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES_RU.md) ([EN](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES.md))
-- Примеры конфигурации
-- Решение проблем
 
 ## Лицензия
 
@@ -116,7 +113,6 @@ ISC © [YT-Dev](https://github.com/ytvee-dev)
 
 ## Ссылки
 
-- [Интерактивная документация](https://ytvee-dev.github.io/eslint-config-react/)
 - [NPM пакет](https://www.npmjs.com/package/@ytvee-dev/eslint-config-react)
 - [GitHub репозиторий](https://github.com/ytvee-dev/eslint-config-react)
 - [Файлы документации](https://github.com/ytvee-dev/eslint-config-react/tree/main/docs)

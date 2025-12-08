@@ -1,4 +1,4 @@
-# @ytvee-dev/eslint-config-react
+# eslint-config-react
 
 [Русская версия](./README_RU.md) | **English**
 
@@ -107,8 +107,6 @@ Full documentation is also available in the `/docs` folder:
 - [Complete rules reference](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES.md) ([RU](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES_RU.md))
 - [Style guide overview](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE.md) ([RU](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE_RU.md))
 - [Profile usage guide](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES.md) ([RU](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES_RU.md))
-- Configuration examples
-- Troubleshooting
 
 ## License
 
@@ -116,7 +114,6 @@ ISC © [YT-Dev](https://github.com/ytvee-dev)
 
 ## Links
 
-- [Interactive Documentation](https://ytvee-dev.github.io/eslint-config-react/)
 - [NPM Package](https://www.npmjs.com/package/@ytvee-dev/eslint-config-react)
 - [GitHub Repository](https://github.com/ytvee-dev/eslint-config-react)
 - [Documentation Files](https://github.com/ytvee-dev/eslint-config-react/tree/main/docs)

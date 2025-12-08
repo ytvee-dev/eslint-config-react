@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стайлгайд линтера - @ytvee-dev/eslint-config-react</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ESLint Config</h2>
+            <p>@ytvee-dev/eslint-config-react</p>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Главная</a>
+                <a href="styleguide.html" class="active">Стайлгайд</a>
+                <a href="profiles.html">Профили</a>
+                <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES_RU.md" target="_blank">Правила <span style="font-size: 0.8em;">↗</span></a>
+        </nav>
+        <div class="lang-switch">
+            <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE.md" target="_blank" class="en-link">🇬🇧 English version</a>
+        </div>
+        <div class="footer-links">
+            <a href="https://github.com/ytvee-dev/eslint-config-react" target="_blank">GitHub</a>
+            <a href="https://www.npmjs.com/package/@ytvee-dev/eslint-config-react" target="_blank">NPM</a>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="content">
+            <h1>Стайлгайд линтера</h1>
+<p>Документ суммирует профиль <code>@ytvee-dev/eslint-config-react</code> и поясняет, какие правила вы получите из коробки. Полный список с деталями и примерами — в <a href="README_RULES_RU.md">README_RULES_RU.md</a>.</p>
+<h2>Содержание</h2>
+<ul><li><a href="#базовые-принципы">Базовые принципы</a></li>
+<li><a href="#дополнения-для-typescript">Дополнения для TypeScript</a></li>
+<li><a href="#best-practices-из-airbnb">Best Practices из Airbnb</a></li>
+<li><a href="#профили">Профили</a></li>
+<li><a href="#автофикс">Автофикс</a></li>
+<li><a href="#лицензия">Лицензия</a></li></ul>
+<h2>Базовые принципы</h2>
+<h3>Рекомендуемые правила ESLint</h3>
+<p>Конфигурация включает полный набор <code>@eslint/js</code> recommended правил:</p>
+<ul><li><strong>Корректность кода</strong>: защита от дубликатов, ошибок в классах, некорректных конструкций</li>
+<li><strong>Безопасность</strong>: запрет eval, опасных операций с прототипами, небезопасных операций</li>
+<li><strong>Качество кода</strong>: контроль неиспользуемых переменных, корректность async/await, работа с промисами</li></ul>
+<h3>TypeScript в режиме type-checked</h3>
+<p>Используется <code>typescript-eslint</code> с набором <code>recommendedTypeChecked</code>:</p>
+<ul><li><strong>Типобезопасность</strong>: защита от операций <code>no-unsafe-*</code> (assignment, call, return, member-access)</li>
+<li><strong>Async операции</strong>: <code>await-thenable</code>, <code>no-floating-promises</code>, <code>require-await</code></li>
+<li><strong>Чистота типов</strong>: запрет дублей, лишних assertions, небезопасных enum сравнений</li>
+<li><strong>Синтаксис</strong>: ограничения на namespace, triple-slash references</li></ul>
+<h3>Форматирование с Prettier</h3>
+<code>eslint-plugin-prettier/recommended</code> применяет настройки из <code>prettier.js</code>:
+<ul><li>Ширина строки: <strong>120 символов</strong></li>
+<li>Кавычки: <strong>одинарные</strong> (<code>'</code>)</li>
+<li>Точка с запятой: <strong>обязательна</strong> (<code>;</code>)</li>
+<li>Отступ: <strong>2 пробела</strong></li>
+<li>Trailing comma: <strong>always</strong> в многострочных структурах</li></ul>
+<p>Нарушения форматирования показываются как <strong>ошибки</strong> линтера и автоматически исправляются.</p>
+<h3>Управление импортами</h3>
+<h4>eslint-plugin-import</h4>
+<ul><li>Запрет дубликатов импортов (<code>no-duplicate-imports</code>)</li>
+<li>Запрет расширений для JS/TS файлов (<code>import/extensions</code>)</li></ul>
+<h4>eslint-plugin-simple-import-sort</h4>
+<p>Автоматическая сортировка импортов по группам:</p>
+<p>1. <strong>Внешние зависимости</strong> — npm пакеты (<code>react</code>, <code>express</code>) 2. <strong>Namespace пакеты</strong> — пакеты с <code>@</code> (<code>@internal/logger</code>) 3. <strong>Абсолютные алиасы</strong> — пути с <code>@/</code> (<code>@/components/Button</code>) 4. <strong>Side-effect импорты</strong> — CSS, полифиллы (<code>./styles.css</code>) 5. <strong>Восходящие относительные</strong> — родительские директории (<code>../parent/module</code>) 6. <strong>Одноуровневые относительные</strong> — текущая директория (<code>./helper</code>)</p>
+<h3>Безопасные примитивы</h3>
+<code>no-restricted-syntax</code> блокирует <code>Symbol</code> и <code>BigInt</code> в средах без нативной поддержки, обеспечивая совместимость с целевыми окружениями.
+<h2>Дополнения для TypeScript</h2>
+<p>Кастомные правила поверх рекомендованного набора:</p>
+<h3><code>@typescript-eslint/explicit-function-return-type</code></h3>
+<p>Все функции должны явно указывать тип возвращаемого значения.</p>
+<div class="code-block"><pre><code>// Хорошо
+function sum(a: number, b: number): number {
+  return a + b;
+}
+
+// Плохо
+function sum(a: number, b: number) {
+  return a + b;
+}
+</code></pre></div>
+<h3><code>@typescript-eslint/consistent-type-definitions</code></h3>
+<p>Предпочитай <code>interface</code> для объектных типов вместо <code>type</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+interface User {
+  name: string;
+}
+
+// Плохо
+type User = {
+  name: string;
+};
+</code></pre></div>
+<h3><code>@typescript-eslint/no-floating-promises</code></h3>
+<p>Каждый промис должен быть обработан: <code>await</code>, <code>.then()/.catch()</code> или явное <code>void</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+await fetchData();
+void fetchData();
+
+// Плохо
+fetchData();
+</code></pre></div>
+<h3><code>@typescript-eslint/no-unused-vars</code></h3>
+<p>Неиспользуемые переменные/параметры запрещены, кроме начинающихся с <code>_</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+const { name, ...rest } = user;
+const onClick = (_event: Event) => {};
+
+// Плохо
+const unused = 1;
+</code></pre></div>
+<h3><code>@typescript-eslint/explicit-member-accessibility</code></h3>
+<p>Всегда указывай модификаторы доступа (<code>public</code>, <code>protected</code>, <code>private</code>) для членов класса (кроме конструкторов).</p>
+<div class="code-block"><pre><code>// Хорошо
+class User {
+  public name: string;
+  private age: number;
+}
+
+// Плохо
+class User {
+  name: string;
+  age: number;
+}
+</code></pre></div>
+<h3><code>@typescript-eslint/member-ordering</code></h3>
+<p>Фиксированный порядок элементов класса:</p>
+<p>1. Сигнатуры 2. Статические поля (public → protected → private) 3. Поля экземпляра (public → protected → private) 4. Конструкторы (public → protected → private) 5. Статические методы (public → protected → private) 6. Методы экземпляра (public → protected → private)</p>
+<h2>Best Practices из Airbnb</h2>
+<p>Конфигурация включает ключевые правила из Airbnb JavaScript Style Guide:</p>
+<h3>Переменные</h3>
+<ul><li><code>no-var</code> — используй <code>const</code>/<code>let</code></li>
+<li><code>prefer-const</code> — <code>const</code> для неизменяемых переменных</li></ul>
+<h3>Функции и стрелочные функции</h3>
+<ul><li><code>prefer-arrow-callback</code> — стрелочные функции для колбэков</li>
+<li><code>arrow-body-style</code> — неявный return в стрелочных функциях</li>
+<li><code>arrow-parens</code> — всегда скобки вокруг параметров</li></ul>
+<h3>Объекты и массивы</h3>
+<ul><li><code>no-new-object</code> — литералы объектов <code>{}</code></li>
+<li><code>object-shorthand</code> — сокращённый синтаксис</li>
+<li><code>quote-props</code> — кавычки только когда нужно</li>
+<li><code>prefer-destructuring</code> — деструктуризация</li>
+<li><code>array-callback-return</code> — обязательный return в array методах</li></ul>
+<h3>Строки</h3>
+<ul><li><code>prefer-template</code> — template strings вместо конкатенации</li>
+<li><code>template-curly-spacing</code> — без пробелов в <code>${}</code></li>
+<li><code>no-useless-concat</code> — запрет бесполезной конкатенации</li></ul>
+<h3>Сравнения и операторы</h3>
+<ul><li><code>eqeqeq</code> — строгое сравнение <code>===</code></li>
+<li><code>no-nested-ternary</code> — предупреждение о вложенных тернарниках</li>
+<li><code>no-unneeded-ternary</code> — запрет ненужных тернарников</li>
+<li><code>no-mixed-operators</code> — явная приоритетность операторов</li></ul>
+<h3>Безопасность</h3>
+<ul><li><code>no-eval</code> — запрет eval()</li>
+<li><code>no-new-func</code> — запрет new Function</li>
+<li><code>no-implied-eval</code> — запрет неявного eval</li>
+<li><code>no-extend-native</code> — запрет расширения нативных объектов</li>
+<li><code>no-iterator</code>, <code>no-proto</code> — запрет устаревших API</li></ul>
+<h3>Стиль кода</h3>
+<ul><li><code>semi</code> — обязательные точки с запятой</li>
+<li><code>brace-style</code> — 1tbs стиль фигурных скобок</li>
+<li><code>comma-style</code> — запятая в конце строки</li>
+<li><code>comma-dangle</code> — trailing comma в многострочных структурах</li>
+<li><code>spaced-comment</code> — пробел после <code>//</code> или <code>/*</code></li></ul>
+<h3>Модули</h3>
+<ul><li><code>no-duplicate-imports</code> — объединяй импорты из одного модуля</li>
+<li><code>no-restricted-exports</code> — запрет экспорта <code>default</code> как именованного и <code>then</code></li></ul>
+<h2>Профили</h2>
+<h3>Базовый (<code>eslint.config.mjs</code>)</h3>
+<p>Включает все перечисленные выше правила:</p>
+<ul><li>ESLint recommended</li>
+<li>TypeScript type-checked</li>
+<li>Best Practices (Airbnb)</li>
+<li>Сортировка импортов</li>
+<li>Prettier форматирование</li>
+<li><code>@typescript-eslint/no-explicit-any</code> отключён (для постепенной миграции)</li></ul>
+<div class="code-block"><pre><code>import baseConfig from '@ytvee-dev/eslint-config-react';
+
+export default [...baseConfig];
+</code></pre></div>
+<h3>Строгий (<code>configs/strict.mjs</code>)</h3>
+<p>Базовый профиль + дополнительные ограничения:</p>
+<ul><li>Запрет <code>any</code> (<code>@typescript-eslint/no-explicit-any</code>)</li>
+<li>Соглашение об именовании <code>camelCase</code>/<code>PascalCase</code></li>
+<li>Один публичный тип/класс/enum на файл</li></ul>
+<div class="code-block"><pre><code>import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+
+export default [...strictConfig];
+</code></pre></div>
+<h3>React (<code>configs/react.mjs</code>)</h3>
+<p>Базовый профиль + React/JSX/a11y правила:</p>
+<h4>React правила</h4>
+<ul><li><code>react/jsx-filename-extension</code> — JSX только в <code>.jsx</code>/<code>.tsx</code></li>
+<li><code>react/jsx-boolean-value</code> — булевы пропсы без значения</li>
+<li><code>react/self-closing-comp</code> — самозакрывающиеся теги</li>
+<li><code>react/jsx-key</code> — ключи в списках</li>
+<li><code>react/jsx-no-duplicate-props</code> — запрет дублей пропсов</li></ul>
+<h4>React Hooks</h4>
+<ul><li><code>react-hooks/rules-of-hooks</code> — правила хуков (error)</li>
+<li><code>react-hooks/exhaustive-deps</code> — полные зависимости (warning)</li></ul>
+<h4>Accessibility (a11y)</h4>
+<ul><li><code>jsx-a11y/alt-text</code> — alt для изображений</li>
+<li><code>jsx-a11y/anchor-is-valid</code> — корректные ссылки</li>
+<li><code>jsx-a11y/click-events-have-key-events</code> — клавиатурные события</li>
+<li><code>jsx-a11y/no-autofocus</code> — ограничение autofocus</li>
+<li><code>jsx-a11y/no-noninteractive-element-interactions</code> — события на интерактивных элементах</li>
+<li><code>jsx-a11y/no-static-element-interactions</code> — роли для статических элементов</li></ul>
+<div class="code-block"><pre><code>import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+
+export default [...reactConfig];
+</code></pre></div>
+<h3>Комбинирование</h3>
+<p>Можно комбинировать профили:</p>
+<div class="code-block"><pre><code>import baseConfig from '@ytvee-dev/eslint-config-react';
+import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+
+// Только базовые правила
+export default [...baseConfig];
+
+// React приложение с базовыми правилами
+export default [...baseConfig, ...reactConfig];
+
+// Строгие правила (включают базовые)
+export default [...strictConfig];
+
+// Строгие React правила
+// Внимание: strictConfig уже включает baseConfig
+export default [...strictConfig, ...reactConfig];
+</code></pre></div>
+<p>Для получения подробной информации о применении профилей смотрите <a href="PROFILES_RU.md">PROFILES_RU.md</a>.</p>
+<h2>Автофикс</h2>
+<p>Большинство правил поддерживают автоматическое исправление:</p>
+<h3>Что исправляется автоматически</h3>
+<ul><li><strong>Форматирование</strong> — Prettier исправляет отступы, кавычки, точки с запятой</li>
+<li><strong>Импорты</strong> — автоматическая сортировка по группам</li>
+<li><strong>var → const/let</strong> — замена устаревшего var</li>
+<li><strong>Стрелочные функции</strong> — упрощение тела функции</li>
+<li><strong>Trailing comma</strong> — добавление запятой в многострочных структурах</li>
+<li><strong>object-shorthand</strong> — сокращение синтаксиса объектов</li>
+<li><strong>template literals</strong> — замена конкатенации на template strings</li>
+<li><strong>Кавычки свойств</strong> — удаление ненужных кавычек</li>
+<li><strong>React</strong> — самозакрывающиеся теги, булевы пропсы</li></ul>
+<h3>Запуск автофикса</h3>
+<div class="code-block"><pre><code># Исправить все автоисправимые ошибки
+npm run lint:fix
+# или
+yarn lint:fix
+
+# Исправить конкретный файл
+npx eslint src/file.ts --fix
+</code></pre></div>
+<h3>Что требует ручного исправления</h3>
+<ul><li><code>no-unused-vars</code> — удаление неиспользуемых переменных</li>
+<li><code>@typescript-eslint/no-floating-promises</code> — добавление await/void</li>
+<li><code>react-hooks/exhaustive-deps</code> — добавление зависимостей в useEffect</li>
+<li><code>@typescript-eslint/explicit-function-return-type</code> — указание типов возврата</li>
+<li>Правила accessibility — добавление alt, role, aria атрибутов</li></ul>
+<h2>Отличия от Airbnb</h2>
+<h3>Что включено из Airbnb</h3>
+<ul><li>Best Practices правила (variables, functions, objects, arrays, strings)</li>
+<li>Стиль кода (semicolons, braces, commas, spacing)</li>
+<li>Безопасность (no-eval, no-new-func, no-extend-native)</li>
+<li>Сравнения и операторы (eqeqeq, no-nested-ternary)</li></ul>
+<h3>Что изменено</h3>
+<h4>Форматирование через Prettier</h4>
+<p>Вместо набора форматирующих правил Airbnb используется Prettier:</p>
+<ul><li>Единый стиль для JS/TS/JSX/TSX</li>
+<li>Автоматическое исправление</li>
+<li>Нет конфликтов между правилами</li></ul>
+<h4>TypeScript вместо Flow</h4>
+<ul><li>Полная типобезопасность через <code>typescript-eslint</code></li>
+<li>Type-checked правила для защиты от runtime ошибок</li>
+<li>Нет необходимости в Babel или runtime shims</li></ul>
+<h4>Другая сортировка импортов</h4>
+<p>Вместо <code>import/order</code> используется <code>eslint-plugin-simple-import-sort</code>:</p>
+<ul><li>Более гибкая группировка</li>
+<li>Поддержка алиасов <code>@/</code></li>
+<li>Автоматическое исправление</li></ul>
+<h4>Модульная структура</h4>
+<ul><li>Базовый профиль без React</li>
+<li>Отдельный React-профиль</li>
+<li>Строгий профиль для больших команд</li></ul>
+<h4>Опциональный запрет any</h4>
+<p>В базовом профиле <code>any</code> разрешён для постепенной миграции. Включается в строгом профиле.</p>
+<h2>Лицензия</h2>
+<p>Пакет распространяется по лицензии ISC. Полный текст доступен в файле <a href="../LICENSE">LICENSE</a>.</p>
+
+        </div>
+        
+        <footer class="footer">
+            <p>
+                <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/LICENSE" target="_blank">ISC License</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

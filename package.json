@@ -38,6 +38,7 @@
   ],
   "scripts": {
     "build": "echo \"Info: Build is unnecessary\"",
+    "build:docbook": "node build-docbook.js",
     "lint": "eslint . --ext .js,.mjs,.ts,.tsx --report-unused-disable-directives",
     "lint:fix": "eslint . --ext .js,.mjs,.ts,.tsx --report-unused-disable-directives --fix",
     "prepare": "command -v husky >/dev/null 2>&1 && husky install || true"
