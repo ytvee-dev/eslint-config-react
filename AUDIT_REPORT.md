@@ -235,3 +235,4 @@ export default [...baseConfig];
 
 Конфигурация готова к использованию в production и публикации в npm.
 
+
