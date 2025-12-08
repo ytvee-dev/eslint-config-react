@@ -112,7 +112,7 @@ Full documentation is also available in the `/docs` folder:
 
 ## License
 
-ISC © [Tyan Yevgeniy](https://github.com/ytvee-dev)
+ISC © [YT-Dev](https://github.com/ytvee-dev)
 
 ## Links
 

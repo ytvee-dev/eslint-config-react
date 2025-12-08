@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Справочник правил - @ytvee-dev/eslint-config-react</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <h1 class="logo"><a href="../../index.html" style="color: inherit; text-decoration: none;">@ytvee-dev/eslint-config-react</a></h1>
+            <nav class="nav">
+                <a href="../../index.html" class="back-link" style="margin-right: 20px; color: #fff;">← Back to Home</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<div class="container main-container">
+    <main class="content" style="max-width: 100%;">
+        <section class="section">
+            <div class="section-content doc-content">
+                <h1>Правила линтера, используемые в проекте</h1>
+<p>Документ описывает все правила, которые реально включены в <code>@ytvee-dev/eslint-config-react</code>, в стилистике <a href="https://leonidlebedev.github.io/javascript-airbnb">Airbnb JavaScript Style Guide</a>. Ниже перечислены профили, ограничения и игнорируемые файлы с примерами для каждого правила.</p>
+<h2>Содержание</h2>
+<ul><li><a href="#игнорируемые-пути">Игнорируемые пути</a></li>
+<li><a href="#базовый-профиль-javascript--typescript">Базовый профиль (JavaScript + TypeScript)</a></li>
+  - <a href="#общие-правила-eslintjs-config-recommended">Общие правила @eslint/js</a>
+  - <a href="#best-practices-airbnb">Best Practices (Airbnb)</a>
+  - <a href="#импорты">Импорты</a>
+  - <a href="#форматирование-prettier--eslint-plugin-prettierrecommended">Форматирование (Prettier)</a>
+  - <a href="#правила-typescript-eslint-config-recommendedtypechecked">Правила TypeScript</a>
+  - <a href="#кастомные-ts-усиления-поверх-рекомендованного-набора">Кастомные TypeScript правила</a>
+<li><a href="#react-профиль-configsreactmjs">React-профиль</a></li>
+<li><a href="#строгий-профиль-configsstrictmjs">Строгий профиль</a></li>
+<h2>Игнорируемые пути</h2>
+<p>Линтер не проверяет вспомогательные артефакты и собранные файлы:</p>
+<p><li><code>node_modules</code>, <code>dist</code>, <code>.yarn</code>, <code>.git*</code>, <code>examples</code></li> <li>Конфигурационные файлы линтера и форматтера: <code>.eslintrc*</code>, <code>.prettier*</code></li> <li>Служебные типы сборки: <code>tsup*</code>, <code>Dockerfile</code>, любые <code>*.md</code>, <code>*.json</code>, <code>*.yml</code></li> <li>PnP файлы Yarn: <code>.pnp.*</code></li></p>
+<p>---</p>
+<h2>Базовый профиль (JavaScript + TypeScript)</h2>
+<p>Профиль <code>eslint.config.mjs</code> собирает рекомендации <code>@eslint/js</code>, набор <code>typescript-eslint</code> в режиме type-checked, дополнительные правила для импортов и форматирования. Все правила из этого раздела применяются к <code>.js/.mjs/.ts/.tsx</code> файлам, если не указано иное.</p>
+<h3>Общие правила @eslint/js (config <code>recommended</code>)</h3>
+<p>Эти правила включены автоматически через <code>pluginJs.configs.recommended</code> и защищают от распространённых ошибок.</p>
+<p>#### Корректность классов и конструкторов</p>
+<p><li><code>constructor-super</code> - вызов super() в конструкторах</li> <li><code>no-class-assign</code> - запрет переназначения класса</li> <li><code>no-dupe-class-members</code> - запрет дублирования членов класса</li> <li><code>no-this-before-super</code> - запрет использования this/super до вызова super()</li> <li><code>no-unused-private-class-members</code> - неиспользуемые приватные члены класса</li> <li><code>getter-return</code> - getter должен возвращать значение</li></p>
+<p>#### Безопасность управления потоком</p>
+<p><li><code>no-cond-assign</code> - запрет присваивания в условиях</li> <li><code>no-constant-binary-expression</code> - запрет константных бинарных выражений</li> <li><code>no-constant-condition</code> - запрет константных условий</li> <li><code>no-unexpected-multiline</code> - защита от неожиданных многострочных выражений</li> <li><code>no-unreachable</code> - запрет недостижимого кода</li> <li><code>no-unsafe-finally</code> - запрет управления потоком в finally</li> <li><code>require-yield</code> - генераторы должны содержать yield</li> <li><code>for-direction</code> - корректное направление цикла for</li></p>
+<p>#### Защита от ошибок синтаксиса и RegExp</p>
+<p><li><code>no-control-regex</code> - запрет управляющих символов в регулярках</li> <li><code>no-empty-character-class</code> - запрет пустых классов в регулярках</li> <li><code>no-fallthrough</code> - запрет fallthrough в switch</li> <li><code>no-invalid-regexp</code> - запрет невалидных регулярных выражений</li> <li><code>no-misleading-character-class</code> - запрет misleading символов в регулярках</li> <li><code>no-regex-spaces</code> - запрет множественных пробелов в регулярках</li> <li><code>no-useless-backreference</code> - запрет бесполезных обратных ссылок</li> <li><code>no-irregular-whitespace</code> - запрет нестандартных пробелов</li></p>
+<p>#### Чистый код без дубликатов</p>
+<p><li><code>no-dupe-args</code> - запрет дублирования аргументов</li> <li><code>no-dupe-else-if</code> - запрет дублирования условий else-if</li> <li><code>no-dupe-keys</code> - запрет дублирования ключей объекта</li> <li><code>no-duplicate-case</code> - запрет дублирования case в switch</li> <li><code>no-empty</code> - запрет пустых блоков</li> <li><code>no-empty-pattern</code> - запрет пустых паттернов деструктуризации</li> <li><code>no-empty-static-block</code> - запрет пустых статических блоков</li> <li><code>no-extra-boolean-cast</code> - запрет лишнего boolean приведения</li></p>
+<p>#### Работа с переменными</p>
+<p><li><code>no-delete-var</code> - запрет удаления переменных</li> <li><code>no-shadow-restricted-names</code> - запрет затенения зарезервированных имён</li> <li><code>no-undef</code> - запрет неопределённых переменных</li> <li><code>no-unused-labels</code> - запрет неиспользуемых меток</li> <li><code>no-unused-vars</code> - перекрывается TypeScript-версией</li> <li><code>no-self-assign</code> - запрет самоприсваивания</li></p>
+<p>#### Безопасные числа и сравнения</p>
+<p><li><code>no-compare-neg-zero</code> - запрет сравнения с -0</li> <li><code>no-loss-of-precision</code> - запрет потери точности чисел</li> <li><code>use-isnan</code> - использовать isNaN для проверки NaN</li> <li><code>valid-typeof</code> - корректные строки для typeof</li></p>
+<p>#### Корректность промисов и асинхронности</p>
+<p><li><code>no-async-promise-executor</code> - запрет async в executor промиса</li> <li><code>no-unsafe-optional-chaining</code> - безопасный optional chaining</li> <li><code>no-unsafe-negation</code> - безопасное отрицание</li></p>
+<h3>Best Practices (Airbnb)</h3>
+<p>Эти правила основаны на Airbnb JavaScript Style Guide и включают лучшие практики разработки.</p>
+<p>#### <code>no-var</code> - Использовать const/let вместо var</p>
+<p><strong>Описание:</strong> Запрещает использование <code>var</code>, требует <code>const</code> или <code>let</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+const x = 1;
+let y = 2;
+<p>// Плохо var x = 1; </code></pre></div></p>
+<p>#### <code>prefer-const</code> - Предпочитать const для неизменяемых переменных</p>
+<p><strong>Описание:</strong> Если переменная не переназначается, используй <code>const</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+const name = 'John';
+let count = 0;
+count += 1;
+<p>// Плохо let name = 'John'; // никогда не меняется </code></pre></div></p>
+<p>#### <code>no-eval</code> - Запрет использования eval()</p>
+<p><strong>Описание:</strong> <code>eval()</code> опасен и может выполнять произвольный код.</p>
+<div class="code-block"><pre><code>// Хорошо
+const result = calculate(x, y);
+<p>// Плохо const result = eval('x + y'); </code></pre></div></p>
+<p>#### <code>no-new-func</code> - Запрет создания функций через new Function</p>
+<p><strong>Описание:</strong> Аналогично eval, создание функций из строк небезопасно.</p>
+<div class="code-block"><pre><code>// Хорошо
+const add = (a, b) => a + b;
+<p>// Плохо const add = new Function('a', 'b', 'return a + b'); </code></pre></div></p>
+<p>#### <code>no-return-assign</code> - Запрет присваивания в return</p>
+<p><strong>Описание:</strong> Присваивание в return может быть запутывающим.</p>
+<div class="code-block"><pre><code>// Хорошо
+function getValue(num) {
+  const result = num * 2;
+  return result;
+}
+<p>// Плохо function getValue(num) {   return result = num * 2; } </code></pre></div></p>
+<p>#### <code>no-param-reassign</code> - Запрет переназначения параметров</p>
+<p><strong>Описание:</strong> Запрещает изменение параметров функции (но разрешает изменение их свойств).</p>
+<div class="code-block"><pre><code>// Хорошо
+function addProperty(obj) {
+  obj.newProp = 'value'; // модификация свойств разрешена
+  return obj;
+}
+<p>function increment(num) {   return num + 1; }</p>
+<p>// Плохо function increment(num) {   num += 1; // переназначение параметра запрещено   return num; } </code></pre></div></p>
+<p>#### <code>no-useless-return</code> - Запрет бесполезного return</p>
+<p><strong>Описание:</strong> Удаляет избыточные return в конце функции.</p>
+<div class="code-block"><pre><code>// Хорошо
+function doSomething() {
+  console.log('done');
+}
+<p>// Плохо function doSomething() {   console.log('done');   return; } </code></pre></div></p>
+<p>#### <code>no-else-return</code> - Запрет else после return</p>
+<p><strong>Описание:</strong> Если в if есть return, else не нужен.</p>
+<div class="code-block"><pre><code>// Хорошо
+function getValue(condition) {
+  if (condition) {
+    return 'yes';
+  }
+  return 'no';
+}
+<p>// Плохо function getValue(condition) {   if (condition) {     return 'yes';   } else {     return 'no';   } } </code></pre></div></p>
+<p>#### <code>eqeqeq</code> - Строгое сравнение === вместо ==</p>
+<p><strong>Описание:</strong> Всегда используй <code>===</code> и <code>!==</code> вместо <code>==</code> и <code>!=</code> (кроме сравнения с null).</p>
+<div class="code-block"><pre><code>// Хорошо
+if (x === 10) {}
+if (x == null) {} // разрешено для null/undefined
+<p>// Плохо if (x == 10) {} </code></pre></div></p>
+<p>#### <code>no-iterator</code> - Запрет использования __iterator__</p>
+<p><strong>Описание:</strong> <code>__iterator__</code> устарел, используй итераторы ES6.</p>
+<div class="code-block"><pre><code>// Хорошо
+for (const item of array) {}
+<p>// Плохо obj.__iterator__ = function() {}; </code></pre></div></p>
+<p>#### <code>no-proto</code> - Запрет использования __proto__</p>
+<p><strong>Описание:</strong> Используй <code>Object.getPrototypeOf()</code> вместо <code>__proto__</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+const proto = Object.getPrototypeOf(obj);
+<p>// Плохо const proto = obj.__proto__; </code></pre></div></p>
+<p>#### <code>no-extend-native</code> - Запрет расширения нативных объектов</p>
+<p><strong>Описание:</strong> Не изменяй прототипы встроенных объектов.</p>
+<div class="code-block"><pre><code>// Хорошо
+function getLastElement(arr) {
+  return arr[arr.length - 1];
+}
+<p>// Плохо Array.prototype.last = function() {   return this[this.length - 1]; }; </code></pre></div></p>
+<p>#### <code>no-new-object</code> - Использовать литералы объектов</p>
+<p><strong>Описание:</strong> Используй <code>{}</code> вместо <code>new Object()</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+const obj = {};
+<p>// Плохо const obj = new Object(); </code></pre></div></p>
+<p>#### <code>object-shorthand</code> - Сокращённый синтаксис объектов</p>
+<p><strong>Описание:</strong> Используй сокращённую запись методов и свойств.</p>
+<div class="code-block"><pre><code>// Хорошо
+const obj = {
+  name,
+  getValue() {
+    return 1;
+  },
+};
+<p>// Плохо const obj = {   name: name,   getValue: function() {     return 1;   }, }; </code></pre></div></p>
+<p>#### <code>quote-props</code> - Кавычки для свойств объекта только когда нужно</p>
+<p><strong>Описание:</strong> Не оборачивай ключи в кавычки, если это не требуется.</p>
+<div class="code-block"><pre><code>// Хорошо
+const obj = {
+  name: 'John',
+  'full-name': 'John Doe',
+};
+<p>// Плохо const obj = {   'name': 'John', }; </code></pre></div></p>
+<p>#### <code>array-callback-return</code> - Обязательный return в array методах</p>
+<p><strong>Описание:</strong> Колбэки map/filter/reduce должны возвращать значение.</p>
+<div class="code-block"><pre><code>// Хорошо
+const doubled = array.map(x => x * 2);
+array.forEach(x => console.log(x));
+<p>// Плохо const doubled = array.map(x => {   x * 2; // нет return }); </code></pre></div></p>
+<p>#### <code>prefer-destructuring</code> - Предпочитать деструктуризацию</p>
+<p><strong>Описание:</strong> Используй деструктуризацию для извлечения свойств объектов.</p>
+<div class="code-block"><pre><code>// Хорошо
+const { name, age } = user;
+<p>// Плохо const name = user.name; const age = user.age; </code></pre></div></p>
+<p>#### <code>prefer-template</code> - Использовать template strings</p>
+<p><strong>Описание:</strong> Используй template literals вместо конкатенации строк.</p>
+<div class="code-block"><pre><code>// Хорошо
+const message = <code>Hello, ${name}!</code>;
+<p>// Плохо const message = 'Hello, ' + name + '!'; </code></pre></div></p>
+<p>#### <code>template-curly-spacing</code> - Нет пробелов в template literals</p>
+<p><strong>Описание:</strong> Не добавляй пробелы внутри <code>${}</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+const message = <code>Hello, ${name}!</code>;
+<p>// Плохо const message = <code>Hello, ${ name }!</code>; </code></pre></div></p>
+<p>#### <code>no-useless-concat</code> - Запрет бесполезной конкатенации</p>
+<p><strong>Описание:</strong> Не конкатенируй литералы, которые можно объединить.</p>
+<div class="code-block"><pre><code>// Хорошо
+const message = 'Hello World';
+<p>// Плохо const message = 'Hello ' + 'World'; </code></pre></div></p>
+<p>#### <code>prefer-arrow-callback</code> - Предпочитать стрелочные функции в колбэках</p>
+<p><strong>Описание:</strong> Используй стрелочные функции для коротких колбэков.</p>
+<div class="code-block"><pre><code>// Хорошо
+array.map(x => x * 2);
+<p>// Плохо (если не нужен this) array.map(function(x) { return x * 2; }); </code></pre></div></p>
+<p>#### <code>arrow-body-style</code> - Неявный return в стрелочных функциях</p>
+<p><strong>Описание:</strong> Если тело стрелочной функции — одно выражение, опускай <code>{}</code> и <code>return</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+const double = x => x * 2;
+<p>// Плохо const double = x => { return x * 2; }; </code></pre></div></p>
+<p>#### <code>arrow-parens</code> - Всегда скобки вокруг параметров стрелочных функций</p>
+<p><strong>Описание:</strong> Всегда оборачивай параметры в скобки.</p>
+<div class="code-block"><pre><code>// Хорошо
+const double = (x) => x * 2;
+<p>// Плохо const double = x => x * 2; </code></pre></div></p>
+<p>#### <code>no-restricted-exports</code> - Запрет экспорта определённых имён</p>
+<p><strong>Описание:</strong> Запрещает экспортировать <code>default</code> как именованный и <code>then</code> (для совместимости с промисами).</p>
+<div class="code-block"><pre><code>// Хорошо
+export const value = 42;
+export default MyComponent;
+<p>// Плохо export { default } from './module'; export const then = () => {}; </code></pre></div></p>
+<p>#### <code>no-nested-ternary</code> - Предупреждение о вложенных тернарных операторах</p>
+<p><strong>Описание:</strong> Вложенные тернарники сложно читать.</p>
+<div class="code-block"><pre><code>// Хорошо
+let value;
+if (condition1) {
+  value = 'a';
+} else if (condition2) {
+  value = 'b';
+} else {
+  value = 'c';
+}
+<p>// Предупреждение (плохо) const value = condition1 ? 'a' : condition2 ? 'b' : 'c'; </code></pre></div></p>
+<p>#### <code>no-unneeded-ternary</code> - Запрет ненужных тернарных операторов</p>
+<p><strong>Описание:</strong> Не используй тернарник, если можно обойтись без него.</p>
+<div class="code-block"><pre><code>// Хорошо
+const isActive = !!value;
+<p>// Плохо const isActive = value ? true : false; </code></pre></div></p>
+<p>#### <code>no-mixed-operators</code> - Явная приоритетность операторов</p>
+<p><strong>Описание:</strong> Используй скобки для ясности при смешивании операторов.</p>
+<div class="code-block"><pre><code>// Хорошо
+const result = (a + b) * c;
+const result = a && b || c;
+<p>// Плохо const result = a + b * c; // неочевидно const result = a && b / c; </code></pre></div></p>
+<p>#### <code>brace-style</code> - Стиль фигурных скобок</p>
+<p><strong>Описание:</strong> Открывающая скобка на той же строке (1tbs style).</p>
+<div class="code-block"><pre><code>// Хорошо
+if (condition) {
+  doSomething();
+}
+<p>// Плохо if (condition) {   doSomething(); } </code></pre></div></p>
+<p>#### <code>spaced-comment</code> - Пробел после // или /*</p>
+<p><strong>Описание:</strong> Всегда добавляй пробел после начала комментария.</p>
+<div class="code-block"><pre><code>// Хорошо
+// This is a comment
+/* This is a block comment */
+<p>// Плохо //This is a comment /*This is a block comment*/ </code></pre></div></p>
+<p>#### <code>comma-style</code> - Запятая в конце строки</p>
+<p><strong>Описание:</strong> Запятые должны быть в конце строки, а не в начале следующей.</p>
+<div class="code-block"><pre><code>// Хорошо
+const obj = {
+  a: 1,
+  b: 2,
+};
+<p>// Плохо const obj = {   a: 1   , b: 2 }; </code></pre></div></p>
+<p>#### <code>comma-dangle</code> - Trailing comma в многострочных структурах</p>
+<p><strong>Описание:</strong> Всегда добавляй запятую после последнего элемента в многострочных структурах.</p>
+<div class="code-block"><pre><code>// Хорошо
+const obj = {
+  a: 1,
+  b: 2,
+};
+<p>const arr = [   1,   2, ];</p>
+<p>// Плохо const obj = {   a: 1,   b: 2 }; </code></pre></div></p>
+<p>#### <code>radix</code> - Явное указание системы счисления в parseInt</p>
+<p><strong>Описание:</strong> Всегда указывай второй параметр radix для parseInt.</p>
+<div class="code-block"><pre><code>// Хорошо
+const num = parseInt('10', 10);
+<p>// Плохо const num = parseInt('10'); </code></pre></div></p>
+<p>#### <code>no-new</code> - Запрет вызова new без присваивания</p>
+<p><strong>Описание:</strong> Не вызывай конструктор без сохранения результата.</p>
+<div class="code-block"><pre><code>// Хорошо
+const instance = new MyClass();
+<p>// Плохо new MyClass(); </code></pre></div></p>
+<h3>Явные точки с запятой (<code>semi</code>)</h3>
+<p><strong>Описание:</strong> Все инструкции завершаются точкой с запятой.</p>
+<div class="code-block"><pre><code>// Хорошо
+const sum = a + b;
+doSomething();
+<p>// Плохо const sum = a + b doSomething() </code></pre></div></p>
+<h3>Запрет Symbol и BigInt без поддержки среды (<code>no-restricted-syntax</code>)</h3>
+<p><strong>Описание:</strong> Использование <code>Symbol</code> и <code>BigInt</code> блокируется, если среда может их не поддерживать.</p>
+<div class="code-block"><pre><code>// Хорошо (если среда поддерживает)
+// const sym = Symbol('key');
+<p>// Плохо (если среда не поддерживает) const sym = Symbol('key'); const big = 123n; </code></pre></div></p>
+<h3>Импорты</h3>
+<p>#### <code>no-duplicate-imports</code> - Не дублируйте импорты</p>
+<p><strong>Описание:</strong> Объединяйте импорты из одного модуля в один import.</p>
+<div class="code-block"><pre><code>// Хорошо
+import { foo, bar } from 'module';
+<p>// Плохо import { foo } from 'module'; import { bar } from 'module'; </code></pre></div></p>
+<p>#### <code>import/extensions</code> - Не указывайте расширения для JS/TS файлов</p>
+<p><strong>Описание:</strong> Для <code>js/jsx/ts/tsx</code> расширение опускается.</p>
+<div class="code-block"><pre><code>// Хорошо
+import Button from './Button';
+import utils from '@/utils';
+<p>// Плохо import Button from './Button.tsx'; import utils from '@/utils.ts'; </code></pre></div></p>
+<p>#### <code>simple-import-sort/imports</code> - Сортировка импортов</p>
+<p><strong>Описание:</strong> Импорты автоматически сортируются в группы: 1. Внешние зависимости (<code>react</code>, <code>express</code>, etc.) 2. Namespace из <code>@*</code> пакетов (<code>@internal/logger</code>) 3. Абсолютные <code>@/...</code> алиасы (<code>@/components/Button</code>) 4. Side-effect импорты (<code>./styles.css</code>) 5. Восходящие относительные (<code>../parent/module</code>) 6. Одноуровневые относительные (<code>./helper</code>)</p>
+<div class="code-block"><pre><code>// Хорошо
+import express from 'express';
+import { useState } from 'react';
+<p>import { logger } from '@internal/logger';</p>
+<p>import { Button } from '@/components/Button';</p>
+<p>import './styles.css';</p>
+<p>import { something } from '../parent/module';</p>
+<p>import { helper } from './helper';</p>
+<p>// Плохо (неправильный порядок) import './styles.css'; import { Button } from '@/components/Button'; import express from 'express'; import { helper } from './helper'; </code></pre></div></p>
+<h3>Форматирование (Prettier + <code>eslint-plugin-prettier/recommended</code>)</h3>
+<p><strong>Описание:</strong> Все нарушения Prettier показываются как ошибки ESLint. Настройки: <li>Ширина строки: 120 символов</li> <li>Кавычки: одинарные</li> <li>Точка с запятой: обязательна</li> <li>Отступ: 2 пробела</li> <li>Trailing comma: всегда в многострочных структурах</li></p>
+<div class="code-block"><pre><code>// Хорошо
+const obj = {
+  name: 'John',
+  age: 30,
+};
+<p>const message = <code>Hello, ${name}!</code>;</p>
+<p>// Плохо const obj = {   name: "John",   age: 30 }</p>
+<p>const message = <code>Hello, ${ name }!</code> </code></pre></div></p>
+<h3>Правила TypeScript-eslint (config <code>recommendedTypeChecked</code>)</h3>
+<p>Эти правила включены автоматически через <code>tseslint.configs.recommendedTypeChecked</code> и применяются только к <code>.ts/.tsx</code> файлам.</p>
+<p>#### Безопасные async-операции</p>
+<p><li><code>@typescript-eslint/await-thenable</code> - await только для thenable</li> <li><code>@typescript-eslint/no-floating-promises</code> - обрабатывай все промисы</li> <li><code>@typescript-eslint/no-for-in-array</code> - не используй for-in для массивов</li> <li><code>@typescript-eslint/no-implied-eval</code> - запрет неявного eval</li> <li><code>@typescript-eslint/no-misused-promises</code> - корректное использование промисов</li> <li><code>@typescript-eslint/require-await</code> - async функции должны содержать await</li> <li><code>@typescript-eslint/unbound-method</code> - методы должны вызываться с правильным контекстом</li></p>
+<p>#### Строгие типы и отсутствие небезопасных конструкций</p>
+<p><li><code>@typescript-eslint/no-unsafe-argument</code> - типобезопасные аргументы</li> <li><code>@typescript-eslint/no-unsafe-assignment</code> - типобезопасное присваивание</li> <li><code>@typescript-eslint/no-unsafe-call</code> - типобезопасные вызовы</li> <li><code>@typescript-eslint/no-unsafe-declaration-merging</code> - безопасное слияние деклараций</li> <li><code>@typescript-eslint/no-unsafe-enum-comparison</code> - безопасное сравнение enum</li> <li><code>@typescript-eslint/no-unsafe-function-type</code> - безопасные типы функций</li> <li><code>@typescript-eslint/no-unsafe-member-access</code> - безопасный доступ к членам</li> <li><code>@typescript-eslint/no-unsafe-return</code> - типобезопасные return</li> <li><code>@typescript-eslint/no-base-to-string</code> - безопасное преобразование в строку</li></p>
+<p>#### Чистота типов</p>
+<p><li><code>@typescript-eslint/no-duplicate-enum-values</code> - запрет дублей в enum</li> <li><code>@typescript-eslint/no-duplicate-type-constituents</code> - запрет дублей в union/intersection</li> <li><code>@typescript-eslint/no-empty-object-type</code> - запрет пустых объектных типов</li> <li><code>@typescript-eslint/no-non-null-asserted-optional-chain</code> - запрет <code>!</code> после optional chain</li> <li><code>@typescript-eslint/no-extra-non-null-assertion</code> - запрет лишних <code>!</code></li> <li><code>@typescript-eslint/no-redundant-type-constituents</code> - запрет избыточных типов</li> <li><code>@typescript-eslint/no-unnecessary-type-assertion</code> - запрет ненужных as</li> <li><code>@typescript-eslint/no-unnecessary-type-constraint</code> - запрет ненужных extends</li> <li><code>@typescript-eslint/prefer-as-const</code> - предпочитать as const</li></p>
+<p>#### Ограничения по синтаксису</p>
+<p><li><code>@typescript-eslint/no-namespace</code> - не используй namespace (кроме .d.ts)</li> <li><code>@typescript-eslint/triple-slash-reference</code> - запрет /// <reference></li> <li><code>@typescript-eslint/prefer-namespace-keyword</code> - используй namespace вместо module</li></ul></p>
+<h3>Кастомные TS-усиления поверх рекомендованного набора</h3>
+<p>Эти правила добавлены дополнительно к TypeScript recommended и применяются только к <code>.ts/.tsx</code> файлам.</p>
+<p>#### <code>@typescript-eslint/explicit-function-return-type</code> - Явный тип возврата функций</p>
+<p><strong>Описание:</strong> Все функции должны явно указывать тип возвращаемого значения.</p>
+<div class="code-block"><pre><code>// Хорошо
+function sum(a: number, b: number): number {
+  return a + b;
+}
+<p>const multiply = (a: number, b: number): number => a * b;</p>
+<p>// Плохо function sum(a: number, b: number) {   return a + b; } </code></pre></div></p>
+<p>#### <code>@typescript-eslint/consistent-type-definitions</code> - Предпочитать interface</p>
+<p><strong>Описание:</strong> Используй <code>interface</code> для определения объектных типов вместо <code>type</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+interface User {
+  name: string;
+  age: number;
+}
+<p>type ID = string | number; // type для union/intersection</p>
+<p>// Плохо type User = {   name: string;   age: number; }; </code></pre></div></p>
+<p>#### <code>@typescript-eslint/no-floating-promises</code> - Обязательная обработка промисов</p>
+<p><strong>Описание:</strong> Каждый промис должен быть обработан (await, .then/.catch, void).</p>
+<div class="code-block"><pre><code>// Хорошо
+await fetchData();
+<p>fetchData().then(handleData).catch(handleError);</p>
+<p>void fetchData(); // явное игнорирование</p>
+<p>// Плохо fetchData(); // промис не обработан </code></pre></div></p>
+<p>#### <code>@typescript-eslint/no-unused-vars</code> - Контроль неиспользуемых переменных</p>
+<p><strong>Описание:</strong> Неиспользуемые переменные/параметры запрещены, кроме начинающихся с <code>_</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+const { name, ...rest } = user;
+const onClick = (_event: Event) => {};
+<p>// Плохо const unused = 1; // переменная не используется function handler(event: Event) {} // параметр не используется </code></pre></div></p>
+<p>#### <code>@typescript-eslint/explicit-member-accessibility</code> - Явные модификаторы доступа</p>
+<p><strong>Описание:</strong> Всегда указывай <code>public</code>, <code>protected</code> или <code>private</code> для членов класса.</p>
+<div class="code-block"><pre><code>// Хорошо
+class User {
+  public name: string;
+  private age: number;
+  
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  public getName(): string {
+    return this.name;
+  }
+}
+<p>// Плохо class User {   name: string; // нет модификатора   age: number; } </code></pre></div></p>
+<p>#### <code>@typescript-eslint/member-ordering</code> - Порядок элементов класса</p>
+<p><strong>Описание:</strong> Члены класса должны быть упорядочены: сигнатуры → статические поля → поля экземпляра → конструкторы → методы.</p>
+<div class="code-block"><pre><code>// Хорошо
+class User {
+  // Статические поля
+  public static defaultName: string = 'Guest';
+  private static instances: number = 0;
+  
+  // Поля экземпляра
+  public name: string;
+  private age: number;
+  
+  // Конструктор
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  // Статические методы
+  public static getInstanceCount(): number {
+    return User.instances;
+  }
+  
+  // Методы экземпляра
+  public getName(): string {
+    return this.name;
+  }
+}
+<p>// Плохо (неправильный порядок) class User {   constructor() {} // конструктор в начале   public name: string; // поля после конструктора   public static instances = 0; // статические поля в конце } </code></pre></div></p>
+<p>---</p>
+<h2>React-профиль (<code>configs/react.mjs</code>)</h2>
+<p>Активируется для файлов <code>.jsx</code> и <code>.tsx</code> и добавляет плагины <code>react</code>, <code>react-hooks</code>, <code>jsx-a11y</code>.</p>
+<h3><code>react/jsx-filename-extension</code> - Расширения файлов с JSX</h3>
+<p><strong>Описание:</strong> JSX разрешён только в <code>.jsx</code> и <code>.tsx</code> файлах.</p>
+<div class="code-block"><pre><code>// Хорошо (файл Button.tsx)
+export const Button = () => <button>Click</button>;
+<p>// Плохо (файл Button.ts с JSX) export const Button = () => <button>Click</button>; </code></pre></div></p>
+<h3><code>react/jsx-boolean-value</code> - Булевы пропсы без значения</h3>
+<p><strong>Описание:</strong> Для <code>true</code> значения не указывай явно <code>={true}</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+<Button disabled />
+<p>// Плохо <Button disabled={true} /> </code></pre></div></p>
+<h3><code>react/self-closing-comp</code> - Самозакрывающиеся теги</h3>
+<p><strong>Описание:</strong> Если у компонента нет детей, используй самозакрывающийся тег.</p>
+<div class="code-block"><pre><code>// Хорошо
+<Button />
+<div className="empty" />
+<p>// Плохо <Button></Button> <div className="empty"></div> </code></pre></div></p>
+<h3><code>react/jsx-key</code> - Ключи в списках</h3>
+<p><strong>Описание:</strong> Элементы в массивах должны иметь уникальный prop <code>key</code>.</p>
+<div class="code-block"><pre><code>// Хорошо
+{items.map(item => (
+  <div key={item.id}>{item.name}</div>
+))}
+<p>// Плохо {items.map(item => (   <div>{item.name}</div> ))} </code></pre></div></p>
+<h3><code>react/jsx-no-duplicate-props</code> - Запрет дублирующих пропсов</h3>
+<p><strong>Описание:</strong> Не дублируй пропсы в одном компоненте.</p>
+<div class="code-block"><pre><code>// Хорошо
+<Button disabled={isDisabled} />
+<p>// Плохо <Button disabled disabled={false} /> </code></pre></div></p>
+<h3><code>react-hooks/rules-of-hooks</code> - Правила хуков</h3>
+<p><strong>Описание:</strong> Хуки должны вызываться только на верхнем уровне и только в функциональных компонентах/хуках.</p>
+<div class="code-block"><pre><code>// Хорошо
+function Component() {
+  const [state, setState] = useState(0);
+  return <div>{state}</div>;
+}
+<p>// Плохо function Component() {   if (condition) {     const [state, setState] = useState(0); // хук внутри условия   } } </code></pre></div></p>
+<h3><code>react-hooks/exhaustive-deps</code> - Полные зависимости эффектов</h3>
+<p><strong>Описание:</strong> В массиве зависимостей useEffect/useCallback/useMemo должны быть все используемые переменные.</p>
+<div class="code-block"><pre><code>// Хорошо
+useEffect(() => {
+  fetchData(userId);
+}, [userId]);
+<p>// Предупреждение (плохо) useEffect(() => {   fetchData(userId); }, []); // userId должен быть в зависимостях </code></pre></div></p>
+<h3>Правила доступности (jsx-a11y)</h3>
+<p>#### <code>jsx-a11y/alt-text</code> - Alt текст для изображений</p>
+<p><strong>Описание:</strong> Все <code><img></code> должны иметь <code>alt</code> атрибут.</p>
+<div class="code-block"><pre><code>// Хорошо
+<img src="photo.jpg" alt="User photo" />
+<p>// Предупреждение (плохо) <img src="photo.jpg" /> </code></pre></div></p>
+<p>#### <code>jsx-a11y/anchor-is-valid</code> - Корректные ссылки</p>
+<p><strong>Описание:</strong> <code><a></code> должен иметь <code>href</code> или корректный обработчик.</p>
+<div class="code-block"><pre><code>// Хорошо
+<a href="/page">Link</a>
+<button onClick={handler}>Button</button>
+<p>// Предупреждение (плохо) <a onClick={handler}>Link</a> </code></pre></div></p>
+<p>#### <code>jsx-a11y/click-events-have-key-events</code> - Клавиатурные события</p>
+<p><strong>Описание:</strong> Элементы с <code>onClick</code> должны иметь клавиатурные обработчики.</p>
+<div class="code-block"><pre><code>// Хорошо
+<div onClick={handler} onKeyPress={handler} role="button" tabIndex={0} />
+<p>// Предупреждение (плохо) <div onClick={handler} /> </code></pre></div></p>
+<p>#### <code>jsx-a11y/no-autofocus</code> - Ограничение autofocus</p>
+<p><strong>Описание:</strong> Используй <code>autoFocus</code> только когда необходимо для UX.</p>
+<div class="code-block"><pre><code>// Хорошо
+<input /> // без autofocus
+<p>// Предупреждение (плохо) <input autoFocus /> </code></pre></div></p>
+<p>#### <code>jsx-a11y/no-noninteractive-element-interactions</code> - События на неинтерактивных элементах</p>
+<p><strong>Описание:</strong> Не вешай события на неинтерактивные элементы без роли.</p>
+<div class="code-block"><pre><code>// Хорошо
+<button onClick={handler}>Click</button>
+<div onClick={handler} role="button" tabIndex={0} />
+<p>// Предупреждение (плохо) <div onClick={handler}>Click</div> </code></pre></div></p>
+<p>#### <code>jsx-a11y/no-static-element-interactions</code> - Интерактивность статических элементов</p>
+<p><strong>Описание:</strong> Статические элементы с обработчиками должны иметь роль и клавиатурную поддержку.</p>
+<div class="code-block"><pre><code>// Хорошо
+<div onClick={handler} onKeyPress={handler} role="button" tabIndex={0} />
+<p>// Предупреждение (плохо) <div onClick={handler} /> </code></pre></div></p>
+<p>---</p>
+<h2>Строгий профиль (<code>configs/strict.mjs</code>)</h2>
+<p>Дополнительно к базовому профилю применяются следующие правила для <code>.ts/.tsx</code> файлов.</p>
+<h3><code>@typescript-eslint/no-explicit-any</code> - Запрет any</h3>
+<p><strong>Описание:</strong> Запрещает использование типа <code>any</code>, требует конкретные типы.</p>
+<div class="code-block"><pre><code>// Хорошо
+function process(data: string): void {}
+function process(data: unknown): void {}
+<p>// Плохо function process(data: any): void {} </code></pre></div></p>
+<h3><code>@typescript-eslint/naming-convention</code> - Соглашение об именовании</h3>
+<p><strong>Описание:</strong> Переменные должны быть в <code>camelCase</code> или <code>PascalCase</code>, подчёркивания допустимы спереди/сзади.</p>
+<div class="code-block"><pre><code>// Хорошо
+const userName = 'John';
+const UserComponent = () => {};
+const _privateVar = 1;
+const unused_ = 2;
+<p>// Плохо const user_name = 'John'; const USER_NAME = 'John'; </code></pre></div></p>
+<h3><code>max-classes-per-file</code> + <code>no-restricted-syntax</code> - Один публичный тип/класс/enum на файл</h3>
+<p><strong>Описание:</strong> В одном файле разрешён только один экспортируемый класс/интерфейс/тип/enum.</p>
+<div class="code-block"><pre><code>// Хорошо (файл User.ts)
+interface User {
+  name: string;
+}
+<p>// Хорошо (вспомогательные приватные типы) interface User {   name: string; } type UserId = string;</p>
+<p>// Плохо (два публичных типа) interface User {   name: string; } interface Post {   title: string; } </code></pre></div></p>
+<p>---</p>
+<p>Для получения подробной информации о применении профилей в вашем проекте смотрите <a href="PROFILES_RU.md">PROFILES_RU.md</a>.</p>
+
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>
+                    Made with ❤️ by
+                    <a href="https://github.com/ytvee-dev" target="_blank">YT-DEV</a>
+                </p>
+                <p class="footer-links">
+                    <a href="https://github.com/ytvee-dev/eslint-config-react" target="_blank">GitHub</a>
+                    <span>•</span>
+                    <a href="https://www.npmjs.com/package/@ytvee-dev/eslint-config-react" target="_blank">NPM</a>
+                    <span>•</span>
+                    <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/LICENSE" target="_blank">ISC License</a>
+                </p>
+            </div>
+        </footer>
+    </main>
+</div>
+</body>
+</html>

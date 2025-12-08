@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Guide - @ytvee-dev/eslint-config-react</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <h1 class="logo"><a href="../../index.html" style="color: inherit; text-decoration: none;">@ytvee-dev/eslint-config-react</a></h1>
+            <nav class="nav">
+                <a href="../../index.html" class="back-link" style="margin-right: 20px; color: #fff;">← Back to Home</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<div class="container main-container">
+    <main class="content" style="max-width: 100%;">
+        <section class="section">
+            <div class="section-content doc-content">
+                <h1>Linter Style Guide</h1>
+<p>This document summarizes the <code>@ytvee-dev/eslint-config-react</code> profile and explains which rules you get out of the box. For the complete list with details and examples, see <a href="README_RULES.md">README_RULES.md</a>.</p>
+<h2>Table of Contents</h2>
+<ul><li><a href="#basic-principles">Basic Principles</a></li>
+<li><a href="#typescript-additions">TypeScript Additions</a></li>
+<li><a href="#best-practices-from-airbnb">Best Practices from Airbnb</a></li>
+<li><a href="#profiles">Profiles</a></li>
+<li><a href="#autofix">Autofix</a></li>
+<li><a href="#license">License</a></li>
+<h2>Basic Principles</h2>
+<h3>Recommended ESLint Rules</h3>
+<p>The configuration includes the complete set of <code>@eslint/js</code> recommended rules:</p>
+<p><li><strong>Code Correctness</strong>: Protection against duplicates, class errors, incorrect constructs</li> <li><strong>Security</strong>: Disallow eval, dangerous prototype operations, unsafe operations</li> <li><strong>Code Quality</strong>: Control of unused variables, correct async/await, working with promises</li></p>
+<h3>TypeScript in Type-Checked Mode</h3>
+<p>Uses <code>typescript-eslint</code> with the <code>recommendedTypeChecked</code> set:</p>
+<p><li><strong>Type Safety</strong>: Protection against <code>no-unsafe-*</code> operations (assignment, call, return, member-access)</li> <li><strong>Async Operations</strong>: <code>await-thenable</code>, <code>no-floating-promises</code>, <code>require-await</code></li> <li><strong>Type Purity</strong>: Disallow duplicates, unnecessary assertions, unsafe enum comparisons</li> <li><strong>Syntax</strong>: Restrictions on namespace, triple-slash references</li></p>
+<h3>Formatting with Prettier</h3>
+<code>eslint-plugin-prettier/recommended</code> applies settings from <code>prettier.js</code>:
+<p><li>Line width: <strong>120 characters</strong></li> <li>Quotes: <strong>single</strong> (<code>'</code>)</li> <li>Semicolons: <strong>required</strong> (<code>;</code>)</li> <li>Indentation: <strong>2 spaces</strong></li> <li>Trailing comma: <strong>always</strong> in multiline structures</li></p>
+<p>Formatting violations are shown as linter <strong>errors</strong> and automatically fixed.</p>
+<h3>Import Management</h3>
+<p>#### eslint-plugin-import</p>
+<p><li>Disallow duplicate imports (<code>no-duplicate-imports</code>)</li> <li>Disallow extensions for JS/TS files (<code>import/extensions</code>)</li></p>
+<p>#### eslint-plugin-simple-import-sort</p>
+<p>Automatic import sorting by groups:</p>
+<p>1. <strong>External dependencies</strong> - npm packages (<code>react</code>, <code>express</code>) 2. <strong>Namespace packages</strong> - packages with <code>@</code> (<code>@internal/logger</code>) 3. <strong>Absolute aliases</strong> - paths with <code>@/</code> (<code>@/components/Button</code>) 4. <strong>Side-effect imports</strong> - CSS, polyfills (<code>./styles.css</code>) 5. <strong>Ascending relative</strong> - parent directories (<code>../parent/module</code>) 6. <strong>Same-level relative</strong> - current directory (<code>./helper</code>)</p>
+<h3>Safe Primitives</h3>
+<code>no-restricted-syntax</code> blocks <code>Symbol</code> and <code>BigInt</code> in environments without native support, ensuring compatibility with target environments.
+<h2>TypeScript Additions</h2>
+<p>Custom rules on top of the recommended set:</p>
+<h3><code>@typescript-eslint/explicit-function-return-type</code></h3>
+<p>All functions must explicitly specify the return type.</p>
+<div class="code-block"><pre><code>// Good
+function sum(a: number, b: number): number {
+  return a + b;
+}
+<p>// Bad function sum(a: number, b: number) {   return a + b; } </code></pre></div></p>
+<h3><code>@typescript-eslint/consistent-type-definitions</code></h3>
+<p>Prefer <code>interface</code> for object types instead of <code>type</code>.</p>
+<div class="code-block"><pre><code>// Good
+interface User {
+  name: string;
+}
+<p>// Bad type User = {   name: string; }; </code></pre></div></p>
+<h3><code>@typescript-eslint/no-floating-promises</code></h3>
+<p>Every promise must be handled: <code>await</code>, <code>.then()/.catch()</code> or explicit <code>void</code>.</p>
+<div class="code-block"><pre><code>// Good
+await fetchData();
+void fetchData();
+<p>// Bad fetchData(); </code></pre></div></p>
+<h3><code>@typescript-eslint/no-unused-vars</code></h3>
+<p>Unused variables/parameters are disallowed, except those starting with <code>_</code>.</p>
+<div class="code-block"><pre><code>// Good
+const { name, ...rest } = user;
+const onClick = (_event: Event) => {};
+<p>// Bad const unused = 1; </code></pre></div></p>
+<h3><code>@typescript-eslint/explicit-member-accessibility</code></h3>
+<p>Always specify access modifiers (<code>public</code>, <code>protected</code>, <code>private</code>) for class members (except constructors).</p>
+<div class="code-block"><pre><code>// Good
+class User {
+  public name: string;
+  private age: number;
+}
+<p>// Bad class User {   name: string;   age: number; } </code></pre></div></p>
+<h3><code>@typescript-eslint/member-ordering</code></h3>
+<p>Fixed order of class elements:</p>
+<p>1. Signatures 2. Static fields (public → protected → private) 3. Instance fields (public → protected → private) 4. Constructors (public → protected → private) 5. Static methods (public → protected → private) 6. Instance methods (public → protected → private)</p>
+<h2>Best Practices from Airbnb</h2>
+<p>The configuration includes key rules from the Airbnb JavaScript Style Guide:</p>
+<h3>Variables</h3>
+<p><li><code>no-var</code> - use <code>const</code>/<code>let</code></li> <li><code>prefer-const</code> - <code>const</code> for immutable variables</li></p>
+<h3>Functions and Arrow Functions</h3>
+<p><li><code>prefer-arrow-callback</code> - arrow functions for callbacks</li> <li><code>arrow-body-style</code> - implicit return in arrow functions</li> <li><code>arrow-parens</code> - always parentheses around parameters</li></p>
+<h3>Objects and Arrays</h3>
+<p><li><code>no-new-object</code> - object literals <code>{}</code></li> <li><code>object-shorthand</code> - shorthand syntax</li> <li><code>quote-props</code> - quotes only when needed</li> <li><code>prefer-destructuring</code> - destructuring</li> <li><code>array-callback-return</code> - mandatory return in array methods</li></p>
+<h3>Strings</h3>
+<p><li><code>prefer-template</code> - template strings instead of concatenation</li> <li><code>template-curly-spacing</code> - no spaces in <code>${}</code></li> <li><code>no-useless-concat</code> - disallow useless concatenation</li></p>
+<h3>Comparisons and Operators</h3>
+<p><li><code>eqeqeq</code> - strict comparison <code>===</code></li> <li><code>no-nested-ternary</code> - warning about nested ternaries</li> <li><code>no-unneeded-ternary</code> - disallow unnecessary ternaries</li> <li><code>no-mixed-operators</code> - explicit operator priority</li></p>
+<h3>Security</h3>
+<p><li><code>no-eval</code> - disallow eval()</li> <li><code>no-new-func</code> - disallow new Function</li> <li><code>no-implied-eval</code> - disallow implicit eval</li> <li><code>no-extend-native</code> - disallow extending native objects</li> <li><code>no-iterator</code>, <code>no-proto</code> - disallow deprecated APIs</li></p>
+<h3>Code Style</h3>
+<p><li><code>semi</code> - mandatory semicolons</li> <li><code>brace-style</code> - 1tbs brace style</li> <li><code>comma-style</code> - comma at end of line</li> <li><code>comma-dangle</code> - trailing comma in multiline structures</li> <li><code>spaced-comment</code> - space after <code>//</code> or <code>/*</code></li></p>
+<h3>Modules</h3>
+<p><li><code>no-duplicate-imports</code> - combine imports from one module</li> <li><code>no-restricted-exports</code> - disallow exporting <code>default</code> as named and <code>then</code></li></p>
+<h2>Profiles</h2>
+<h3>Base (<code>eslint.config.mjs</code>)</h3>
+<p>Includes all rules listed above:</p>
+<p><li>ESLint recommended</li> <li>TypeScript type-checked</li> <li>Best Practices (Airbnb)</li> <li>Import sorting</li> <li>Prettier formatting</li> <li><code>@typescript-eslint/no-explicit-any</code> disabled (for gradual migration)</li></p>
+<div class="code-block"><pre><code>import baseConfig from '@ytvee-dev/eslint-config-react';
+<p>export default [...baseConfig]; </code></pre></div></p>
+<h3>Strict (<code>configs/strict.mjs</code>)</h3>
+<p>Base profile plus additional constraints:</p>
+<p><li>Disallow <code>any</code> (<code>@typescript-eslint/no-explicit-any</code>)</li> <li>Naming convention <code>camelCase</code>/<code>PascalCase</code></li> <li>One public type/class/enum per file</li></p>
+<div class="code-block"><pre><code>import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+<p>export default [...strictConfig]; </code></pre></div></p>
+<h3>React (<code>configs/react.mjs</code>)</h3>
+<p>Base profile plus React/JSX/a11y rules:</p>
+<p>#### React Rules</p>
+<p><li><code>react/jsx-filename-extension</code> - JSX only in <code>.jsx</code>/<code>.tsx</code></li> <li><code>react/jsx-boolean-value</code> - boolean props without value</li> <li><code>react/self-closing-comp</code> - self-closing tags</li> <li><code>react/jsx-key</code> - keys in lists</li> <li><code>react/jsx-no-duplicate-props</code> - disallow duplicate props</li></p>
+<p>#### React Hooks</p>
+<p><li><code>react-hooks/rules-of-hooks</code> - rules of hooks (error)</li> <li><code>react-hooks/exhaustive-deps</code> - complete dependencies (warning)</li></p>
+<p>#### Accessibility (a11y)</p>
+<p><li><code>jsx-a11y/alt-text</code> - alt for images</li> <li><code>jsx-a11y/anchor-is-valid</code> - correct links</li> <li><code>jsx-a11y/click-events-have-key-events</code> - keyboard events</li> <li><code>jsx-a11y/no-autofocus</code> - autofocus limitation</li> <li><code>jsx-a11y/no-noninteractive-element-interactions</code> - events on interactive elements</li> <li><code>jsx-a11y/no-static-element-interactions</code> - roles for static elements</li></p>
+<div class="code-block"><pre><code>import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+<p>export default [...reactConfig]; </code></pre></div></p>
+<h3>Combining Profiles</h3>
+<p>You can combine profiles:</p>
+<div class="code-block"><pre><code>import baseConfig from '@ytvee-dev/eslint-config-react';
+import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+<p>// Base rules only export default [...baseConfig];</p>
+<p>// React application with base rules export default [...baseConfig, ...reactConfig];</p>
+<p>// Strict rules (includes base) export default [...strictConfig];</p>
+<p>// Strict React rules // Note: strictConfig already includes baseConfig export default [...strictConfig, ...reactConfig]; </code></pre></div></p>
+<p>For detailed information on applying profiles, see <a href="PROFILES.md">PROFILES.md</a>.</p>
+<h2>Autofix</h2>
+<p>Most rules support automatic fixing:</p>
+<h3>What is Automatically Fixed</h3>
+<p><li><strong>Formatting</strong> - Prettier fixes indentation, quotes, semicolons</li> <li><strong>Imports</strong> - automatic sorting by groups</li> <li><strong>var → const/let</strong> - replacing deprecated var</li> <li><strong>Arrow functions</strong> - simplifying function body</li> <li><strong>Trailing comma</strong> - adding comma in multiline structures</li> <li><strong>object-shorthand</strong> - shortening object syntax</li> <li><strong>template literals</strong> - replacing concatenation with template strings</li> <li><strong>Property quotes</strong> - removing unnecessary quotes</li> <li><strong>React</strong> - self-closing tags, boolean props</li></p>
+<h3>Running Autofix</h3>
+<div class="code-block"><pre><code><h1>Fix all auto-fixable errors</h1>
+npm run lint:fix
+<h1>or</h1>
+yarn lint:fix
+<h1>Fix a specific file</h1>
+npx eslint src/file.ts --fix
+</code></pre></div>
+<h3>What Requires Manual Fixing</h3>
+<p><li><code>no-unused-vars</code> - removing unused variables</li> <li><code>@typescript-eslint/no-floating-promises</code> - adding await/void</li> <li><code>react-hooks/exhaustive-deps</code> - adding dependencies to useEffect</li> <li><code>@typescript-eslint/explicit-function-return-type</code> - specifying return types</li> <li>Accessibility rules - adding alt, role, aria attributes</li></p>
+<h2>Differences from Airbnb</h2>
+<h3>What's Included from Airbnb</h3>
+<p><li>Best Practices rules (variables, functions, objects, arrays, strings)</li> <li>Code style (semicolons, braces, commas, spacing)</li> <li>Security (no-eval, no-new-func, no-extend-native)</li> <li>Comparisons and operators (eqeqeq, no-nested-ternary)</li></p>
+<h3>What's Changed</h3>
+<p>#### Formatting via Prettier</p>
+<p>Instead of Airbnb's formatting rules, Prettier is used:</p>
+<p><li>Unified style for JS/TS/JSX/TSX</li> <li>Automatic fixing</li> <li>No conflicts between rules</li></p>
+<p>#### TypeScript Instead of Flow</p>
+<p><li>Full type safety via <code>typescript-eslint</code></li> <li>Type-checked rules to protect against runtime errors</li> <li>No need for Babel or runtime shims</li></p>
+<p>#### Different Import Sorting</p>
+<p>Instead of <code>import/order</code>, <code>eslint-plugin-simple-import-sort</code> is used:</p>
+<p><li>More flexible grouping</li> <li>Support for <code>@/</code> aliases</li> <li>Automatic fixing</li></p>
+<p>#### Modular Structure</p>
+<p><li>Base profile without React</li> <li>Separate React profile</li> <li>Strict profile for large teams</li></ul></p>
+<p>#### Optional any Disallow</p>
+<p>In the base profile, <code>any</code> is allowed for gradual migration. Enabled in strict profile.</p>
+<h2>License</h2>
+<p>The package is distributed under the ISC license. Full text is available in the <a href="../LICENSE">LICENSE</a> file. </p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>
+                    Made with ❤️ by
+                    <a href="https://github.com/ytvee-dev" target="_blank">YT-DEV</a>
+                </p>
+                <p class="footer-links">
+                    <a href="https://github.com/ytvee-dev/eslint-config-react" target="_blank">GitHub</a>
+                    <span>•</span>
+                    <a href="https://www.npmjs.com/package/@ytvee-dev/eslint-config-react" target="_blank">NPM</a>
+                    <span>•</span>
+                    <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/LICENSE" target="_blank">ISC License</a>
+                </p>
+            </div>
+        </footer>
+    </main>
+</div>
+</body>
+</html>

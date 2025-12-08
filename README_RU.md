@@ -112,7 +112,7 @@ module.exports = require("@ytvee-dev/eslint-config-react/prettier");
 
 ## Лицензия
 
-ISC © [Tyan Yevgeniy](https://github.com/ytvee-dev)
+ISC © [YT-Dev](https://github.com/ytvee-dev)
 
 ## Ссылки
 

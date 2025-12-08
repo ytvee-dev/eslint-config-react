@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profiles Guide - @ytvee-dev/eslint-config-react</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <h1 class="logo"><a href="../../index.html" style="color: inherit; text-decoration: none;">@ytvee-dev/eslint-config-react</a></h1>
+            <nav class="nav">
+                <a href="../../index.html" class="back-link" style="margin-right: 20px; color: #fff;">← Back to Home</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<div class="container main-container">
+    <main class="content" style="max-width: 100%;">
+        <section class="section">
+            <div class="section-content doc-content">
+                <h1>How to Apply Profiles</h1>
+<p>This document explains how to use different configuration profiles from <code>@ytvee-dev/eslint-config-react</code> in your project.</p>
+<h2>Available Profiles</h2>
+<h3>Base Profile</h3>
+<p>The base profile includes fundamental ESLint rules, TypeScript type-checking, import management, and Prettier formatting.</p>
+<p><strong>What's included:</strong> <ul><li>All <code>@eslint/js</code> recommended rules</li> <li>TypeScript rules (type-checked)</li> <li>Best Practices from Airbnb</li> <li>Import sorting</li> <li>Prettier formatting</li> <li><code>@typescript-eslint/no-explicit-any</code> is disabled (for gradual migration)</li></p>
+<p><strong>How to use:</strong></p>
+<div class="code-block"><pre><code>import baseConfig from '@ytvee-dev/eslint-config-react';
+<p>export default [...baseConfig]; </code></pre></div></p>
+<h3>Strict Profile</h3>
+<p>The strict profile extends the base profile with additional constraints for larger teams and enterprise projects.</p>
+<p><strong>What's added:</strong> <li><code>@typescript-eslint/no-explicit-any</code> is enabled (error)</li> <li>Naming convention enforcement (<code>camelCase</code>/<code>PascalCase</code>)</li> <li>One public type/class/enum per file</li></p>
+<p><strong>How to use:</strong></p>
+<div class="code-block"><pre><code>import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+<p>export default [...strictConfig]; </code></pre></div></p>
+<p>Note: The strict profile already includes all base rules, so you don't need to import the base config separately.</p>
+<h3>React Profile</h3>
+<p>The React profile adds React-specific linting rules including JSX, hooks, and accessibility checks.</p>
+<p><strong>What's added:</strong> <li>React rules (JSX syntax, components)</li> <li>React Hooks rules</li> <li>Accessibility rules (a11y)</li></ul></p>
+<p><strong>How to use:</strong></p>
+<div class="code-block"><pre><code>import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+<p>export default [...reactConfig]; </code></pre></div></p>
+<p>Note: The React profile already includes all base rules, so you don't need to import the base config separately.</p>
+<h2>Common Combinations</h2>
+<h3>Basic JavaScript/TypeScript Project</h3>
+<p>For a standard Node.js or TypeScript project without React:</p>
+<div class="code-block"><pre><code>import baseConfig from '@ytvee-dev/eslint-config-react';
+<p>export default [...baseConfig]; </code></pre></div></p>
+<h3>React Application</h3>
+<p>For a React application with standard rules:</p>
+<div class="code-block"><pre><code>import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+<p>export default [...reactConfig]; </code></pre></div></p>
+<h3>Strict React Application</h3>
+<p>For a React application with strict rules enforced:</p>
+<div class="code-block"><pre><code>import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+<p>export default [   ...strictConfig,  // includes base rules + strict rules   ...reactConfig,   // adds React-specific rules (without base) ]; </code></pre></div></p>
+<p>Note: When combining strict and React profiles, the order matters. The strict profile must come first to ensure base rules are applied correctly.</p>
+<h3>React Application Without TypeScript Strict Rules</h3>
+<p>If you want React rules but not the strict TypeScript rules:</p>
+<div class="code-block"><pre><code>import baseConfig from '@ytvee-dev/eslint-config-react';
+import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+<p>export default [   ...baseConfig,   ...reactConfig, ]; </code></pre></div></p>
+<h2>Custom Overrides</h2>
+<p>You can add your own rules or override existing ones:</p>
+<div class="code-block"><pre><code>import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+<p>export default [   ...reactConfig,   {     rules: {       // Override specific rules       'no-console': 'warn',       '@typescript-eslint/explicit-function-return-type': 'off',     },   }, ]; </code></pre></div></p>
+<h2>File-Specific Configuration</h2>
+<p>You can apply different rules to specific files or directories:</p>
+<div class="code-block"><pre><code>import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+<p>export default [   ...reactConfig,   {     files: ['**/*.test.{ts,tsx}'],     rules: {       // Relax rules for test files       '@typescript-eslint/no-explicit-any': 'off',     },   },   {     files: ['scripts/**/*.js'],     rules: {       // Node.js scripts specific rules       'no-console': 'off',     },   }, ]; </code></pre></div></p>
+<h2>Migration Strategy</h2>
+<h3>Gradual Migration to Strict Rules</h3>
+<p>If you're migrating an existing codebase, start with the base profile:</p>
+<div class="code-block"><pre><code>// Step 1: Start with base profile
+import baseConfig from '@ytvee-dev/eslint-config-react';
+<p>export default [...baseConfig]; </code></pre></div></p>
+<p>Once all issues are fixed, move to strict:</p>
+<div class="code-block"><pre><code>// Step 2: Enable strict rules
+import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+<p>export default [...strictConfig]; </code></pre></div></p>
+<h3>Temporary Rule Disabling</h3>
+<p>During migration, you can temporarily disable specific rules:</p>
+<div class="code-block"><pre><code>import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+<p>export default [   ...strictConfig,   {     rules: {       // Temporarily disable until migration is complete       '@typescript-eslint/naming-convention': 'warn', // downgrade to warning     },   }, ]; </code></pre></div></p>
+<h2>Troubleshooting</h2>
+<h3>TypeScript Project Service</h3>
+<p>If you encounter issues with TypeScript linting, ensure you have a valid <code>tsconfig.json</code> in your project root. The config uses <code>projectService</code> which automatically detects your TypeScript configuration.</p>
+<h3>Performance Issues</h3>
+<p>For large projects, you may want to exclude certain directories:</p>
+<div class="code-block"><pre><code>import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+<p>export default [   { ignores: ['<strong>/build/</strong>', '<strong>/dist/</strong>', '<strong>/.next/</strong>'] },   ...reactConfig, ]; </code></pre></div></p>
+<h3>Conflicting Rules</h3>
+<p>If you experience conflicts with other ESLint configs or plugins, make sure to:</p>
+<p>1. Place <code>@ytvee-dev/eslint-config-react</code> configs first 2. Add your custom rules last 3. Use explicit overrides for conflicting rules</p>
+<div class="code-block"><pre><code>import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+import someOtherConfig from 'eslint-config-other';
+<p>export default [   ...reactConfig,   ...someOtherConfig,   {     rules: {       // Explicit override to resolve conflict       'some-rule': 'error',     },   }, ]; </code></pre></div></p>
+
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>
+                    Made with ❤️ by
+                    <a href="https://github.com/ytvee-dev" target="_blank">YT-DEV</a>
+                </p>
+                <p class="footer-links">
+                    <a href="https://github.com/ytvee-dev/eslint-config-react" target="_blank">GitHub</a>
+                    <span>•</span>
+                    <a href="https://www.npmjs.com/package/@ytvee-dev/eslint-config-react" target="_blank">NPM</a>
+                    <span>•</span>
+                    <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/LICENSE" target="_blank">ISC License</a>
+                </p>
+            </div>
+        </footer>
+    </main>
+</div>
+</body>
+</html>
