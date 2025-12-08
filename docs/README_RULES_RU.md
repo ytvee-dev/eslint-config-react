@@ -36,12 +36,186 @@
 
 #### Корректность классов и конструкторов
 
-- `constructor-super` - вызов super() в конструкторах
-- `no-class-assign` - запрет переназначения класса
-- `no-dupe-class-members` - запрет дублирования членов класса
-- `no-this-before-super` - запрет использования this/super до вызова super()
-- `no-unused-private-class-members` - неиспользуемые приватные члены класса
-- `getter-return` - getter должен возвращать значение
+**`constructor-super` - вызов super() в конструкторах**
+
+Описание: Если класс наследуется от другого (extends), его конструктор обязан вызывать super(...) до любого использования this. Это гарантирует корректную инициализацию родительского класса.
+
+```ts
+// Хорошо
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+class Employee extends Person {
+  constructor(name, position) {
+    super(name); // сначала super
+    this.position = position;
+  }
+}
+
+// Плохо
+class Employee extends Person {
+  constructor(name, position) {
+    this.position = position; // использование this до super
+    super(name);
+  }
+}
+```
+
+**`no-class-assign` - запрет переназначения класса**
+
+Описание: Запрещает переприсваивать идентификатор класса после объявления. Класс — это не просто переменная; его переопределение делает код непредсказуемым и ломает ожидания.
+
+```ts
+// Хорошо
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+const john = new Person('John');
+
+// Плохо
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+Person = {}; // переопределение класса
+```
+
+**`no-dupe-class-members` - запрет дублирования членов класса**
+
+Описание: В одном классе нельзя объявлять два метода или поля с одинаковым именем. Последующее определение тихо перетирает предыдущее и усложняет отладку.
+
+```ts
+// Хорошо
+class Person {
+  getName() {
+    return this.name;
+  }
+
+  setName(name) {
+    this.name = name;
+  }
+}
+
+// Плохо
+class Person {
+  getName() {
+    return this.name;
+  }
+
+  getName() { // дубликат метода
+    return this.name.toUpperCase();
+  }
+}
+```
+
+**`no-this-before-super` - запрет использования this/super до вызова super()**
+
+Описание: В подклассе (extends) нельзя обращаться к this или вызывать методы через super.* до явного вызова конструктора родителя super(). До этого момента экземпляр ещё не инициализирован.
+
+```ts
+// Хорошо
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+class Employee extends Person {
+  constructor(name, position) {
+    super(name);           // сначала super
+    this.position = position; // затем this
+  }
+}
+
+// Плохо
+class Employee extends Person {
+  constructor(name, position) {
+    this.position = position; // this до super
+    super(name);
+  }
+}
+
+class Manager extends Person {
+  constructor(name) {
+    super.log(); // обращение к super.* до super()
+    super(name);
+  }
+}
+```
+
+**`no-unused-private-class-members` - неиспользуемые приватные члены класса**
+
+Описание: Приватные поля и методы класса (с префиксом #) должны использоваться внутри класса. Неиспользуемые приватные члены считаются мёртвым кодом и должны удаляться.
+
+```ts
+// Хорошо
+class Counter {
+  #value = 0;
+
+  increment() {
+    this.#value += 1; // приватное поле используется
+  }
+
+  getValue() {
+    return this.#value;
+  }
+}
+
+// Плохо
+class Counter {
+  #value = 0;      // нигде не используется
+  #log() {         // метод тоже не используется
+    console.log(this.#value);
+  }
+
+  increment() {
+    // логика без использования приватных членов
+  }
+}
+```
+
+**`getter-return` - getter должен возвращать значение**
+
+Описание: Геттер (get prop() { ... }) обязан всегда либо возвращать значение через return, либо явно выбрасывать ошибку. Отсутствие return делает поведение геттера неочевидным.
+
+```ts
+// Хорошо
+class Person {
+  constructor(name) {
+    this._name = name;
+  }
+
+  get name() {
+    return this._name;
+  }
+}
+
+// Хорошо (геттер всегда бросает ошибку)
+class Config {
+  get secretKey() {
+    throw new Error('Access denied');
+  }
+}
+
+// Плохо
+class Person {
+  constructor(name) {
+    this._name = name;
+  }
+
+  get name() {
+    console.log(this._name); // нет return
+  }
+}
+```
 
 #### Безопасность управления потоком
 
@@ -1133,6 +1307,3 @@ interface Post {
 ```
 
 ---
-
-Для получения подробной информации о применении профилей в вашем проекте смотрите [PROFILES_RU.md](PROFILES_RU.md).
-
