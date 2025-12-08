@@ -1010,9 +1010,99 @@ if (Array.isArray(value)) {
 
 #### Корректность промисов и асинхронности
 
-- `no-async-promise-executor` - запрет async в executor промиса
-- `no-unsafe-optional-chaining` - безопасный optional chaining
-- `no-unsafe-negation` - безопасное отрицание
+**`no-async-promise-executor` – запрет async в executor промиса**
+
+Описание: Запрещает объявлять executor у new Promise как async-функцию. Исключения в async-executor ведут себя нетривиально, могут превращаться в неотлавливаемые отклонения и усложняют управление потоком. Асинхронный код нужно выносить за пределы конструктора Promise или использовать уже существующие промисы.
+
+```ts
+// Хорошо
+// без async в executor
+const result = new Promise((resolve, reject) => {
+  try {
+    const value = computeSync();
+    resolve(value);
+  } catch (error) {
+    reject(error);
+  }
+});
+
+// асинхронная логика снаружи
+async function fetchData() {
+  const response = await api.get('/data');
+  return response.data;
+}
+
+fetchData().then(handleData).catch(handleError);
+
+// Плохо
+// executor объявлен как async
+const result = new Promise(async (resolve, reject) => {
+  const response = await api.get('/data');
+  resolve(response.data);
+  // ошибки могут всплывать неконтролируемо
+});
+```
+
+**`no-unsafe-optional-chaining` – безопасный optional chaining**
+
+Описание: Запрещает использование ?. в местах, где результат может неожиданно стать undefined и тут же использоваться в контексте, не готовом к этому (арифметика, логические операции, левый операнд in/instanceof, присваивание и т.п.). Правило заставляет явно учитывать undefined после optional chaining и тем самым предотвращает скрытые TypeError и неочевидную логику.
+
+```ts
+// Хорошо
+// безопасный доступ к глубоко вложенному свойству
+const street = user?.address?.street ?? 'Unknown street';
+
+// безопасный вызов метода
+const length = user?.getName?.().length ?? 0;
+
+// явная проверка перед использованием
+const price = product?.price;
+if (price != null) {
+  total += price;
+}
+
+// Плохо
+// арифметика с возможным undefined
+total += product?.price; // если product undefined, будет total += undefined
+
+// небезопасный доступ к свойству результата optional chaining
+const street = user?.address.street; // address может быть undefined
+
+// использование слева от in
+if (key in obj?.config) {
+  // obj может быть undefined -> TypeError
+}
+
+// присваивание в цепочку
+user?.profile.name = 'John'; // если user undefined, будет попытка записи в undefined
+```
+
+**`no-unsafe-negation` – безопасное отрицание**
+
+Описание: Запрещает отрицание ! непосредственно перед оператором сравнения (in, instanceof и др.), из-за особенностей парсинга. Конструкция !key in obj интерпретируется как (!key) in obj, а не как !(key in obj). Правило требует ставить скобки, чтобы явно указать, что именно отрицается.
+
+```ts
+// Хорошо
+// проверяем, что свойства НЕТ в объекте
+if (!(key in obj)) {
+  // ключ отсутствует
+}
+
+// проверяем, что значение НЕ является экземпляром класса
+if (!(value instanceof Error)) {
+  // не ошибка
+}
+
+// Плохо
+if (!key in obj) {
+  // на самом деле интерпретируется как (!key) in obj
+  // логика почти наверняка неверная
+}
+
+if (!value instanceof Error) {
+  // интерпретируется как (!value) instanceof Error
+}
+```
 
 ### Best Practices (Airbnb)
 
