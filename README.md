@@ -110,7 +110,7 @@ Full documentation is also available in the `/docs` folder:
 
 ## License
 
-ISC © [YT-Dev](https://github.com/ytvee-dev)
+MIT © [YT-Dev](https://github.com/ytvee-dev)
 
 ## Links
 

@@ -383,4 +383,4 @@ In the base profile, `any` is allowed for gradual migration. Enabled in strict p
 
 ## License
 
-The package is distributed under the ISC license. Full text is available in the [LICENSE](../LICENSE) file.
+The package is distributed under the MIT license. Full text is available in the [LICENSE](../LICENSE) file.

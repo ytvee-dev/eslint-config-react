@@ -103,7 +103,7 @@ function createHTMLPage(title, content, pageId, enLink) {
         
         <footer class="footer">
             <p>
-                <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/LICENSE" target="_blank">ISC License</a>
+                <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/LICENSE" target="_blank">MIT License</a>
             </p>
         </footer>
     </div>
