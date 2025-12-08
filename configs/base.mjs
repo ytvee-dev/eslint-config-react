@@ -4,6 +4,7 @@ import tseslint from 'typescript-eslint';
 
 import pluginJs from '@eslint/js';
 
+import { bestPracticesRule } from './rules/best-practices.rule.mjs';
 import { ignoreRule } from './rules/ignore.rule.mjs';
 import { importRule } from './rules/import.rule.mjs';
 import { importsRule } from './rules/import-sort.rule.mjs';
@@ -13,12 +14,19 @@ import { typescriptRule } from './rules/typescript.rule.mjs';
 const tsconfigRootDir = new URL('..', import.meta.url).pathname;
 
 export default [
-  typescriptRule,
   ignoreRule,
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  bestPracticesRule,
+  importRule,
+  importsRule,
+  javascriptRule,
+  ...tseslint.configs.recommendedTypeChecked.map((config) => ({
+    ...config,
+    files: ['**/*.{ts,tsx}'],
+  })),
   {
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       parserOptions: {
         projectService: true,
@@ -26,8 +34,6 @@ export default [
       },
     },
   },
-  importRule,
-  importsRule,
-  javascriptRule,
+  typescriptRule,
   eslintPluginPrettierRecommended,
 ];

@@ -1,117 +1,1206 @@
 # Правила линтера, используемые в проекте
 
-Документ описывает все правила, которые реально включены в `@ytvee-dev/eslint-config-react`, в стилистике [Airbnb JavaScript Style Guide](https://leonidlebedev.github.io/javascript-airbnb). Ниже перечислены профили, ограничения и игнорируемые файлы.
+Документ описывает все правила, которые реально включены в `@ytvee-dev/eslint-config-react`, в стилистике [Airbnb JavaScript Style Guide](https://leonidlebedev.github.io/javascript-airbnb). Ниже перечислены профили, ограничения и игнорируемые файлы с примерами для каждого правила.
+
+## Содержание
+
+- [Игнорируемые пути](#игнорируемые-пути)
+- [Базовый профиль (JavaScript + TypeScript)](#базовый-профиль-javascript--typescript)
+  - [Общие правила @eslint/js](#общие-правила-eslintjs-config-recommended)
+  - [Best Practices (Airbnb)](#best-practices-airbnb)
+  - [Импорты](#импорты)
+  - [Форматирование (Prettier)](#форматирование-prettier--eslint-plugin-prettierrecommended)
+  - [Правила TypeScript](#правила-typescript-eslint-config-recommendedtypechecked)
+  - [Кастомные TypeScript правила](#кастомные-ts-усиления-поверх-рекомендованного-набора)
+- [React-профиль](#react-профиль-configsreactmjs)
+- [Строгий профиль](#строгий-профиль-configsstrictmjs)
+- [Как применять профили](#как-применять-профили)
 
 ## Игнорируемые пути
 
 Линтер не проверяет вспомогательные артефакты и собранные файлы:
 
-- `node_modules`, `dist`, `.yarn`, `.git*`, `examples`.
-- Конфигурационные файлы линтера и форматтера: `.eslintrc*`, `.prettier*`.
-- Служебные типы сборки: `tsup*`, `Dockerfile`, любые `*.md`, `*.json`, `*.yml`.
+- `node_modules`, `dist`, `.yarn`, `.git*`, `examples`
+- Конфигурационные файлы линтера и форматтера: `.eslintrc*`, `.prettier*`
+- Служебные типы сборки: `tsup*`, `Dockerfile`, любые `*.md`, `*.json`, `*.yml`
+- PnP файлы Yarn: `.pnp.*`
+
+---
 
 ## Базовый профиль (JavaScript + TypeScript)
 
 Профиль `eslint.config.mjs` собирает рекомендации `@eslint/js`, набор `typescript-eslint` в режиме type-checked, дополнительные правила для импортов и форматирования. Все правила из этого раздела применяются к `.js/.mjs/.ts/.tsx` файлам, если не указано иное.
 
-### Общие правила `@eslint/js` (config `recommended`)
+### Общие правила @eslint/js (config `recommended`)
 
-- Корректность классов и конструкторов: `constructor-super`, `no-class-assign`, `no-dupe-class-members`, `no-this-before-super`, `no-unused-private-class-members`, `getter-return`.
-- Безопасность управления потоком: `no-cond-assign`, `no-constant-binary-expression`, `no-constant-condition`, `no-unexpected-multiline`, `no-unreachable`, `no-unsafe-finally`, `require-yield`, `for-direction`.
-- Защита от ошибок синтаксиса и RegExp: `no-control-regex`, `no-empty-character-class`, `no-fallthrough`, `no-invalid-regexp`, `no-misleading-character-class`, `no-regex-spaces`, `no-useless-backreference`, `no-irregular-whitespace`.
-- Чистый код без дубликатов: `no-dupe-args`, `no-dupe-else-if`, `no-dupe-keys`, `no-duplicate-case`, `no-empty`, `no-empty-pattern`, `no-empty-static-block`, `no-extra-boolean-cast`.
-- Работа с переменными: `no-delete-var`, `no-shadow-restricted-names`, `no-undef`, `no-unused-labels`, `no-unused-vars` (перекрывается TypeScript-версией ниже), `no-self-assign`.
-- Безопасные числа и сравнения: `no-compare-neg-zero`, `no-loss-of-precision`, `use-isnan`, `valid-typeof`.
-- Корректность промисов и асинхронности: `no-async-promise-executor`, `no-unsafe-optional-chaining`, `no-unsafe-negation`.
-- Чистые объявления: `no-case-declarations`, `no-const-assign`, `no-ex-assign`, `no-func-assign`, `no-global-assign`, `no-import-assign`, `no-new-native-nonconstructor`, `no-obj-calls`, `no-octal`, `no-prototype-builtins`, `no-redeclare`, `no-setter-return`, `no-with`, `no-debugger`.
-- Регулярности работы с массивами и строками: `no-sparse-arrays`, `no-useless-catch`, `no-useless-escape`, `no-nonoctal-decimal-escape`.
+Эти правила включены автоматически через `pluginJs.configs.recommended` и защищают от распространённых ошибок.
+
+#### Корректность классов и конструкторов
+
+- `constructor-super` - вызов super() в конструкторах
+- `no-class-assign` - запрет переназначения класса
+- `no-dupe-class-members` - запрет дублирования членов класса
+- `no-this-before-super` - запрет использования this/super до вызова super()
+- `no-unused-private-class-members` - неиспользуемые приватные члены класса
+- `getter-return` - getter должен возвращать значение
+
+#### Безопасность управления потоком
+
+- `no-cond-assign` - запрет присваивания в условиях
+- `no-constant-binary-expression` - запрет константных бинарных выражений
+- `no-constant-condition` - запрет константных условий
+- `no-unexpected-multiline` - защита от неожиданных многострочных выражений
+- `no-unreachable` - запрет недостижимого кода
+- `no-unsafe-finally` - запрет управления потоком в finally
+- `require-yield` - генераторы должны содержать yield
+- `for-direction` - корректное направление цикла for
+
+#### Защита от ошибок синтаксиса и RegExp
+
+- `no-control-regex` - запрет управляющих символов в регулярках
+- `no-empty-character-class` - запрет пустых классов в регулярках
+- `no-fallthrough` - запрет fallthrough в switch
+- `no-invalid-regexp` - запрет невалидных регулярных выражений
+- `no-misleading-character-class` - запрет misleading символов в регулярках
+- `no-regex-spaces` - запрет множественных пробелов в регулярках
+- `no-useless-backreference` - запрет бесполезных обратных ссылок
+- `no-irregular-whitespace` - запрет нестандартных пробелов
+
+#### Чистый код без дубликатов
+
+- `no-dupe-args` - запрет дублирования аргументов
+- `no-dupe-else-if` - запрет дублирования условий else-if
+- `no-dupe-keys` - запрет дублирования ключей объекта
+- `no-duplicate-case` - запрет дублирования case в switch
+- `no-empty` - запрет пустых блоков
+- `no-empty-pattern` - запрет пустых паттернов деструктуризации
+- `no-empty-static-block` - запрет пустых статических блоков
+- `no-extra-boolean-cast` - запрет лишнего boolean приведения
+
+#### Работа с переменными
+
+- `no-delete-var` - запрет удаления переменных
+- `no-shadow-restricted-names` - запрет затенения зарезервированных имён
+- `no-undef` - запрет неопределённых переменных
+- `no-unused-labels` - запрет неиспользуемых меток
+- `no-unused-vars` - перекрывается TypeScript-версией
+- `no-self-assign` - запрет самоприсваивания
+
+#### Безопасные числа и сравнения
+
+- `no-compare-neg-zero` - запрет сравнения с -0
+- `no-loss-of-precision` - запрет потери точности чисел
+- `use-isnan` - использовать isNaN для проверки NaN
+- `valid-typeof` - корректные строки для typeof
+
+#### Корректность промисов и асинхронности
+
+- `no-async-promise-executor` - запрет async в executor промиса
+- `no-unsafe-optional-chaining` - безопасный optional chaining
+- `no-unsafe-negation` - безопасное отрицание
+
+### Best Practices (Airbnb)
+
+Эти правила основаны на Airbnb JavaScript Style Guide и включают лучшие практики разработки.
+
+#### `no-var` - Использовать const/let вместо var
+
+**Описание:** Запрещает использование `var`, требует `const` или `let`.
+
+```js
+// ✅ Хорошо
+const x = 1;
+let y = 2;
+
+// ❌ Плохо
+var x = 1;
+```
+
+#### `prefer-const` - Предпочитать const для неизменяемых переменных
+
+**Описание:** Если переменная не переназначается, используй `const`.
+
+```js
+// ✅ Хорошо
+const name = 'John';
+let count = 0;
+count += 1;
+
+// ❌ Плохо
+let name = 'John'; // никогда не меняется
+```
+
+#### `no-eval` - Запрет использования eval()
+
+**Описание:** `eval()` опасен и может выполнять произвольный код.
+
+```js
+// ✅ Хорошо
+const result = calculate(x, y);
+
+// ❌ Плохо
+const result = eval('x + y');
+```
+
+#### `no-new-func` - Запрет создания функций через new Function
+
+**Описание:** Аналогично eval, создание функций из строк небезопасно.
+
+```js
+// ✅ Хорошо
+const add = (a, b) => a + b;
+
+// ❌ Плохо
+const add = new Function('a', 'b', 'return a + b');
+```
+
+#### `no-return-assign` - Запрет присваивания в return
+
+**Описание:** Присваивание в return может быть запутывающим.
+
+```js
+// ✅ Хорошо
+function getValue(num) {
+  const result = num * 2;
+  return result;
+}
+
+// ❌ Плохо
+function getValue(num) {
+  return result = num * 2;
+}
+```
+
+#### `no-param-reassign` - Запрет переназначения параметров
+
+**Описание:** Запрещает изменение параметров функции (но разрешает изменение их свойств).
+
+```js
+// ✅ Хорошо
+function addProperty(obj) {
+  obj.newProp = 'value'; // модификация свойств разрешена
+  return obj;
+}
+
+function increment(num) {
+  return num + 1;
+}
+
+// ❌ Плохо
+function increment(num) {
+  num += 1; // переназначение параметра запрещено
+  return num;
+}
+```
+
+#### `no-useless-return` - Запрет бесполезного return
+
+**Описание:** Удаляет избыточные return в конце функции.
+
+```js
+// ✅ Хорошо
+function doSomething() {
+  console.log('done');
+}
+
+// ❌ Плохо
+function doSomething() {
+  console.log('done');
+  return;
+}
+```
+
+#### `no-else-return` - Запрет else после return
+
+**Описание:** Если в if есть return, else не нужен.
+
+```js
+// ✅ Хорошо
+function getValue(condition) {
+  if (condition) {
+    return 'yes';
+  }
+  return 'no';
+}
+
+// ❌ Плохо
+function getValue(condition) {
+  if (condition) {
+    return 'yes';
+  } else {
+    return 'no';
+  }
+}
+```
+
+#### `eqeqeq` - Строгое сравнение === вместо ==
+
+**Описание:** Всегда используй `===` и `!==` вместо `==` и `!=` (кроме сравнения с null).
+
+```js
+// ✅ Хорошо
+if (x === 10) {}
+if (x == null) {} // разрешено для null/undefined
+
+// ❌ Плохо
+if (x == 10) {}
+```
+
+#### `no-iterator` - Запрет использования __iterator__
+
+**Описание:** `__iterator__` устарел, используй итераторы ES6.
+
+```js
+// ✅ Хорошо
+for (const item of array) {}
+
+// ❌ Плохо
+obj.__iterator__ = function() {};
+```
+
+#### `no-proto` - Запрет использования __proto__
+
+**Описание:** Используй `Object.getPrototypeOf()` вместо `__proto__`.
+
+```js
+// ✅ Хорошо
+const proto = Object.getPrototypeOf(obj);
+
+// ❌ Плохо
+const proto = obj.__proto__;
+```
+
+#### `no-extend-native` - Запрет расширения нативных объектов
+
+**Описание:** Не изменяй прототипы встроенных объектов.
+
+```js
+// ✅ Хорошо
+function getLastElement(arr) {
+  return arr[arr.length - 1];
+}
+
+// ❌ Плохо
+Array.prototype.last = function() {
+  return this[this.length - 1];
+};
+```
+
+#### `no-new-object` - Использовать литералы объектов
+
+**Описание:** Используй `{}` вместо `new Object()`.
+
+```js
+// ✅ Хорошо
+const obj = {};
+
+// ❌ Плохо
+const obj = new Object();
+```
+
+#### `object-shorthand` - Сокращённый синтаксис объектов
+
+**Описание:** Используй сокращённую запись методов и свойств.
+
+```js
+// ✅ Хорошо
+const obj = {
+  name,
+  getValue() {
+    return 1;
+  },
+};
+
+// ❌ Плохо
+const obj = {
+  name: name,
+  getValue: function() {
+    return 1;
+  },
+};
+```
+
+#### `quote-props` - Кавычки для свойств объекта только когда нужно
+
+**Описание:** Не оборачивай ключи в кавычки, если это не требуется.
+
+```js
+// ✅ Хорошо
+const obj = {
+  name: 'John',
+  'full-name': 'John Doe',
+};
+
+// ❌ Плохо
+const obj = {
+  'name': 'John',
+};
+```
+
+#### `array-callback-return` - Обязательный return в array методах
+
+**Описание:** Колбэки map/filter/reduce должны возвращать значение.
+
+```js
+// ✅ Хорошо
+const doubled = array.map(x => x * 2);
+array.forEach(x => console.log(x));
+
+// ❌ Плохо
+const doubled = array.map(x => {
+  x * 2; // нет return
+});
+```
+
+#### `prefer-destructuring` - Предпочитать деструктуризацию
+
+**Описание:** Используй деструктуризацию для извлечения свойств объектов.
+
+```js
+// ✅ Хорошо
+const { name, age } = user;
+
+// ❌ Плохо
+const name = user.name;
+const age = user.age;
+```
+
+#### `prefer-template` - Использовать template strings
+
+**Описание:** Используй template literals вместо конкатенации строк.
+
+```js
+// ✅ Хорошо
+const message = `Hello, ${name}!`;
+
+// ❌ Плохо
+const message = 'Hello, ' + name + '!';
+```
+
+#### `template-curly-spacing` - Нет пробелов в template literals
+
+**Описание:** Не добавляй пробелы внутри `${}`.
+
+```js
+// ✅ Хорошо
+const message = `Hello, ${name}!`;
+
+// ❌ Плохо
+const message = `Hello, ${ name }!`;
+```
+
+#### `no-useless-concat` - Запрет бесполезной конкатенации
+
+**Описание:** Не конкатенируй литералы, которые можно объединить.
+
+```js
+// ✅ Хорошо
+const message = 'Hello World';
+
+// ❌ Плохо
+const message = 'Hello ' + 'World';
+```
+
+#### `prefer-arrow-callback` - Предпочитать стрелочные функции в колбэках
+
+**Описание:** Используй стрелочные функции для коротких колбэков.
+
+```js
+// ✅ Хорошо
+array.map(x => x * 2);
+
+// ❌ Плохо (если не нужен this)
+array.map(function(x) { return x * 2; });
+```
+
+#### `arrow-body-style` - Неявный return в стрелочных функциях
+
+**Описание:** Если тело стрелочной функции — одно выражение, опускай `{}` и `return`.
+
+```js
+// ✅ Хорошо
+const double = x => x * 2;
+
+// ❌ Плохо
+const double = x => { return x * 2; };
+```
+
+#### `arrow-parens` - Всегда скобки вокруг параметров стрелочных функций
+
+**Описание:** Всегда оборачивай параметры в скобки.
+
+```js
+// ✅ Хорошо
+const double = (x) => x * 2;
+
+// ❌ Плохо
+const double = x => x * 2;
+```
+
+#### `no-restricted-exports` - Запрет экспорта определённых имён
+
+**Описание:** Запрещает экспортировать `default` как именованный и `then` (для совместимости с промисами).
+
+```js
+// ✅ Хорошо
+export const value = 42;
+export default MyComponent;
+
+// ❌ Плохо
+export { default } from './module';
+export const then = () => {};
+```
+
+#### `no-nested-ternary` - Предупреждение о вложенных тернарных операторах
+
+**Описание:** Вложенные тернарники сложно читать.
+
+```js
+// ✅ Хорошо
+let value;
+if (condition1) {
+  value = 'a';
+} else if (condition2) {
+  value = 'b';
+} else {
+  value = 'c';
+}
+
+// ⚠️ Плохо (предупреждение)
+const value = condition1 ? 'a' : condition2 ? 'b' : 'c';
+```
+
+#### `no-unneeded-ternary` - Запрет ненужных тернарных операторов
+
+**Описание:** Не используй тернарник, если можно обойтись без него.
+
+```js
+// ✅ Хорошо
+const isActive = !!value;
+
+// ❌ Плохо
+const isActive = value ? true : false;
+```
+
+#### `no-mixed-operators` - Явная приоритетность операторов
+
+**Описание:** Используй скобки для ясности при смешивании операторов.
+
+```js
+// ✅ Хорошо
+const result = (a + b) * c;
+const result = a && b || c;
+
+// ❌ Плохо
+const result = a + b * c; // неочевидно
+const result = a && b / c;
+```
+
+#### `brace-style` - Стиль фигурных скобок
+
+**Описание:** Открывающая скобка на той же строке (1tbs style).
+
+```js
+// ✅ Хорошо
+if (condition) {
+  doSomething();
+}
+
+// ❌ Плохо
+if (condition)
+{
+  doSomething();
+}
+```
+
+#### `spaced-comment` - Пробел после // или /*
+
+**Описание:** Всегда добавляй пробел после начала комментария.
+
+```js
+// ✅ Хорошо
+// This is a comment
+/* This is a block comment */
+
+// ❌ Плохо
+//This is a comment
+/*This is a block comment*/
+```
+
+#### `comma-style` - Запятая в конце строки
+
+**Описание:** Запятые должны быть в конце строки, а не в начале следующей.
+
+```js
+// ✅ Хорошо
+const obj = {
+  a: 1,
+  b: 2,
+};
+
+// ❌ Плохо
+const obj = {
+  a: 1
+  , b: 2
+};
+```
+
+#### `comma-dangle` - Trailing comma в многострочных структурах
+
+**Описание:** Всегда добавляй запятую после последнего элемента в многострочных структурах.
+
+```js
+// ✅ Хорошо
+const obj = {
+  a: 1,
+  b: 2,
+};
+
+const arr = [
+  1,
+  2,
+];
+
+// ❌ Плохо
+const obj = {
+  a: 1,
+  b: 2
+};
+```
+
+#### `radix` - Явное указание системы счисления в parseInt
+
+**Описание:** Всегда указывай второй параметр radix для parseInt.
+
+```js
+// ✅ Хорошо
+const num = parseInt('10', 10);
+
+// ❌ Плохо
+const num = parseInt('10');
+```
+
+#### `no-new` - Запрет вызова new без присваивания
+
+**Описание:** Не вызывай конструктор без сохранения результата.
+
+```js
+// ✅ Хорошо
+const instance = new MyClass();
+
+// ❌ Плохо
+new MyClass();
+```
 
 ### Явные точки с запятой (`semi`)
 
-Все инструкции завершаются точкой с запятой.
+**Описание:** Все инструкции завершаются точкой с запятой.
 
 ```js
-// Хорошо
+// ✅ Хорошо
 const sum = a + b;
+doSomething();
 
-// Плохо
+// ❌ Плохо
 const sum = a + b
+doSomething()
 ```
 
-### Запрет `Symbol` и `BigInt` без поддержки среды (`no-restricted-syntax`)
+### Запрет Symbol и BigInt без поддержки среды (`no-restricted-syntax`)
 
-Использование `Symbol` и `BigInt` блокируется, если среда может их не поддерживать.
+**Описание:** Использование `Symbol` и `BigInt` блокируется, если среда может их не поддерживать.
+
+```js
+// ✅ Хорошо (если среда поддерживает)
+// const sym = Symbol('key');
+
+// ❌ Плохо (если среда не поддерживает)
+const sym = Symbol('key');
+const big = 123n;
+```
 
 ### Импорты
 
-- **Не дублируйте импорты** (`no-duplicate-imports`).
-- **Не указывайте расширения** (`import/extensions`): для `js/jsx/ts/tsx` расширение опускается.
-- **Сортировка импортов** (`simple-import-sort/imports`): группы — внешние зависимости → namespace из `@*` → абсолютные `@/...` алиасы → side-effect импорты → восходящие относительные → одноуровневые относительные.
+#### `no-duplicate-imports` - Не дублируйте импорты
 
-```ts
-// Плохо
+**Описание:** Объединяйте импорты из одного модуля в один import.
+
+```js
+// ✅ Хорошо
+import { foo, bar } from 'module';
+
+// ❌ Плохо
+import { foo } from 'module';
+import { bar } from 'module';
+```
+
+#### `import/extensions` - Не указывайте расширения для JS/TS файлов
+
+**Описание:** Для `js/jsx/ts/tsx` расширение опускается.
+
+```js
+// ✅ Хорошо
+import Button from './Button';
+import utils from '@/utils';
+
+// ❌ Плохо
+import Button from './Button.tsx';
+import utils from '@/utils.ts';
+```
+
+#### `simple-import-sort/imports` - Сортировка импортов
+
+**Описание:** Импорты автоматически сортируются в группы:
+1. Внешние зависимости (`react`, `express`, etc.)
+2. Namespace из `@*` пакетов (`@internal/logger`)
+3. Абсолютные `@/...` алиасы (`@/components/Button`)
+4. Side-effect импорты (`./styles.css`)
+5. Восходящие относительные (`../parent/module`)
+6. Одноуровневые относительные (`./helper`)
+
+```js
+// ✅ Хорошо
+import express from 'express';
+import { useState } from 'react';
+
+import { logger } from '@internal/logger';
+
+import { Button } from '@/components/Button';
+
+import './styles.css';
+
+import { something } from '../parent/module';
+
+import { helper } from './helper';
+
+// ❌ Плохо (неправильный порядок)
 import './styles.css';
 import { Button } from '@/components/Button';
 import express from 'express';
-
-// Хорошо
-import express from 'express';
-import { Button } from '@/components/Button';
-import './styles.css';
+import { helper } from './helper';
 ```
 
 ### Форматирование (Prettier + `eslint-plugin-prettier/recommended`)
 
-- Однострочные кавычки, точка с запятой, ширина строки 120, запятая после последнего элемента, отступ 2 пробела. Нарушения подсвечиваются как ошибки ESLint.
+**Описание:** Все нарушения Prettier показываются как ошибки ESLint. Настройки:
+- Ширина строки: 120 символов
+- Кавычки: одинарные
+- Точка с запятой: обязательна
+- Отступ: 2 пробела
+- Trailing comma: всегда в многострочных структурах
 
-### Правила `typescript-eslint` (config `recommendedTypeChecked`)
+```js
+// ✅ Хорошо
+const obj = {
+  name: 'John',
+  age: 30,
+};
 
-Ниже перечислены все правила набора type-checked с учётом переопределений пресета:
+const message = `Hello, ${name}!`;
 
-- Безопасные async-операции: `@typescript-eslint/await-thenable`, `@typescript-eslint/no-floating-promises` (дублирует кастомное правило), `@typescript-eslint/no-for-in-array`, `@typescript-eslint/no-implied-eval`, `@typescript-eslint/no-misused-promises`, `@typescript-eslint/require-await`, `@typescript-eslint/unbound-method`.
-- Строгие типы и отсутствие небезопасных конструкций: `@typescript-eslint/no-unsafe-argument`, `@typescript-eslint/no-unsafe-assignment`, `@typescript-eslint/no-unsafe-call`, `@typescript-eslint/no-unsafe-declaration-merging`, `@typescript-eslint/no-unsafe-enum-comparison`, `@typescript-eslint/no-unsafe-function-type`, `@typescript-eslint/no-unsafe-member-access`, `@typescript-eslint/no-unsafe-return`, `@typescript-eslint/no-unsafe-unary-minus`, `@typescript-eslint/no-base-to-string`.
-- Чистота типов: `@typescript-eslint/no-duplicate-enum-values`, `@typescript-eslint/no-duplicate-type-constituents`, `@typescript-eslint/no-empty-object-type`, `@typescript-eslint/no-non-null-asserted-optional-chain`, `@typescript-eslint/no-extra-non-null-assertion`, `@typescript-eslint/no-redundant-type-constituents`, `@typescript-eslint/no-unnecessary-type-assertion`, `@typescript-eslint/no-unnecessary-type-constraint`, `@typescript-eslint/prefer-as-const`.
-- Ограничения по синтаксису: `@typescript-eslint/no-namespace`, `@typescript-eslint/triple-slash-reference`, `@typescript-eslint/prefer-namespace-keyword`.
-- Контроль генераторов и промисов: `@typescript-eslint/prefer-promise-reject-errors` (заменяет базовое `prefer-promise-reject-errors`).
-- Документация и комментарии: `@typescript-eslint/ban-ts-comment`.
-- Запрет устаревших конструкций: `@typescript-eslint/no-array-constructor`, `@typescript-eslint/no-array-delete`, `@typescript-eslint/no-misused-new`, `@typescript-eslint/no-require-imports`.
-- Исключение опасных преобразований: `@typescript-eslint/no-unsafe-enum-comparison`, `@typescript-eslint/restrict-plus-operands`, `@typescript-eslint/restrict-template-expressions`, `@typescript-eslint/only-throw-error`, `@typescript-eslint/no-wrapper-object-types`.
-- Работа с переменными и выражениями: `@typescript-eslint/no-unused-vars` (перекрывается кастомной конфигурацией ниже), `@typescript-eslint/no-this-alias`, `@typescript-eslint/no-unused-expressions`.
-- **Отключённое в базовом профиле правило:** `@typescript-eslint/no-explicit-any` (снимается в строгом профиле).
+// ❌ Плохо
+const obj = {
+  name: "John",
+  age: 30
+}
+
+const message = `Hello, ${ name }!`
+```
+
+### Правила TypeScript-eslint (config `recommendedTypeChecked`)
+
+Эти правила включены автоматически через `tseslint.configs.recommendedTypeChecked` и применяются только к `.ts/.tsx` файлам.
+
+#### Безопасные async-операции
+
+- `@typescript-eslint/await-thenable` - await только для thenable
+- `@typescript-eslint/no-floating-promises` - обрабатывай все промисы
+- `@typescript-eslint/no-for-in-array` - не используй for-in для массивов
+- `@typescript-eslint/no-implied-eval` - запрет неявного eval
+- `@typescript-eslint/no-misused-promises` - корректное использование промисов
+- `@typescript-eslint/require-await` - async функции должны содержать await
+- `@typescript-eslint/unbound-method` - методы должны вызываться с правильным контекстом
+
+#### Строгие типы и отсутствие небезопасных конструкций
+
+- `@typescript-eslint/no-unsafe-argument` - типобезопасные аргументы
+- `@typescript-eslint/no-unsafe-assignment` - типобезопасное присваивание
+- `@typescript-eslint/no-unsafe-call` - типобезопасные вызовы
+- `@typescript-eslint/no-unsafe-declaration-merging` - безопасное слияние деклараций
+- `@typescript-eslint/no-unsafe-enum-comparison` - безопасное сравнение enum
+- `@typescript-eslint/no-unsafe-function-type` - безопасные типы функций
+- `@typescript-eslint/no-unsafe-member-access` - безопасный доступ к членам
+- `@typescript-eslint/no-unsafe-return` - типобезопасные return
+- `@typescript-eslint/no-base-to-string` - безопасное преобразование в строку
+
+#### Чистота типов
+
+- `@typescript-eslint/no-duplicate-enum-values` - запрет дублей в enum
+- `@typescript-eslint/no-duplicate-type-constituents` - запрет дублей в union/intersection
+- `@typescript-eslint/no-empty-object-type` - запрет пустых объектных типов
+- `@typescript-eslint/no-non-null-asserted-optional-chain` - запрет `!` после optional chain
+- `@typescript-eslint/no-extra-non-null-assertion` - запрет лишних `!`
+- `@typescript-eslint/no-redundant-type-constituents` - запрет избыточных типов
+- `@typescript-eslint/no-unnecessary-type-assertion` - запрет ненужных as
+- `@typescript-eslint/no-unnecessary-type-constraint` - запрет ненужных extends
+- `@typescript-eslint/prefer-as-const` - предпочитать as const
+
+#### Ограничения по синтаксису
+
+- `@typescript-eslint/no-namespace` - не используй namespace (кроме .d.ts)
+- `@typescript-eslint/triple-slash-reference` - запрет /// <reference>
+- `@typescript-eslint/prefer-namespace-keyword` - используй namespace вместо module
 
 ### Кастомные TS-усиления поверх рекомендованного набора
 
-- Явный тип возвращаемого значения (`@typescript-eslint/explicit-function-return-type`).
-- Предпочтение `interface` для объектных типов (`@typescript-eslint/consistent-type-definitions` со значением `interface`).
-- Обязательная обработка промисов (`@typescript-eslint/no-floating-promises`).
-- Настроенный контроль неиспользуемых сущностей (`@typescript-eslint/no-unused-vars`): игнорируются только имена, начинающиеся с `_`, учитываются rest-поля.
-- Явные модификаторы доступа (`@typescript-eslint/explicit-member-accessibility`, конструкторы исключены из требования).
-- Фиксированный порядок элементов класса (`@typescript-eslint/member-ordering`): сигнатуры → статические поля → поля экземпляра → конструкторы → методы.
-- В базовом профиле `@typescript-eslint/no-explicit-any` отключён, чтобы не мешать миграциям к строгим типам.
+Эти правила добавлены дополнительно к TypeScript recommended и применяются только к `.ts/.tsx` файлам.
+
+#### `@typescript-eslint/explicit-function-return-type` - Явный тип возврата функций
+
+**Описание:** Все функции должны явно указывать тип возвращаемого значения.
+
+```ts
+// ✅ Хорошо
+function sum(a: number, b: number): number {
+  return a + b;
+}
+
+const multiply = (a: number, b: number): number => a * b;
+
+// ❌ Плохо
+function sum(a: number, b: number) {
+  return a + b;
+}
+```
+
+#### `@typescript-eslint/consistent-type-definitions` - Предпочитать interface
+
+**Описание:** Используй `interface` для определения объектных типов вместо `type`.
+
+```ts
+// ✅ Хорошо
+interface User {
+  name: string;
+  age: number;
+}
+
+type ID = string | number; // type для union/intersection
+
+// ❌ Плохо
+type User = {
+  name: string;
+  age: number;
+};
+```
+
+#### `@typescript-eslint/no-floating-promises` - Обязательная обработка промисов
+
+**Описание:** Каждый промис должен быть обработан (await, .then/.catch, void).
+
+```ts
+// ✅ Хорошо
+await fetchData();
+
+fetchData().then(handleData).catch(handleError);
+
+void fetchData(); // явное игнорирование
+
+// ❌ Плохо
+fetchData(); // промис не обработан
+```
+
+#### `@typescript-eslint/no-unused-vars` - Контроль неиспользуемых переменных
+
+**Описание:** Неиспользуемые переменные/параметры запрещены, кроме начинающихся с `_`.
+
+```ts
+// ✅ Хорошо
+const { name, ...rest } = user;
+const onClick = (_event: Event) => {};
+
+// ❌ Плохо
+const unused = 1; // переменная не используется
+function handler(event: Event) {} // параметр не используется
+```
+
+#### `@typescript-eslint/explicit-member-accessibility` - Явные модификаторы доступа
+
+**Описание:** Всегда указывай `public`, `protected` или `private` для членов класса.
+
+```ts
+// ✅ Хорошо
+class User {
+  public name: string;
+  private age: number;
+  
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  public getName(): string {
+    return this.name;
+  }
+}
+
+// ❌ Плохо
+class User {
+  name: string; // нет модификатора
+  age: number;
+}
+```
+
+#### `@typescript-eslint/member-ordering` - Порядок элементов класса
+
+**Описание:** Члены класса должны быть упорядочены: сигнатуры → статические поля → поля экземпляра → конструкторы → методы.
+
+```ts
+// ✅ Хорошо
+class User {
+  // Статические поля
+  public static defaultName: string = 'Guest';
+  private static instances: number = 0;
+  
+  // Поля экземпляра
+  public name: string;
+  private age: number;
+  
+  // Конструктор
+  constructor(name: string, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  // Статические методы
+  public static getInstanceCount(): number {
+    return User.instances;
+  }
+  
+  // Методы экземпляра
+  public getName(): string {
+    return this.name;
+  }
+}
+
+// ❌ Плохо (неправильный порядок)
+class User {
+  constructor() {} // конструктор в начале
+  public name: string; // поля после конструктора
+  public static instances = 0; // статические поля в конце
+}
+```
+
+---
 
 ## React-профиль (`configs/react.mjs`)
 
-Активируется для файлов `.jsx` и `.tsx` и добавляет плагины `react`, `react-hooks`, `jsx-a11y`:
+Активируется для файлов `.jsx` и `.tsx` и добавляет плагины `react`, `react-hooks`, `jsx-a11y`.
 
-- Расширения файлов с JSX (`react/jsx-filename-extension`): только `.jsx`/`.tsx`.
-- Булевы пропсы без значения (`react/jsx-boolean-value`).
-- Самозакрывающиеся теги без детей (`react/self-closing-comp`).
-- Стабильные ключи в списках (`react/jsx-key` с проверкой фрагментов).
-- Запрет дублирующих пропсов (`react/jsx-no-duplicate-props`, регистр не различает).
-- Корректное использование хуков (`react-hooks/rules-of-hooks`).
-- Полные зависимости эффектов (`react-hooks/exhaustive-deps`, предупреждение).
-- Базовая доступность: `jsx-a11y/alt-text`, `jsx-a11y/anchor-is-valid`, `jsx-a11y/click-events-have-key-events`, `jsx-a11y/no-autofocus` (разрешён для нативных компонентов только при необходимости), `jsx-a11y/no-noninteractive-element-interactions`, `jsx-a11y/no-static-element-interactions`.
+### `react/jsx-filename-extension` - Расширения файлов с JSX
+
+**Описание:** JSX разрешён только в `.jsx` и `.tsx` файлах.
+
+```tsx
+// ✅ Хорошо (файл Button.tsx)
+export const Button = () => <button>Click</button>;
+
+// ❌ Плохо (файл Button.ts с JSX)
+export const Button = () => <button>Click</button>;
+```
+
+### `react/jsx-boolean-value` - Булевы пропсы без значения
+
+**Описание:** Для `true` значения не указывай явно `={true}`.
+
+```tsx
+// ✅ Хорошо
+<Button disabled />
+
+// ❌ Плохо
+<Button disabled={true} />
+```
+
+### `react/self-closing-comp` - Самозакрывающиеся теги
+
+**Описание:** Если у компонента нет детей, используй самозакрывающийся тег.
+
+```tsx
+// ✅ Хорошо
+<Button />
+<div className="empty" />
+
+// ❌ Плохо
+<Button></Button>
+<div className="empty"></div>
+```
+
+### `react/jsx-key` - Ключи в списках
+
+**Описание:** Элементы в массивах должны иметь уникальный prop `key`.
+
+```tsx
+// ✅ Хорошо
+{items.map(item => (
+  <div key={item.id}>{item.name}</div>
+))}
+
+// ❌ Плохо
+{items.map(item => (
+  <div>{item.name}</div>
+))}
+```
+
+### `react/jsx-no-duplicate-props` - Запрет дублирующих пропсов
+
+**Описание:** Не дублируй пропсы в одном компоненте.
+
+```tsx
+// ✅ Хорошо
+<Button disabled={isDisabled} />
+
+// ❌ Плохо
+<Button disabled disabled={false} />
+```
+
+### `react-hooks/rules-of-hooks` - Правила хуков
+
+**Описание:** Хуки должны вызываться только на верхнем уровне и только в функциональных компонентах/хуках.
+
+```tsx
+// ✅ Хорошо
+function Component() {
+  const [state, setState] = useState(0);
+  return <div>{state}</div>;
+}
+
+// ❌ Плохо
+function Component() {
+  if (condition) {
+    const [state, setState] = useState(0); // хук внутри условия
+  }
+}
+```
+
+### `react-hooks/exhaustive-deps` - Полные зависимости эффектов
+
+**Описание:** В массиве зависимостей useEffect/useCallback/useMemo должны быть все используемые переменные.
+
+```tsx
+// ✅ Хорошо
+useEffect(() => {
+  fetchData(userId);
+}, [userId]);
+
+// ⚠️ Плохо (предупреждение)
+useEffect(() => {
+  fetchData(userId);
+}, []); // userId должен быть в зависимостях
+```
+
+### Правила доступности (jsx-a11y)
+
+#### `jsx-a11y/alt-text` - Alt текст для изображений
+
+**Описание:** Все `<img>` должны иметь `alt` атрибут.
+
+```tsx
+// ✅ Хорошо
+<img src="photo.jpg" alt="User photo" />
+
+// ⚠️ Плохо
+<img src="photo.jpg" />
+```
+
+#### `jsx-a11y/anchor-is-valid` - Корректные ссылки
+
+**Описание:** `<a>` должен иметь `href` или корректный обработчик.
+
+```tsx
+// ✅ Хорошо
+<a href="/page">Link</a>
+<button onClick={handler}>Button</button>
+
+// ⚠️ Плохо
+<a onClick={handler}>Link</a>
+```
+
+#### `jsx-a11y/click-events-have-key-events` - Клавиатурные события
+
+**Описание:** Элементы с `onClick` должны иметь клавиатурные обработчики.
+
+```tsx
+// ✅ Хорошо
+<div onClick={handler} onKeyPress={handler} role="button" tabIndex={0} />
+
+// ⚠️ Плохо
+<div onClick={handler} />
+```
+
+#### `jsx-a11y/no-autofocus` - Ограничение autofocus
+
+**Описание:** Используй `autoFocus` только когда необходимо для UX.
+
+```tsx
+// ✅ Хорошо
+<input /> // без autofocus
+
+// ⚠️ Плохо (предупреждение)
+<input autoFocus />
+```
+
+#### `jsx-a11y/no-noninteractive-element-interactions` - События на неинтерактивных элементах
+
+**Описание:** Не вешай события на неинтерактивные элементы без роли.
+
+```tsx
+// ✅ Хорошо
+<button onClick={handler}>Click</button>
+<div onClick={handler} role="button" tabIndex={0} />
+
+// ⚠️ Плохо
+<div onClick={handler}>Click</div>
+```
+
+#### `jsx-a11y/no-static-element-interactions` - Интерактивность статических элементов
+
+**Описание:** Статические элементы с обработчиками должны иметь роль и клавиатурную поддержку.
+
+```tsx
+// ✅ Хорошо
+<div onClick={handler} onKeyPress={handler} role="button" tabIndex={0} />
+
+// ⚠️ Плохо
+<div onClick={handler} />
+```
+
+---
 
 ## Строгий профиль (`configs/strict.mjs`)
 
-Дополнительно к базовому профилю:
+Дополнительно к базовому профилю применяются следующие правила для `.ts/.tsx` файлов.
 
-- Запрет `any` (`@typescript-eslint/no-explicit-any`).
-- Соглашение об именовании (`@typescript-eslint/naming-convention`): переменные только `camelCase` или `PascalCase`, подчёркивания допустимы спереди/сзади.
-- Один публичный тип/класс/enum на файл: `max-classes-per-file` + спец. `no-restricted-syntax`, запрещающий несколько деклараций подряд.
+### `@typescript-eslint/no-explicit-any` - Запрет any
+
+**Описание:** Запрещает использование типа `any`, требует конкретные типы.
+
+```ts
+// ✅ Хорошо
+function process(data: string): void {}
+function process(data: unknown): void {}
+
+// ❌ Плохо
+function process(data: any): void {}
+```
+
+### `@typescript-eslint/naming-convention` - Соглашение об именовании
+
+**Описание:** Переменные должны быть в `camelCase` или `PascalCase`, подчёркивания допустимы спереди/сзади.
+
+```ts
+// ✅ Хорошо
+const userName = 'John';
+const UserComponent = () => {};
+const _privateVar = 1;
+const unused_ = 2;
+
+// ❌ Плохо
+const user_name = 'John';
+const USER_NAME = 'John';
+```
+
+### `max-classes-per-file` + `no-restricted-syntax` - Один публичный тип/класс/enum на файл
+
+**Описание:** В одном файле разрешён только один экспортируемый класс/интерфейс/тип/enum.
+
+```ts
+// ✅ Хорошо (файл User.ts)
+interface User {
+  name: string;
+}
+
+// ✅ Хорошо (вспомогательные приватные типы)
+interface User {
+  name: string;
+}
+type UserId = string;
+
+// ❌ Плохо (два публичных типа)
+interface User {
+  name: string;
+}
+interface Post {
+  title: string;
+}
+```
+
+---
 
 ## Как применять профили
 
-- **Базовый** (`eslint.config.mjs`): все правила из разделов «Базовый профиль» и «Кастомные TS-усиления».
-- **Строгий** (`configs/strict.mjs`): база + запрет `any` + соглашение об именовании + одно экспортируемое объявление типа/класса/enum на файл.
-- **React** (`configs/react.mjs`): база + React/JSX/a11y правила.
+### Базовый профиль
+
+Подключается автоматически при импорте `@ytvee-dev/eslint-config-react`:
+
+```js
+import baseConfig from '@ytvee-dev/eslint-config-react';
+
+export default [...baseConfig];
+```
+
+Включает:
+- Все правила `@eslint/js` recommended
+- TypeScript rules (type-checked)
+- Best Practices из Airbnb
+- Сортировку импортов
+- Prettier форматирование
+
+### Строгий профиль
+
+Для более строгих проектов:
+
+```js
+import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+
+export default [...strictConfig];
+```
+
+Дополнительно к базовому:
+- Запрет `any`
+- Соглашение об именовании
+- Один публичный тип/класс/enum на файл
+
+### React-профиль
+
+Для React-приложений:
+
+```js
+import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+
+export default [...reactConfig];
+```
+
+Дополнительно к базовому:
+- React правила (JSX, hooks)
+- Accessibility правила (a11y)
+
+### Комбинированное использование
+
+```js
+import baseConfig from '@ytvee-dev/eslint-config-react';
+import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
+import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
+
+export default [
+  ...baseConfig,    // базовые правила
+  ...reactConfig,   // React правила
+  // или
+  ...strictConfig,  // строгие правила (включают базовые)
+  
+  // ваши кастомные правила
+  {
+    rules: {
+      // переопределения
+    },
+  },
+];
+```

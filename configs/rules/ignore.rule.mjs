@@ -12,5 +12,6 @@ export const ignoreRule = {
     '**/*.json',
     '**/*.yml',
     '**/Dockerfile',
+    '**/.pnp.*',
   ],
 };

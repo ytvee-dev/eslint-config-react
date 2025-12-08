@@ -1,13 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
-/** @type {import('eslint').Linter.Plugin} */
 const jsxA11yPlugin = jsxA11y;
-/** @type {import('eslint').Linter.Plugin} */
 const reactPluginConfig = reactPlugin;
-/** @type {import('eslint').Linter.Plugin} */
 const reactHooksPlugin = reactHooks;
 
 export const reactRule = {

@@ -47,15 +47,8 @@ module.exports = require('@ytvee-dev/eslint-config-react/prettier');
 
 ```js
 import baseConfig from '@ytvee-dev/eslint-config-react';
-// import strictConfig from '@ytvee-dev/eslint-config-react/configs/strict';
-// import reactConfig from '@ytvee-dev/eslint-config-react/configs/react';
 
-export default [
-  ...baseConfig,
-  // ...strictConfig,
-  // ...reactConfig,
-  // ваши дополнительные правила
-];
+export default [...baseConfig];
 ```
 
 4. Запускайте проверки:
@@ -78,10 +71,11 @@ yarn lint:fix
 
 ## Чем отличается от Airbnb и что не включено
 
-- **Отдельное включение React-профиля.** Конфигурация собирается на `@eslint/js` и `typescript-eslint`, а React-правила подключаются только если добавить `configs/react.mjs` в свой `eslint.config.mjs`. Нужные плагины (`react`, `react-hooks`, `jsx-a11y`) установятся вместе с пакетом, но лишних правил в не-React проектах не будет.
+- **Модульная структура с отдельным React-профилем.** Конфигурация собирается на `@eslint/js` и `typescript-eslint`, а React-правила подключаются только если добавить `configs/react.mjs` в свой `eslint.config.mjs`. Нужные плагины (`react`, `react-hooks`, `jsx-a11y`) установятся вместе с пакетом, но лишних правил в не-React проектах не будет.
 - **Форматирование отдано Prettier, а не правилам Airbnb.** Вместо набора форматирующих правил из `eslint-config-airbnb` используется `eslint-plugin-prettier/recommended` и общий пресет `prettier.js`. Это избавляет от конфликтов стиля и делает вывод одинаковым для JS/TS и JSX/TSX-файлов.
-- **Другой подход к сортировке импортов.** Вместо `import/order` из Airbnb применён `eslint-plugin-simple-import-sort` с явными группами внешних, внутренних и относительных модулей.
-- **Ставка на типобезопасность, а не на весь стек JS-правил Airbnb.** Базовый набор включает `pluginJs.configs.recommended` и `typescript-eslint` с типовыми проверками, но не подключает детализированные JS-ограничения Airbnb (например, строгую деструктуризацию или порядок методов в классах), чтобы оставить пространство для дополнительных правил в профиле `configs/strict.mjs`.
+- **Другой подход к сортировке импортов.** Вместо `import/order` из Airbnb применён `eslint-plugin-simple-import-sort` с явными группами внешних, внутренних и относительных модулей. Поддержка алиасов `@/` и автоматическое исправление.
+- **Ставка на типобезопасность и Best Practices из Airbnb.** Базовый набор включает `pluginJs.configs.recommended`, `typescript-eslint` с типовыми проверками и большой набор Best Practices правил из Airbnb Style Guide: управление переменными (no-var, prefer-const), функции (arrow-body-style, prefer-arrow-callback), объекты и массивы (object-shorthand, prefer-destructuring), строки (prefer-template), сравнения (eqeqeq, no-nested-ternary), безопасность (no-eval, no-new-func, no-extend-native) и стиль кода (semi, brace-style, comma-dangle).
+- **Автофикс для большинства правил.** Поддержка автоматического исправления для форматирования, сортировки импортов, замены var на const/let, упрощения стрелочных функций и многих других правил Airbnb.
 
 ## Настройка среды
 
