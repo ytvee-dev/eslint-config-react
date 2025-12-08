@@ -100,14 +100,13 @@ Add to your `package.json`:
 
 ## Documentation
 
-📚 **Full documentation is available in the `/docs` folder:**
+**Interactive Documentation:** [ytvee-dev.github.io/eslint-config-react](https://ytvee-dev.github.io/eslint-config-react/)
 
-[**View Documentation**](https://github.com/ytvee-dev/eslint-config-react/tree/main/docs)
+Full documentation is also available in the `/docs` folder:
 
-Includes:
-- [Complete rules reference](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES.md)
-- [Style guide overview](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE.md)
-- [Profile usage guide](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES.md)
+- [Complete rules reference](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES.md) ([RU](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES_RU.md))
+- [Style guide overview](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE.md) ([RU](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE_RU.md))
+- [Profile usage guide](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES.md) ([RU](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES_RU.md))
 - Configuration examples
 - Troubleshooting
 
@@ -117,7 +116,8 @@ ISC © [Tyan Yevgeniy](https://github.com/ytvee-dev)
 
 ## Links
 
+- [Interactive Documentation](https://ytvee-dev.github.io/eslint-config-react/)
 - [NPM Package](https://www.npmjs.com/package/@ytvee-dev/eslint-config-react)
 - [GitHub Repository](https://github.com/ytvee-dev/eslint-config-react)
-- [Full Documentation](https://github.com/ytvee-dev/eslint-config-react/tree/main/docs)
+- [Documentation Files](https://github.com/ytvee-dev/eslint-config-react/tree/main/docs)
 - [Report Issues](https://github.com/ytvee-dev/eslint-config-react/issues)

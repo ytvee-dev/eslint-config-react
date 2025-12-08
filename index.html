@@ -168,15 +168,68 @@ export default [...strictConfig];</code></pre>
                     </div>
                 </div>
 
-                <p class="note">
-                    <strong data-en="Note:" data-ru="Примечание:">Note:</strong>
-                    <span data-en="For detailed profile usage examples, see the "
-                          data-ru="Подробные примеры использования профилей см. в ">
-              For detailed profile usage examples, see the 
-            </span>
-                    <a href="docs/PROFILES.md" data-en="Profiles Guide" data-ru="Руководстве по профилям">Profiles
-                        Guide</a>.
-                </p>
+                <div class="profile-details">
+                    <h3 data-en="Advanced Profile Usage" data-ru="Продвинутое использование профилей">Advanced Profile Usage</h3>
+                    
+                    <h4 data-en="Combining Profiles" data-ru="Комбинирование профилей">Combining Profiles</h4>
+                    <p data-en="You can combine strict and React profiles for maximum control:"
+                       data-ru="Вы можете комбинировать строгий и React профили для максимального контроля:">
+                        You can combine strict and React profiles for maximum control:
+                    </p>
+                    <div class="code-block">
+                        <pre><code>import strictConfig from "@ytvee-dev/eslint-config-react/configs/strict";
+import reactConfig from "@ytvee-dev/eslint-config-react/configs/react";
+
+export default [
+  ...strictConfig,  // includes base + strict rules
+  ...reactConfig,   // adds React-specific rules
+];</code></pre>
+                    </div>
+
+                    <h4 data-en="Custom Overrides" data-ru="Пользовательские переопределения">Custom Overrides</h4>
+                    <p data-en="Override specific rules for your project needs:"
+                       data-ru="Переопределите конкретные правила для нужд вашего проекта:">
+                        Override specific rules for your project needs:
+                    </p>
+                    <div class="code-block">
+                        <pre><code>import reactConfig from "@ytvee-dev/eslint-config-react/configs/react";
+
+export default [
+  ...reactConfig,
+  {
+    rules: {
+      'no-console': 'warn',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+];</code></pre>
+                    </div>
+
+                    <h4 data-en="File-Specific Configuration" data-ru="Конфигурация для конкретных файлов">File-Specific Configuration</h4>
+                    <p data-en="Apply different rules to test files or scripts:"
+                       data-ru="Применяйте разные правила к тестовым файлам или скриптам:">
+                        Apply different rules to test files or scripts:
+                    </p>
+                    <div class="code-block">
+                        <pre><code>import reactConfig from "@ytvee-dev/eslint-config-react/configs/react";
+
+export default [
+  ...reactConfig,
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+];</code></pre>
+                    </div>
+
+                    <p class="note">
+                        <strong data-en="Full documentation:" data-ru="Полная документация:">Full documentation:</strong>
+                        <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES.md" target="_blank">English</a> | 
+                        <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES_RU.md" target="_blank">Русский</a>
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -233,11 +286,68 @@ export default [...strictConfig];</code></pre>
                     </ol>
                 </div>
 
-                <p class="note">
-                    <strong data-en="For complete style guide details:" data-ru="Полные детали стайлгайда:">For complete
-                        style guide details:</strong>
-                    <a href="docs/README_STYLEGUIDE.md">English</a> | <a href="docs/README_STYLEGUIDE_RU.md">Русский</a>
-                </p>
+                <div class="style-details">
+                    <h3 data-en="Code Examples" data-ru="Примеры кода">Code Examples</h3>
+                    
+                    <h4 data-en="Variables" data-ru="Переменные">Variables</h4>
+                    <div class="code-block">
+                        <pre><code>// Good - use const for non-reassigned values
+const maxItems = 100;
+const userName = 'John';
+
+// Good - use let for mutable values
+let counter = 0;
+counter++;
+
+// Bad - avoid var
+var oldStyle = 'deprecated';</code></pre>
+                    </div>
+
+                    <h4 data-en="Functions" data-ru="Функции">Functions</h4>
+                    <div class="code-block">
+                        <pre><code>// Good - arrow functions with implicit return
+const double = (x: number): number => x * 2;
+
+// Good - explicit return type
+function calculateSum(a: number, b: number): number {
+  return a + b;
+}
+
+// Good - prefer template strings
+const greeting = `Hello, ${userName}!`;</code></pre>
+                    </div>
+
+                    <h4 data-en="Objects and Arrays" data-ru="Объекты и массивы">Objects and Arrays</h4>
+                    <div class="code-block">
+                        <pre><code>// Good - use object shorthand
+const name = 'Product';
+const price = 99;
+const product = { name, price };
+
+// Good - use destructuring
+const { id, title } = product;
+const [first, ...rest] = array;
+
+// Good - use spread operator
+const newProduct = { ...product, discount: 10 };</code></pre>
+                    </div>
+
+                    <h4 data-en="Comparisons" data-ru="Сравнения">Comparisons</h4>
+                    <div class="code-block">
+                        <pre><code>// Good - strict equality
+if (value === 'test') { }
+if (count !== 0) { }
+
+// Bad - avoid == and !=
+if (value == 'test') { }  // eslint error</code></pre>
+                    </div>
+
+                    <p class="note">
+                        <strong data-en="Full style guide:" data-ru="Полный стайлгайд:">Full style guide:</strong>
+                        <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE.md" target="_blank">English</a> | 
+                        <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE_RU.md" target="_blank">Русский</a>
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -282,11 +392,115 @@ export default [...strictConfig];</code></pre>
                     </ul>
                 </div>
 
-                <p class="note">
-                    <strong data-en="For complete rules list with examples:"
-                            data-ru="Полный список правил с примерами:">For complete rules list with examples:</strong>
-                    <a href="docs/README_RULES.md">English</a> | <a href="docs/README_RULES_RU.md">Русский</a>
-                </p>
+                <div class="rules-details">
+                    <h3 data-en="Key Rules Explained" data-ru="Ключевые правила подробно">Key Rules Explained</h3>
+                    
+                    <div class="rule-item">
+                        <h4><code>no-var</code></h4>
+                        <p data-en="Disallows var keyword, enforces const/let usage"
+                           data-ru="Запрещает ключевое слово var, требует использования const/let">
+                            Disallows var keyword, enforces const/let usage
+                        </p>
+                        <div class="code-block">
+                            <pre><code>// Bad
+var count = 0;
+
+// Good
+const MAX_COUNT = 100;
+let count = 0;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4><code>prefer-const</code></h4>
+                        <p data-en="Requires const for variables that are never reassigned"
+                           data-ru="Требует const для переменных, которые не переприсваиваются">
+                            Requires const for variables that are never reassigned
+                        </p>
+                        <div class="code-block">
+                            <pre><code>// Bad
+let config = { api: 'https://api.example.com' };
+// config is never reassigned
+
+// Good
+const config = { api: 'https://api.example.com' };</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4><code>eqeqeq</code></h4>
+                        <p data-en="Requires strict equality operators === and !=="
+                           data-ru="Требует операторы строгого равенства === и !==">
+                            Requires strict equality operators === and !==
+                        </p>
+                        <div class="code-block">
+                            <pre><code>// Bad
+if (value == 'test') { }
+if (count != 0) { }
+
+// Good
+if (value === 'test') { }
+if (count !== 0) { }</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4><code>prefer-template</code></h4>
+                        <p data-en="Requires template literals instead of string concatenation"
+                           data-ru="Требует template literals вместо конкатенации строк">
+                            Requires template literals instead of string concatenation
+                        </p>
+                        <div class="code-block">
+                            <pre><code>// Bad
+const message = 'Hello, ' + name + '!';
+
+// Good
+const message = `Hello, ${name}!`;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4><code>arrow-body-style</code></h4>
+                        <p data-en="Requires concise arrow function bodies when possible"
+                           data-ru="Требует краткие тела стрелочных функций где возможно">
+                            Requires concise arrow function bodies when possible
+                        </p>
+                        <div class="code-block">
+                            <pre><code>// Bad
+const double = (x) => { return x * 2; };
+
+// Good
+const double = (x) => x * 2;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4><code>object-shorthand</code></h4>
+                        <p data-en="Requires object literal shorthand syntax"
+                           data-ru="Требует сокращенный синтаксис объектных литералов">
+                            Requires object literal shorthand syntax
+                        </p>
+                        <div class="code-block">
+                            <pre><code>// Bad
+const obj = {
+  name: name,
+  getValue: function() { return 42; }
+};
+
+// Good
+const obj = {
+  name,
+  getValue() { return 42; }
+};</code></pre>
+                        </div>
+                    </div>
+
+                    <p class="note">
+                        <strong data-en="Complete rules reference:" data-ru="Полный справочник правил:">Complete rules reference:</strong>
+                        <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES.md" target="_blank">English</a> | 
+                        <a href="https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES_RU.md" target="_blank">Русский</a>
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -325,6 +539,50 @@ export default [...strictConfig];</code></pre>
                                 data-en="Consistent class member order" data-ru="Единообразный порядок членов класса">Consistent class member order</span>
                         </li>
                     </ul>
+                </div>
+
+                <h3 data-en="TypeScript Examples" data-ru="Примеры TypeScript">TypeScript Examples</h3>
+                
+                <div class="rule-item">
+                    <h4 data-en="Explicit Return Types" data-ru="Явные типы возврата">Explicit Return Types</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - no return type
+function calculate(a: number, b: number) {
+  return a + b;
+}
+
+// Good - explicit return type
+function calculate(a: number, b: number): number {
+  return a + b;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <h4 data-en="Promise Handling" data-ru="Обработка промисов">Promise Handling</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - floating promise
+fetchData();
+
+// Good - properly handled
+await fetchData();
+// or
+fetchData().catch(handleError);</code></pre>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <h4 data-en="Type Definitions" data-ru="Определения типов">Type Definitions</h4>
+                    <div class="code-block">
+                        <pre><code>// Good - prefer interface
+interface User {
+  id: number;
+  name: string;
+}
+
+// Use type for unions
+type Status = 'active' | 'inactive' | 'pending';</code></pre>
+                    </div>
                 </div>
             </div>
         </section>
@@ -375,6 +633,86 @@ export default [...strictConfig];</code></pre>
                         </li>
                     </ul>
                 </div>
+
+                <h3 data-en="React Examples" data-ru="Примеры React">React Examples</h3>
+                
+                <div class="rule-item">
+                    <h4 data-en="JSX File Extensions" data-ru="Расширения JSX файлов">JSX File Extensions</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - JSX in .js/.ts files
+// Button.js or Button.ts
+export const Button = () => <button>Click</button>;
+
+// Good - JSX in .jsx/.tsx files
+// Button.jsx or Button.tsx
+export const Button = () => <button>Click</button>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <h4 data-en="Boolean Props" data-ru="Булевы пропсы">Boolean Props</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - explicit true
+<Component isActive={true} />
+
+// Good - implicit true
+<Component isActive /></code></pre>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <h4 data-en="Self-Closing Tags" data-ru="Самозакрывающиеся теги">Self-Closing Tags</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - unnecessary closing tag
+<Component></Component>
+
+// Good - self-closing
+<Component /></code></pre>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <h4 data-en="Keys in Lists" data-ru="Ключи в списках">Keys in Lists</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - no key
+{items.map(item => <Item name={item.name} />)}
+
+// Good - unique key
+{items.map(item => <Item key={item.id} name={item.name} />)}</code></pre>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <h4 data-en="Hook Dependencies" data-ru="Зависимости хуков">Hook Dependencies</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - missing dependency
+useEffect(() => {
+  fetchData(userId);
+}, []); // userId should be in deps
+
+// Good - complete dependencies
+useEffect(() => {
+  fetchData(userId);
+}, [userId]);</code></pre>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <h4 data-en="Accessibility Example" data-ru="Пример доступности">Accessibility Example</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - missing alt text
+<img src="logo.png" />
+
+// Good - descriptive alt text
+<img src="logo.png" alt="Company Logo" />
+
+// Bad - div with onClick but no keyboard support
+<div onClick={handleClick}>Click me</div>
+
+// Good - button with proper semantics
+<button onClick={handleClick}>Click me</button></code></pre>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -400,6 +738,66 @@ export default [...strictConfig];</code></pre>
                         </li>
                     </ul>
                 </div>
+
+                <h3 data-en="Strict Mode Examples" data-ru="Примеры строгого режима">Strict Mode Examples</h3>
+                
+                <div class="rule-item">
+                    <h4 data-en="No Any Type" data-ru="Запрет any">No Any Type</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - any type
+function process(data: any): any {
+  return data.value;
+}
+
+// Good - explicit types
+interface Data {
+  value: string;
+}
+
+function process(data: Data): string {
+  return data.value;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <h4 data-en="Naming Conventions" data-ru="Соглашения об именовании">Naming Conventions</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - incorrect naming
+const UserName = 'John';  // variables should be camelCase
+interface user_data {}    // interfaces should be PascalCase
+class my_class {}         // classes should be PascalCase
+
+// Good - proper naming
+const userName = 'John';
+interface UserData {}
+class MyClass {}
+type UserId = string;</code></pre>
+                    </div>
+                </div>
+
+                <div class="rule-item">
+                    <h4 data-en="One Export Per File" data-ru="Один экспорт на файл">One Export Per File</h4>
+                    <div class="code-block">
+                        <pre><code>// Bad - multiple public classes
+export class UserService {}
+export class ProductService {}
+
+// Good - one public export per file
+// UserService.ts
+export class UserService {}
+
+// ProductService.ts
+export class ProductService {}</code></pre>
+                    </div>
+                </div>
+
+                <p class="note">
+                    <span data-en="The strict profile is recommended for large teams and enterprise projects where code consistency and type safety are critical."
+                          data-ru="Строгий профиль рекомендуется для больших команд и корпоративных проектов, где критична согласованность кода и типобезопасность.">
+                        The strict profile is recommended for large teams and enterprise projects where code consistency and type safety are critical.
+                    </span>
+                </p>
             </div>
         </section>
 
@@ -407,7 +805,7 @@ export default [...strictConfig];</code></pre>
             <div class="footer-content">
                 <p>
                     <span data-en="Made with ❤️ by" data-ru="Сделано с ❤️">Made with ❤️ by</span>
-                    <a href="https://github.com/ytvee-dev" target="_blank">Tyan Yevgeniy</a>
+                    <a href="https://github.com/ytvee-dev" target="_blank">YT-DEV</a>
                 </p>
                 <p class="footer-links">
                     <a href="https://github.com/ytvee-dev/eslint-config-react" target="_blank">GitHub</a>

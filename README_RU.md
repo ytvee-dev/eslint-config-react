@@ -100,14 +100,13 @@ module.exports = require("@ytvee-dev/eslint-config-react/prettier");
 
 ## Документация
 
-📚 **Полная документация доступна в папке `/docs`:**
+**Интерактивная документация:** [ytvee-dev.github.io/eslint-config-react](https://ytvee-dev.github.io/eslint-config-react/)
 
-[**Открыть документацию**](https://github.com/ytvee-dev/eslint-config-react/tree/main/docs)
+Полная документация также доступна в папке `/docs`:
 
-Включает:
-- [Полный справочник правил](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES_RU.md)
-- [Обзор стайлгайда](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE_RU.md)
-- [Руководство по профилям](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES_RU.md)
+- [Полный справочник правил](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES_RU.md) ([EN](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_RULES.md))
+- [Обзор стайлгайда](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE_RU.md) ([EN](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/README_STYLEGUIDE.md))
+- [Руководство по профилям](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES_RU.md) ([EN](https://github.com/ytvee-dev/eslint-config-react/blob/main/docs/PROFILES.md))
 - Примеры конфигурации
 - Решение проблем
 
@@ -117,7 +116,8 @@ ISC © [Tyan Yevgeniy](https://github.com/ytvee-dev)
 
 ## Ссылки
 
+- [Интерактивная документация](https://ytvee-dev.github.io/eslint-config-react/)
 - [NPM пакет](https://www.npmjs.com/package/@ytvee-dev/eslint-config-react)
 - [GitHub репозиторий](https://github.com/ytvee-dev/eslint-config-react)
-- [Полная документация](https://github.com/ytvee-dev/eslint-config-react/tree/main/docs)
+- [Файлы документации](https://github.com/ytvee-dev/eslint-config-react/tree/main/docs)
 - [Сообщить о проблеме](https://github.com/ytvee-dev/eslint-config-react/issues)
